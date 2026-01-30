@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>番茄钟与待办事项 | Pomodoro & Todo</title>
+    <style>
+        :root {
+            --primary: #667eea;
+            --primary-dark: #764ba2;
+            --secondary: #11998e;
+            --secondary-dark: #38ef7d;
+            --danger: #ff6b6b;
+            --bg-gradient-start: #667eea;
+            --bg-gradient-end: #764ba2;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-primary: #333;
+            --text-secondary: #666;
+            --border-color: #e0e0e0;
+            --input-bg: #fff;
+            --item-bg: #f8f9fa;
+            --item-hover: #f0f4ff;
+            --confirmed-bg: #f0f4ff;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="red"] {
+            --primary: #ff6b6b;
+            --primary-dark: #ee5a6f;
+            --bg-gradient-start: #ff6b6b;
+            --bg-gradient-end: #ee5a6f;
+            --secondary: #ff8f8f;
+            --secondary-dark: #ffb4b4;
+            --item-hover: #ffe6e6;
+            --confirmed-bg: #fff0f0;
+        }
+
+        [data-theme="blue"] {
+            --primary: #4facfe;
+            --primary-dark: #00f2fe;
+            --bg-gradient-start: #4facfe;
+            --bg-gradient-end: #00f2fe;
+            --secondary: #00c9ff;
+            --secondary-dark: #92fe9d;
+            --item-hover: #dbeafe;
+            --confirmed-bg: #e6f4ff;
+        }
+
+        [data-theme="green"] {
+            --primary: #11998e;
+            --primary-dark: #38ef7d;
+            --bg-gradient-start: #11998e;
+            --bg-gradient-end: #38ef7d;
+            --secondary: #0ba360;
+            --secondary-dark: #3cba92;
+            --item-hover: #d1fae5;
+            --confirmed-bg: #e6fff3;
+        }
+
+        [data-theme="yellow"] {
+            --primary: #f093fb;
+            --primary-dark: #f5576c;
+            --bg-gradient-start: #fa709a;
+            --bg-gradient-end: #fee140;
+            --secondary: #f5576c;
+            --secondary-dark: #ff9a9e;
+            --item-hover: #fef3c7;
+            --confirmed-bg: #fff9e6;
+        }
+
+        [data-theme="bw"] {
+            --primary: #2c3e50;
+            --primary-dark: #34495e;
+            --bg-gradient-start: #2c3e50;
+            --bg-gradient-end: #4a5568;
+            --secondary: #5a6c7d;
+            --secondary-dark: #7f8c8d;
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --item-hover: #dde4e6;
+            --confirmed-bg: #ecf0f1;
+            --shadow: rgba(0, 0, 0, 0.5);
+        }
+
+        [data-theme="scifi"] {
+            --primary: #00d2ff;
+            --primary-dark: #3a7bd5;
+            --bg-gradient-start: #00d2ff;
+            --bg-gradient-end: #3a7bd5;
+            --secondary: #00ff87;
+            --secondary-dark: #60efff;
+            --card-bg: rgba(10, 20, 40, 0.95);
+            --text-primary: #e0f7ff;
+            --text-secondary: #90caf9;
+            --border-color: #00d2ff;
+            --input-bg: rgba(0, 210, 255, 0.1);
+            --item-bg: rgba(0, 210, 255, 0.05);
+            --item-hover: rgba(0, 210, 255, 0.15);
+            --confirmed-bg: rgba(0, 255, 135, 0.1);
+            --shadow: rgba(0, 210, 255, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Header Styles */
+        .header {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px var(--shadow);
+            position: relative;
+            z-index: 100;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .control-panel {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            gap: 8px;
+            z-index: 200;
+        }
+
+        .control-btn {
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 45px;
+            left: 0;
+            background: white;
+            border-radius: 12px;
+            padding: 6px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+            min-width: 150px;
+            z-index: 300;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+            animation: dropdownFade 0.2s ease;
+        }
+
+        @keyframes dropdownFade {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-item {
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 2px;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f5f5;
+        }
+
+        .dropdown-item.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 10px;
+            padding-top: 10px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            font-size: 0.95em;
+        }
+
+        /* Main Layout */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 968px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 40px var(--shadow);
+            animation: slideIn 0.5s ease;
+            height: fit-content;
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-primary);
+        }
+
+        /* Todo List Styles */
+        .todo-input-group {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: var(--item-bg);
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 14px;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        select.input-field {
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: var(--item-bg);
+            color: var(--text-secondary);
+            border: 2px solid var(--border-color);
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 12px;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .todo-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .todo-item {
+            background: var(--item-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .todo-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .todo-item.selected {
+            border-color: var(--primary);
+            background: var(--confirmed-bg);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .todo-item.completed {
+            opacity: 0.6;
+            background: #e8f5e9;
+            border-color: #81c784;
+        }
+
+        .todo-item.completed .todo-name {
+            text-decoration: line-through;
+            color: #666;
+        }
+
+        .todo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .todo-name-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .checkbox-wrapper {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .task-checkbox {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            opacity: 0;
+            z-index: 2;
+            position: absolute;
+        }
+
+        .checkbox-custom {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            background: white;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .task-checkbox:checked + .checkbox-custom {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+            border-color: var(--secondary);
+            color: white;
+        }
+
+        .task-checkbox:checked + .checkbox-custom::after {
+            content: '✓';
+        }
+
+        .todo-name {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: var(--text-primary);
+            word-break: break-word;
+        }
+
+        .todo-priority {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .priority-high {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .priority-medium {
+            background: #feca57;
+            color: #333;
+        }
+
+        .priority-low {
+            background: #48dbfb;
+            color: white;
+        }
+
+        .todo-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            margin-left: 34px;
+        }
+
+        .todo-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .todo-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            margin-left: 34px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+            font-size: 0.95em;
+        }
+
+        .empty-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+            opacity: 0.5;
+        }
+
+        /* Pomodoro Styles */
+        .clock-section {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .timer-display {
+            font-size: 5em;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 20px 0;
+            line-height: 1;
+            text-shadow: none;
+        }
+
+        @media (max-width: 768px) {
+            .timer-display {
+                font-size: 3.5em;
+            }
+        }
+
+        .timer-status {
+            font-size: 1.2em;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .control-btn-large {
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+            color: white;
+        }
+
+        .btn-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-pause {
+            background: linear-gradient(135deg, #feca57 0%, #ff9f43 100%);
+            color: white;
+        }
+
+        .btn-stop {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+        }
+
+        .settings-group {
+            background: var(--item-bg);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .settings-group {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .setting-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .setting-label {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .current-task {
+            background: var(--confirmed-bg);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .current-task-label {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .current-task-name {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .current-task-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9em;
+            color: var(--text-secondary);
+        }
+
+        .progress-ring {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .progress-ring svg {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-bg {
+            fill: none;
+            stroke: var(--item-bg);
+            stroke-width: 8;
+        }
+
+        .progress-ring-fill {
+            fill: none;
+            stroke: url(#gradient);
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s linear;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: white;
+            opacity: 0.9;
+            font-size: 0.9em;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Scrollbar Styles */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--item-bg);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 35px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: scaleIn 0.3s ease;
+            border: 2px solid var(--border-color);
+            text-align: center;
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .modal-text {
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        /* Back to top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+            color: var(--text-primary);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 70px 20px 25px 20px;
+                margin-bottom: 20px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+
+            .todo-actions {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="control-panel">
+                <a href="/JLU-Toolkit/index.html" class="control-btn" title="返回首页">🏠</a>
+                <button class="control-btn" onclick="toggleDropdown('themeDropdown')" title="主题">🎨</button>
+                <div class="dropdown-menu" id="themeDropdown"></div>
+                <button class="control-btn" onclick="toggleDropdown('langDropdown')" title="语言">🌐</button>
+                <div class="dropdown-menu" id="langDropdown"></div>
+            </div>
+            <h1 id="pageTitle">🍅 番茄钟与待办事项</h1>
+            <p class="subtitle" id="pageSubtitle">高效时间管理，专注每一个任务</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Left Side: Todo List -->
+            <div class="card">
+                <div class="card-title">
+                    <span>📝</span>
+                    <span id="todoTitle">任务清单</span>
+                </div>
+                
+                <div class="todo-input-group">
+                    <input type="text" class="input-field" id="taskName" placeholder="任务名称...">
+                    <div class="input-row">
+                        <div style="position: relative;">
+                            <label id="ddlLabel" style="position: absolute; top: -10px; left: 10px; background: var(--card-bg); padding: 0 5px; font-size: 12px; color: var(--text-secondary); font-weight: 600;">截止日期 (DDL)</label>
+                            <input type="date" class="input-field" id="taskDDL" style="padding-top: 16px;">
+                        </div>
+                        <select class="input-field" id="taskPriority">
+                            <option value="high">高优先级</option>
+                            <option value="medium" selected>中优先级</option>
+                            <option value="low">低优先级</option>
+                        </select>
+                    </div>
+                    <div class="input-row">
+                        <input type="number" class="input-field" id="taskDuration" placeholder="预计时间（分钟）" min="1">
+                        <button class="btn-primary" onclick="addTask()" id="addTaskBtn">
+                            <span>➕</span>
+                            <span>添加任务</span>
+                        </button>
+                    </div>
+                </div>
+
+                <button class="btn-success" onclick="loadLocalTasks()" id="loadLocalBtn">
+                    <span>📂</span>
+                    <span>加载本地任务</span>
+                </button>
+
+                <div class="todo-list" id="todoList">
+                    <div class="empty-state">
+                        <div class="empty-icon">📋</div>
+                        <div id="emptyText">暂无任务，添加新任务或加载本地任务</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Pomodoro -->
+            <div class="card">
+                <div class="card-title">
+                    <span>🍅</span>
+                    <span id="pomodoroTitle">番茄钟</span>
+                </div>
+
+                <div class="clock-section">
+                    <div class="current-task" id="currentTaskDisplay" style="display: none;">
+                        <div class="current-task-label" id="currentLabel">当前任务</div>
+                        <div class="current-task-name" id="currentTaskName">--</div>
+                        <div class="current-task-meta">
+                            <span id="currentTaskDDL">📅 --</span>
+                            <span id="currentTaskPomodoros">🍅 --</span>
+                        </div>
+                    </div>
+                    <div class="current-task" id="noTaskDisplay">
+                        <div class="current-task-label" id="hintLabel">提示</div>
+                        <div class="current-task-name" id="hintText" style="font-size: 1.1em; font-weight: normal;">👈 点击左侧任务开始专注</div>
+                    </div>
+
+                    <div class="progress-ring">
+                        <svg width="200" height="200">
+                            <defs>
+                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:var(--primary)"/>
+                                    <stop offset="100%" style="stop-color:var(--primary-dark)"/>
+                                </linearGradient>
+                            </defs>
+                            <circle class="progress-ring-bg" cx="100" cy="100" r="90"></circle>
+                            <circle class="progress-ring-fill" cx="100" cy="100" r="90" 
+                                    stroke-dasharray="565.48" 
+                                    stroke-dashoffset="0"></circle>
+                        </svg>
+                    </div>
+
+                    <div class="timer-display" id="timerDisplay">25:00</div>
+                    <div class="timer-status" id="timerStatus">准备专注</div>
+
+                    <div class="timer-controls">
+                        <button class="control-btn-large btn-start" id="startBtn" onclick="startTimer()">
+                            <span>▶️</span>
+                            <span id="startText">开始</span>
+                        </button>
+                        <button class="control-btn-large btn-pause" id="pauseBtn" onclick="pauseTimer()" style="display: none;">
+                            <span>⏸️</span>
+                            <span id="pauseText">暂停</span>
+                        </button>
+                        <button class="control-btn-large btn-stop" onclick="stopTimer()">
+                            <span>⏹️</span>
+                            <span id="stopText">结束</span>
+                        </button>
+                    </div>
+
+                    <div class="settings-group">
+                        <div class="setting-item">
+                            <label class="setting-label" id="workDurationLabel">专注时长（分钟）</label>
+                            <input type="number" class="input-field" id="workDuration" value="25" min="1" max="60">
+                        </div>
+                        <div class="setting-item">
+                            <label class="setting-label" id="breakDurationLabel">休息时长（分钟）</label>
+                            <input type="number" class="input-field" id="breakDuration" value="5" min="1" max="30">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div>JLU Pomodoro & Todo</div>
+        </div>
+
+        <button class="back-to-top" id="backToTop" onclick="scrollToTop()" title="回到顶部">⬆️</button>
+    </div>
+
+    <!-- Complete Task Modal -->
+    <div class="modal-overlay" id="completeModal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-title" id="modalTitle">🎉 任务完成！</div>
+            <div class="modal-text" id="modalText">恭喜完成一个番茄钟！休息一下吧。</div>
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="closeModal()" id="modalConfirm">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let currentLang = 'zh-CN';
+        let currentTheme = 'default';
+        let currentTaskIndex = -1;
+        let timerInterval = null;
+        let timeLeft = 25 * 60;
+        let isRunning = false;
+        let isBreak = false;
+        let totalTime = 25 * 60;
+        let currentTasks = []; // 内存中的任务列表
+
+        // Translations
+        const translations = {
+            'zh-CN': {
+                title: '🍅 番茄钟与待办事项',
+                subtitle: '高效时间管理，专注每一个任务',
+                todoTitle: '任务清单',
+                pomodoroTitle: '番茄钟',
+                taskName: '任务名称...',
+                addTask: '添加任务',
+                emptyText: '暂无任务，添加新任务或加载本地任务',
+                currentTask: '当前任务',
+                hint: '提示',
+                hintText: '👈 点击左侧任务开始专注',
+                ddlLabel: '截止日期 (DDL)',
+                workDuration: '专注时长（分钟）',
+                breakDuration: '休息时长（分钟）',
+                start: '开始',
+                pause: '暂停',
+                stop: '结束',
+                ready: '准备专注',
+                readyBreak: '准备休息',
+                working: '专注中',
+                break: '休息中',
+                completed: '任务完成！',
+                breakMessage: '恭喜完成一个番茄钟！休息一下吧。',
+                pomodoros: '个番茄',
+                ddl: '截止日期',
+                themes: ['紫色', '红色', '蓝色', '绿色', '黄色', '黑白', '科幻'],
+                priority: {
+                    high: '高优先级',
+                    medium: '中优先级',
+                    low: '低优先级'
+                },
+                confirm: '确定',
+                complete: '完成',
+                uncomplete: '撤销',
+                delete: '删除',
+                loadLocal: '加载本地任务'
+            },
+            'zh-TW': {
+                title: '🍅 番茄鐘與待辦事項',
+                subtitle: '高效時間管理，專注每一個任務',
+                todoTitle: '任務清單',
+                pomodoroTitle: '番茄鐘',
+                taskName: '任務名稱...',
+                addTask: '添加任務',
+                emptyText: '暫無任務，添加新任務或加載本地任務',
+                currentTask: '當前任務',
+                hint: '提示',
+                hintText: '👈 點擊左側任務開始專注',
+                ddlLabel: '截止日期 (DDL)',
+                workDuration: '專注時長（分鐘）',
+                breakDuration: '休息時長（分鐘）',
+                start: '開始',
+                pause: '暫停',
+                stop: '結束',
+                ready: '準備專注',
+                readyBreak: '準備休息',
+                working: '專注中',
+                break: '休息中',
+                completed: '任務完成！',
+                breakMessage: '恭喜完成一個番茄鐘！休息一下吧。',
+                pomodoros: '個番茄',
+                ddl: '截止日期',
+                themes: ['紫色', '紅色', '藍色', '綠色', '黃色', '黑白', '科幻'],
+                priority: {
+                    high: '高優先級',
+                    medium: '中優先級',
+                    low: '低優先級'
+                },
+                confirm: '確定',
+                complete: '完成',
+                uncomplete: '撤銷',
+                delete: '刪除',
+                loadLocal: '加載本地任務'
+            },
+            'en': {
+                title: '🍅 Pomodoro & Todo',
+                subtitle: 'Efficient time management, focus on every task',
+                todoTitle: 'Task List',
+                pomodoroTitle: 'Pomodoro Timer',
+                taskName: 'Task name...',
+                addTask: 'Add Task',
+                emptyText: 'No tasks yet. Add new or load local tasks',
+                currentTask: 'Current Task',
+                hint: 'Hint',
+                hintText: '👈 Click a task on the left to focus',
+                ddlLabel: 'Due Date (DDL)',
+                workDuration: 'Focus Duration (min)',
+                breakDuration: 'Break Duration (min)',
+                start: 'Start',
+                pause: 'Pause',
+                stop: 'Stop',
+                ready: 'Ready to focus',
+                readyBreak: 'Ready for break',
+                working: 'Focusing',
+                break: 'Taking a break',
+                completed: 'Task Completed!',
+                breakMessage: 'Congratulations! Take a break.',
+                pomodoros: 'pomodoros',
+                ddl: 'Due Date',
+                themes: ['Purple', 'Red', 'Blue', 'Green', 'Yellow', 'B&W', 'Sci-Fi'],
+                priority: {
+                    high: 'High Priority',
+                    medium: 'Medium Priority',
+                    low: 'Low Priority'
+                },
+                confirm: 'OK',
+                complete: 'Done',
+                uncomplete: 'Undo',
+                delete: 'Delete',
+                loadLocal: 'Load Local Tasks'
+            }
+        };
+
+        const themes = [
+            { id: 'default', emoji: '🟣' },
+            { id: 'red', emoji: '🔴' },
+            { id: 'blue', emoji: '🔵' },
+            { id: 'green', emoji: '🟢' },
+            { id: 'yellow', emoji: '🟡' },
+            { id: 'bw', emoji: '⚫' },
+            { id: 'scifi', emoji: '🚀' }
+        ];
+
+        const languages = [
+            { code: 'zh-CN', emoji: '🇨🇳' },
+            { code: 'zh-TW', emoji: '🇭🇰' },
+            { code: 'en', emoji: '🇺🇸' }
+        ];
+
+        // Initialize
+        function init() {
+            renderDropdowns();
+            updateLanguage();
+            updateTimerDisplay();
+            initBackToTop();
+            setupWorkDurationListener();
+            
+            // Set today's date as default for DDL
+            document.getElementById('taskDDL').valueAsDate = new Date();
+        }
+
+        function setupWorkDurationListener() {
+            const workInput = document.getElementById('workDuration');
+            workInput.addEventListener('input', function() {
+                // 实时更新所有任务的番茄钟显示
+                if (currentTasks.length > 0) {
+                    const workDuration = parseInt(this.value) || 25;
+                    currentTasks.forEach(task => {
+                        if (task.duration) {
+                            task.pomodoros = Math.ceil(task.duration / workDuration);
+                        }
+                    });
+                    renderTasksList(currentTasks);
+                }
+                // 同时更新计时器显示
+                if (!isRunning && !isBreak) {
+                    timeLeft = parseInt(this.value) || 25;
+                    timeLeft *= 60;
+                    totalTime = timeLeft;
+                    updateTimerDisplay();
+                }
+            });
+        }
+
+        function loadLocalTasks() {
+            const stored = localStorage.getItem('jlu_pomodoro_tasks');
+            if (stored) {
+                currentTasks = JSON.parse(stored);
+                // 根据当前设置的番茄钟时长重新计算番茄钟数量
+                const workDuration = parseInt(document.getElementById('workDuration').value) || 25;
+                currentTasks.forEach(task => {
+                    if (task.duration) {
+                        task.pomodoros = Math.ceil(task.duration / workDuration);
+                    }
+                });
+                renderTasksList(currentTasks);
+            } else {
+                alert(currentLang === 'en' ? 'No local tasks found' : '未找到本地任务');
+            }
+        }
+
+        function saveTasksToLocal() {
+            localStorage.setItem('jlu_pomodoro_tasks', JSON.stringify(currentTasks));
+        }
+
+        function renderDropdowns() {
+            const t = translations[currentLang];
+            
+            // Theme dropdown
+            const themeDropdown = document.getElementById('themeDropdown');
+            themeDropdown.innerHTML = themes.map((theme, index) => `
+                <div class="dropdown-item ${currentTheme === theme.id ? 'active' : ''}"
+                     onclick="setTheme('${theme.id}')">
+                    ${theme.emoji} ${t.themes[index]}
+                </div>
+            `).join('');
+
+            // Language dropdown
+            const langDropdown = document.getElementById('langDropdown');
+            langDropdown.innerHTML = languages.map((lang) => `
+                <div class="dropdown-item ${currentLang === lang.code ? 'active' : ''}"
+                     onclick="setLanguage('${lang.code}')">
+                    ${lang.emoji} ${lang.code === 'zh-CN' ? '简体中文' : lang.code === 'zh-TW' ? '繁體中文' : 'English'}
+                </div>
+            `).join('');
+        }
+
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            const allDropdowns = document.querySelectorAll('.dropdown-menu');
+            allDropdowns.forEach(d => {
+                if (d.id !== id) d.classList.remove('show');
+            });
+            dropdown.classList.toggle('show');
+        }
+
+        function setTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+            currentTheme = theme;
+            renderDropdowns();
+            document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+            updateLanguage();
+            renderDropdowns();
+            renderTasksList(currentTasks);
+        }
+
+        function updateLanguage() {
+            const t = translations[currentLang];
+            document.getElementById('pageTitle').textContent = t.title;
+            document.getElementById('pageSubtitle').textContent = t.subtitle;
+            document.getElementById('todoTitle').textContent = t.todoTitle;
+            document.getElementById('pomodoroTitle').textContent = t.pomodoroTitle;
+            document.getElementById('taskName').placeholder = t.taskName;
+            document.getElementById('addTaskBtn').innerHTML = `<span>➕</span><span>${t.addTask}</span>`;
+            document.getElementById('loadLocalBtn').innerHTML = `<span>📂</span><span>${t.loadLocal}</span>`;
+            document.getElementById('emptyText').textContent = t.emptyText;
+            document.getElementById('currentLabel').textContent = t.currentTask;
+            document.getElementById('hintLabel').textContent = t.hint;
+            document.getElementById('hintText').textContent = t.hintText;
+            document.getElementById('ddlLabel').textContent = t.ddlLabel;
+            document.getElementById('workDurationLabel').textContent = t.workDuration;
+            document.getElementById('breakDurationLabel').textContent = t.breakDuration;
+            document.getElementById('startText').textContent = t.start;
+            document.getElementById('pauseText').textContent = t.pause;
+            document.getElementById('stopText').textContent = t.stop;
+            document.getElementById('modalTitle').textContent = t.completed;
+            document.getElementById('modalText').textContent = t.breakMessage;
+            document.getElementById('modalConfirm').textContent = t.confirm;
+            
+            // Update priority options
+            const prioritySelect = document.getElementById('taskPriority');
+            prioritySelect.options[0].text = t.priority.high;
+            prioritySelect.options[1].text = t.priority.medium;
+            prioritySelect.options[2].text = t.priority.low;
+            
+            // Update status display
+            updateStatusDisplay();
+        }
+
+        function getPriorityValue(priority) {
+            const values = { high: 3, medium: 2, low: 1 };
+            return values[priority] || 0;
+        }
+
+        function compareDate(a, b) {
+            // 如果其中一个没有日期，有日期的排在前面
+            if (!a && !b) return 0;
+            if (!a) return 1;
+            if (!b) return -1;
+            return new Date(a) - new Date(b);
+        }
+
+        // Todo Functions
+        function addTask() {
+            const name = document.getElementById('taskName').value.trim();
+            const ddl = document.getElementById('taskDDL').value;
+            const priority = document.getElementById('taskPriority').value;
+            const duration = parseInt(document.getElementById('taskDuration').value) || 0;
+
+            if (!name) {
+                alert(currentLang === 'en' ? 'Please enter task name' : '请输入任务名称');
+                return;
+            }
+
+            const workDuration = parseInt(document.getElementById('workDuration').value) || 25;
+            const pomodoroCount = Math.ceil(duration / workDuration);
+            
+            const newTask = {
+                id: Date.now(),
+                name,
+                ddl,
+                priority,
+                duration,
+                pomodoros: pomodoroCount,
+                completed: false
+            };
+
+            currentTasks.push(newTask);
+            saveTasksToLocal();
+            
+            // Clear inputs
+            document.getElementById('taskName').value = '';
+            document.getElementById('taskDuration').value = '';
+            
+            renderTasksList(currentTasks);
+        }
+
+        function deleteTask(id, event) {
+            event.stopPropagation();
+            currentTasks = currentTasks.filter(t => t.id !== id);
+            saveTasksToLocal();
+            
+            // 检查是否删除了当前选中的任务
+            const selectedTask = currentTasks.find((t, idx) => idx === currentTaskIndex);
+            if (!selectedTask) {
+                currentTaskIndex = -1;
+                updateCurrentTaskDisplay();
+            } else {
+                // 重新计算currentTaskIndex
+                currentTaskIndex = currentTasks.findIndex(t => t.id === selectedTask.id);
+            }
+            
+            renderTasksList(currentTasks);
+        }
+
+        function toggleTaskComplete(id, event) {
+            event.stopPropagation();
+            const task = currentTasks.find(t => t.id === id);
+            if (task) {
+                task.completed = !task.completed;
+                saveTasksToLocal();
+                renderTasksList(currentTasks);
+            }
+        }
+
+        function selectTask(id) {
+            const index = currentTasks.findIndex(t => t.id === id);
+            if (index !== -1) {
+                currentTaskIndex = index;
+                renderTasksList(currentTasks);
+                updateCurrentTaskDisplay();
+            }
+        }
+
+        function updateCurrentTaskDisplay() {
+            const task = currentTasks[currentTaskIndex];
+            const t = translations[currentLang];
+            
+            if (task) {
+                document.getElementById('currentTaskDisplay').style.display = 'block';
+                document.getElementById('noTaskDisplay').style.display = 'none';
+                document.getElementById('currentTaskName').textContent = task.name;
+                document.getElementById('currentTaskDDL').textContent = `📅 ${task.ddl || '--'}`;
+                document.getElementById('currentTaskPomodoros').textContent = `🍅 ${task.pomodoros} ${t.pomodoros}`;
+            } else {
+                document.getElementById('currentTaskDisplay').style.display = 'none';
+                document.getElementById('noTaskDisplay').style.display = 'block';
+            }
+        }
+
+        function renderTasksList(tasks) {
+            const list = document.getElementById('todoList');
+            const t = translations[currentLang];
+            
+            if (tasks.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📋</div>
+                        <div>${t.emptyText}</div>
+                    </div>
+                `;
+                return;
+            }
+
+            // 排序：先按优先级（高->低），相同优先级按DDL（近->远）
+            const sortedTasks = [...tasks].sort((a, b) => {
+                const priorityDiff = getPriorityValue(b.priority) - getPriorityValue(a.priority);
+                if (priorityDiff !== 0) return priorityDiff;
+                return compareDate(a.ddl, b.ddl);
+            });
+
+            list.innerHTML = sortedTasks.map((task) => {
+                const priorityClass = `priority-${task.priority}`;
+                const priorityText = t.priority[task.priority];
+                const isSelected = task.id === (currentTasks[currentTaskIndex]?.id);
+                
+                return `
+                    <div class="todo-item ${isSelected ? 'selected' : ''} ${task.completed ? 'completed' : ''}" 
+                         onclick="selectTask(${task.id})">
+                        <div class="todo-header">
+                            <div class="todo-name-wrapper">
+                                <div class="checkbox-wrapper" onclick="event.stopPropagation()">
+                                    <input type="checkbox" class="task-checkbox" 
+                                           ${task.completed ? 'checked' : ''} 
+                                           onchange="toggleTaskComplete(${task.id}, event)"
+                                           title="${task.completed ? t.uncomplete : t.complete}">
+                                    <div class="checkbox-custom"></div>
+                                </div>
+                                <div class="todo-name">${task.name}</div>
+                            </div>
+                            <span class="todo-priority ${priorityClass}">${priorityText}</span>
+                        </div>
+                        <div class="todo-meta">
+                            <div class="todo-meta-item">📅 ${task.ddl || '--'}</div>
+                            <div class="todo-meta-item">⏱️ ${task.duration || 0}min</div>
+                            <div class="todo-meta-item">🍅 ${task.pomodoros || 0} ${t.pomodoros}</div>
+                        </div>
+                        <div class="todo-actions">
+                            <button class="btn-danger" onclick="deleteTask(${task.id}, event)">
+                                ${t.delete}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Pomodoro Functions
+        function updateStatusDisplay() {
+            const t = translations[currentLang];
+            const statusEl = document.getElementById('timerStatus');
+            
+            if (isRunning) {
+                statusEl.textContent = isBreak ? t.break : t.working;
+            } else {
+                statusEl.textContent = isBreak ? t.readyBreak : t.ready;
+            }
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timerDisplay').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Update progress ring
+            const circumference = 2 * Math.PI * 90;
+            const progress = isBreak ? 
+                (1 - timeLeft / (parseInt(document.getElementById('breakDuration').value || 5) * 60)) :
+                (1 - timeLeft / totalTime);
+            const offset = circumference * progress;
+            document.querySelector('.progress-ring-fill').style.strokeDashoffset = offset;
+        }
+
+        function startTimer() {
+            if (isRunning) return;
+            
+            if (!isBreak && timeLeft === totalTime) {
+                // Starting new work session
+                totalTime = parseInt(document.getElementById('workDuration').value || 25) * 60;
+                timeLeft = totalTime;
+            } else if (isBreak && timeLeft === parseInt(document.getElementById('breakDuration').value || 5) * 60) {
+                // Starting new break
+            }
+            
+            isRunning = true;
+            document.getElementById('startBtn').style.display = 'none';
+            document.getElementById('pauseBtn').style.display = 'flex';
+            updateStatusDisplay();
+            
+            timerInterval = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateTimerDisplay();
+                } else {
+                    completeTimer();
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            if (!isRunning) return;
+            isRunning = false;
+            clearInterval(timerInterval);
+            document.getElementById('startBtn').style.display = 'flex';
+            document.getElementById('pauseBtn').style.display = 'none';
+            updateStatusDisplay();
+        }
+
+        function stopTimer() {
+            isRunning = false;
+            clearInterval(timerInterval);
+            isBreak = false;
+            timeLeft = parseInt(document.getElementById('workDuration').value || 25) * 60;
+            totalTime = timeLeft;
+            updateTimerDisplay();
+            document.getElementById('startBtn').style.display = 'flex';
+            document.getElementById('pauseBtn').style.display = 'none';
+            updateStatusDisplay();
+        }
+
+        function completeTimer() {
+            pauseTimer();
+            
+            if (!isBreak) {
+                // Work session completed
+                document.getElementById('completeModal').classList.add('show');
+                // Switch to break
+                isBreak = true;
+                timeLeft = parseInt(document.getElementById('breakDuration').value || 5) * 60;
+            } else {
+                // Break completed
+                isBreak = false;
+                timeLeft = parseInt(document.getElementById('workDuration').value || 25) * 60;
+                totalTime = timeLeft;
+            }
+            updateTimerDisplay();
+            updateStatusDisplay();
+        }
+
+        function closeModal(event) {
+            if (!event || event.target.id === 'completeModal') {
+                document.getElementById('completeModal').classList.remove('show');
+            }
+        }
+
+        // Back to top
+        function initBackToTop() {
+            const backToTopBtn = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.matches('.control-btn')) {
+                document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+            }
+        });
+
+        // Initialize on load
+        window.onload = init;
+    </script>
+</body>
+</html>
