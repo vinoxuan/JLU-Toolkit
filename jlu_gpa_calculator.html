@@ -1,0 +1,2064 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GPA Calculator</title>
+<style>
+:root {
+--primary: #667eea;
+--primary-dark: #764ba2;
+--secondary: #11998e;
+--secondary-dark: #38ef7d;
+--danger: #ff6b6b;
+--bg-gradient-start: #667eea;
+--bg-gradient-end: #764ba2;
+--card-bg: rgba(255, 255, 255, 0.95);
+--text-primary: #333;
+--text-secondary: #666;
+--border-color: #e0e0e0;
+--input-bg: #fff;
+--item-bg: #f8f9fa;
+--item-hover: #f0f4ff;
+--confirmed-bg: #f0f4ff;
+--number-bg: rgba(102, 126, 234, 0.1);
+--number-color: #667eea;
+--shadow: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="red"] {
+--primary: #ff6b6b;
+--primary-dark: #ee5a6f;
+--bg-gradient-start: #ff6b6b;
+--bg-gradient-end: #ee5a6f;
+--secondary: #ff8f8f;
+--secondary-dark: #ffb4b4;
+--number-bg: rgba(255, 107, 107, 0.1);
+--number-color: #ff6b6b;
+--confirmed-bg: #fff0f0;
+--item-hover: #ffe6e6;
+}
+
+[data-theme="blue"] {
+--primary: #4facfe;
+--primary-dark: #00f2fe;
+--bg-gradient-start: #4facfe;
+--bg-gradient-end: #00f2fe;
+--secondary: #00c9ff;
+--secondary-dark: #92fe9d;
+--number-bg: rgba(79, 172, 254, 0.1);
+--number-color: #4facfe;
+--confirmed-bg: #e6f4ff;
+--item-hover: #dbeafe;
+}
+
+[data-theme="green"] {
+--primary: #11998e;
+--primary-dark: #38ef7d;
+--bg-gradient-start: #11998e;
+--bg-gradient-end: #38ef7d;
+--secondary: #0ba360;
+--secondary-dark: #3cba92;
+--number-bg: rgba(17, 153, 142, 0.1);
+--number-color: #11998e;
+--confirmed-bg: #e6fff3;
+--item-hover: #d1fae5;
+}
+
+[data-theme="yellow"] {
+--primary: #f093fb;
+--primary-dark: #f5576c;
+--bg-gradient-start: #fa709a;
+--bg-gradient-end: #fee140;
+--number-bg: rgba(250, 112, 154, 0.1);
+--number-color: #fa709a;
+--confirmed-bg: #fff9e6;
+--item-hover: #fef3c7;
+}
+
+[data-theme="bw"] {
+--primary: #2c3e50;
+--primary-dark: #34495e;
+--bg-gradient-start: #2c3e50;
+--bg-gradient-end: #4a5568;
+--secondary: #5a6c7d;
+--secondary-dark: #7f8c8d;
+--card-bg: rgba(255, 255, 255, 0.98);
+--number-bg: rgba(44, 62, 80, 0.1);
+--number-color: #2c3e50;
+--confirmed-bg: #ecf0f1;
+--item-hover: #dde4e6;
+--shadow: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="scifi"] {
+--primary: #00d2ff;
+--primary-dark: #3a7bd5;
+--bg-gradient-start: #00d2ff;
+--bg-gradient-end: #3a7bd5;
+--secondary: #00ff87;
+--secondary-dark: #60efff;
+--card-bg: rgba(10, 20, 40, 0.95);
+--text-primary: #e0f7ff;
+--text-secondary: #90caf9;
+--border-color: #00d2ff;
+--input-bg: rgba(0, 210, 255, 0.1);
+--item-bg: rgba(0, 210, 255, 0.05);
+--item-hover: rgba(0, 210, 255, 0.15);
+--confirmed-bg: rgba(0, 255, 135, 0.1);
+--number-bg: rgba(0, 210, 255, 0.2);
+--number-color: #00d2ff;
+--shadow: rgba(0, 210, 255, 0.3);
+}
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+min-height: 100vh;
+padding: 20px;
+display: flex;
+justify-content: center;
+align-items: flex-start;
+color: var(--text-primary);
+}
+
+.container {
+width: 100%;
+max-width: 1000px;
+background: var(--card-bg);
+backdrop-filter: blur(10px);
+border-radius: 24px;
+box-shadow: 0 20px 60px var(--shadow);
+padding: 60px 40px 40px 40px;
+margin-top: 20px;
+animation: slideIn 0.5s ease;
+position: relative;
+}
+
+.control-panel {
+position: absolute;
+top: 15px;
+left: 15px;
+display: flex;
+flex-direction: row;
+gap: 10px;
+align-items: center;
+z-index: 100;
+}
+
+.control-btn {
+border: none;
+background: rgba(255, 255, 255, 0.2);
+backdrop-filter: blur(10px);
+border-radius: 50%;
+width: 36px;
+height: 36px;
+cursor: pointer;
+font-size: 16px;
+transition: all 0.3s ease;
+display: flex;
+align-items: center;
+justify-content: center;
+box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+position: relative;
+}
+
+.control-btn:hover {
+transform: scale(1.1);
+background: rgba(255, 255, 255, 0.4);
+}
+
+.dropdown-menu {
+display: none;
+position: absolute;
+top: 45px;
+left: 0;
+background: white;
+border-radius: 12px;
+padding: 8px;
+box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+min-width: 140px;
+z-index: 101;
+}
+
+.dropdown-menu.show {
+display: block;
+}
+
+.dropdown-item {
+padding: 8px 12px;
+border-radius: 6px;
+cursor: pointer;
+font-size: 13px;
+transition: all 0.2s;
+color: #333;
+display: flex;
+align-items: center;
+gap: 8px;
+white-space: nowrap;
+}
+
+.dropdown-item:hover {
+background: #f0f0f0;
+}
+
+.dropdown-item.active {
+background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+color: white;
+}
+
+@keyframes slideIn {
+from { opacity: 0; transform: translateY(-30px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+from { opacity: 0; transform: scale(0.9); }
+to { opacity: 1; transform: scale(1); }
+}
+
+h1 {
+text-align: center;
+color: var(--text-primary);
+margin-bottom: 10px;
+font-size: 2.2em;
+background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+
+.subtitle {
+text-align: center;
+color: var(--text-secondary);
+margin-bottom: 30px;
+font-size: 0.95em;
+}
+
+.course-list {
+margin-bottom: 20px;
+}
+
+.course-item {
+display: grid;
+grid-template-columns: 50px 2fr 1fr 1fr 1fr 50px;
+gap: 12px;
+margin-bottom: 15px;
+padding: 16px;
+background: var(--item-bg);
+border-radius: 16px;
+border: 2px solid transparent;
+transition: all 0.3s ease;
+align-items: center;
+animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+from { opacity: 0; transform: translateX(-20px); }
+to { opacity: 1; transform: translateX(0); }
+}
+
+.course-item:hover {
+border-color: var(--primary);
+transform: translateX(5px);
+box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.course-item.confirmed {
+background: var(--confirmed-bg);
+border-color: var(--primary);
+}
+
+.course-number {
+font-weight: 700;
+color: var(--number-color);
+font-size: 1.2em;
+text-align: center;
+background: var(--number-bg);
+border-radius: 50%;
+width: 36px;
+height: 36px;
+min-width: 36px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.input-group {
+display: flex;
+flex-direction: column;
+gap: 5px;
+}
+
+label {
+font-size: 0.85em;
+color: var(--text-secondary);
+font-weight: 600;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+input[type="text"],
+input[type="number"] {
+padding: 10px 12px;
+border: 2px solid var(--border-color);
+border-radius: 10px;
+font-size: 15px;
+transition: all 0.3s ease;
+outline: none;
+font-family: inherit;
+width: 100%;
+background: var(--input-bg);
+color: var(--text-primary);
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+border-color: var(--primary);
+box-shadow: 0 0 0 3px var(--number-bg);
+}
+
+input.no-spinner::-webkit-outer-spin-button,
+input.no-spinner::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+
+input.no-spinner {
+-moz-appearance: textfield;
+}
+
+.action-btn {
+background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+color: white;
+border: none;
+padding: 10px;
+border-radius: 10px;
+cursor: pointer;
+font-weight: 700;
+font-size: 0.95em;
+transition: all 0.3s ease;
+height: 42px;
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.action-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.action-btn.confirmed {
+cursor: default;
+transform: none;
+box-shadow: none;
+}
+
+.action-btn.high { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+.action-btn.mid { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.action-btn.low { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); }
+
+.delete-btn {
+background: var(--danger);
+color: white;
+border: none;
+width: 36px;
+height: 36px;
+min-width: 36px;
+border-radius: 10px;
+cursor: pointer;
+font-size: 18px;
+transition: all 0.2s ease;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.delete-btn:hover {
+background: #ff5252;
+transform: scale(1.08);
+box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+}
+
+.button-group {
+display: flex;
+gap: 15px;
+margin-top: 30px;
+flex-wrap: wrap;
+}
+
+.main-btn {
+flex: 1;
+min-width: 150px;
+padding: 16px 28px;
+border: none;
+border-radius: 12px;
+font-size: 16px;
+font-weight: 700;
+cursor: pointer;
+transition: all 0.3s ease;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+font-family: inherit;
+}
+
+.add-btn {
+background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+color: white;
+box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.add-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.calc-btn {
+background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+color: white;
+box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.calc-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.result-section {
+margin-top: 40px;
+padding: 30px;
+background: linear-gradient(135deg, var(--item-bg) 0%, var(--confirmed-bg) 100%);
+border-radius: 20px;
+text-align: center;
+display: none;
+animation: scaleIn 0.4s ease;
+border: 2px solid var(--border-color);
+}
+
+.result-section.show { display: block; }
+
+.result-title {
+font-size: 1.2em;
+color: var(--text-secondary);
+margin-bottom: 15px;
+font-weight: 600;
+}
+
+.gpa-value {
+font-size: 4em;
+font-weight: 800;
+background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin: 10px 0;
+line-height: 1.2;
+}
+
+.result-details {
+display: flex;
+justify-content: center;
+gap: 40px;
+margin-top: 20px;
+flex-wrap: wrap;
+}
+
+.detail-item {
+background: var(--card-bg);
+padding: 15px 25px;
+border-radius: 12px;
+box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.detail-label {
+font-size: 0.9em;
+color: var(--text-secondary);
+margin-bottom: 5px;
+}
+
+.detail-value {
+font-size: 1.4em;
+font-weight: 700;
+color: var(--text-primary);
+}
+
+.empty-state {
+text-align: center;
+padding: 40px;
+color: var(--text-secondary);
+font-style: italic;
+background: var(--item-bg);
+border-radius: 16px;
+border: 2px dashed var(--border-color);
+}
+
+.grade-scale-container {
+margin-top: 30px;
+background: var(--item-bg);
+border-radius: 16px;
+border: 1px solid var(--border-color);
+overflow: hidden;
+}
+
+.grade-scale-header {
+background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+color: white;
+padding: 16px 20px;
+cursor: pointer;
+display: flex;
+justify-content: space-between;
+align-items: center;
+font-weight: 600;
+font-size: 1.1em;
+transition: all 0.3s ease;
+}
+
+.grade-scale-header:hover {
+opacity: 0.95;
+}
+
+.grade-scale-icon {
+transition: transform 0.3s ease;
+font-size: 1.2em;
+}
+
+.grade-scale-container.expanded .grade-scale-icon {
+transform: rotate(180deg);
+}
+
+.grade-scale-content {
+max-height: 0;
+overflow: hidden;
+transition: max-height 0.4s ease;
+padding: 0 20px;
+}
+
+.grade-scale-container.expanded .grade-scale-content {
+max-height: 600px;
+overflow-y: auto;
+padding: 20px;
+}
+
+.scale-cards-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+gap: 10px;
+}
+
+.scale-card {
+background: var(--input-bg);
+border: 2px solid var(--border-color);
+border-radius: 10px;
+padding: 12px 8px;
+text-align: center;
+transition: all 0.2s ease;
+}
+
+.scale-card:hover {
+border-color: var(--primary);
+transform: translateY(-2px);
+box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.scale-card-range {
+font-size: 0.85em;
+color: var(--text-secondary);
+margin-bottom: 4px;
+font-weight: 600;
+}
+
+.scale-card-value {
+font-size: 1.3em;
+font-weight: 700;
+color: var(--primary);
+}
+
+@media (max-width: 768px) {
+body { padding: 10px; }
+.container { padding: 60px 20px 20px 20px; border-radius: 16px; }
+.control-panel { top: 10px; left: 10px; gap: 8px; }
+.control-btn { width: 32px; height: 32px; font-size: 14px; }
+.dropdown-menu { min-width: 130px; font-size: 12px; }
+.course-item {
+grid-template-columns: 40px 1fr 40px;
+grid-template-rows: auto auto auto auto;
+gap: 12px;
+padding: 20px;
+}
+.course-number { grid-column: 1; grid-row: 1; width: 32px; height: 32px; font-size: 1em; align-self: center; }
+.delete-btn { grid-column: 3; grid-row: 1; width: 32px; height: 32px; align-self: center; justify-self: end; }
+.course-item .input-group:nth-of-type(1) { grid-column: 2; grid-row: 1; }
+.course-item .input-group:nth-of-type(2) { grid-column: 1 / 4; grid-row: 2; }
+.course-item .input-group:nth-of-type(3) { grid-column: 1 / 4; grid-row: 3; }
+.action-btn { grid-column: 1 / 4; grid-row: 4; height: 45px; font-size: 1em; }
+h1 { font-size: 1.8em; }
+.gpa-value { font-size: 3em; }
+.scale-cards-grid {
+grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+gap: 8px;
+}
+.scale-card { padding: 10px 6px; }
+.scale-card-range { font-size: 0.8em; }
+.scale-card-value { font-size: 1.1em; }
+}
+
+.error-shake { animation: shake 0.5s; border-color: var(--danger) !important; }
+
+@keyframes shake {
+0%, 100% { transform: translateX(0); }
+25% { transform: translateX(-10px); }
+75% { transform: translateX(10px); }
+}
+
+.chart-section {
+margin-top: 40px;
+padding: 30px;
+background: var(--card-bg);
+border-radius: 20px;
+box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+display: none;
+animation: scaleIn 0.5s ease;
+position: relative;
+}
+
+.chart-section.show { display: block; }
+
+.chart-title {
+text-align: center;
+font-size: 1.3em;
+color: var(--text-primary);
+margin-bottom: 20px;
+font-weight: 700;
+}
+
+.chart-wrapper {
+position: relative;
+width: 100%;
+max-width: 600px;
+margin: 0 auto;
+height: 400px;
+cursor: pointer;
+}
+
+#contributionChart { width: 100%; height: 100%; }
+
+.chart-tooltip {
+position: absolute;
+background: rgba(0, 0, 0, 0.9);
+color: white;
+padding: 12px 16px;
+border-radius: 8px;
+font-size: 13px;
+pointer-events: none;
+opacity: 0;
+transition: opacity 0.3s;
+z-index: 10;
+max-width: 200px;
+box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.chart-tooltip.show { opacity: 1; }
+
+.legend {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+gap: 12px;
+margin-top: 20px;
+padding-top: 20px;
+border-top: 1px solid var(--border-color);
+}
+
+.legend-item {
+display: flex;
+align-items: center;
+gap: 6px;
+font-size: 0.85em;
+color: var(--text-secondary);
+background: var(--item-bg);
+padding: 4px 10px;
+border-radius: 6px;
+}
+
+.legend-color {
+width: 12px;
+height: 12px;
+border-radius: 3px;
+}
+
+.toast {
+position: fixed;
+bottom: 30px;
+left: 50%;
+transform: translateX(-50%) translateY(100px);
+background: rgba(0, 0, 0, 0.9);
+color: white;
+padding: 16px 32px;
+border-radius: 50px;
+font-weight: 600;
+box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+opacity: 0;
+transition: all 0.3s ease;
+z-index: 1000;
+}
+
+.toast.show {
+opacity: 1;
+transform: translateX(-50%) translateY(0);
+}
+
+/* Modal Styles */
+.modal-overlay {
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.6);
+backdrop-filter: blur(5px);
+z-index: 1000;
+justify-content: center;
+align-items: center;
+animation: fadeIn 0.3s ease;
+}
+
+.modal-overlay.show {
+display: flex;
+}
+
+.modal-content {
+background: var(--card-bg);
+border-radius: 20px;
+padding: 30px;
+width: 90%;
+max-width: 600px;
+max-height: 80vh;
+overflow-y: auto;
+box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+animation: scaleIn 0.3s ease;
+border: 2px solid var(--border-color);
+}
+
+.modal-header {
+font-size: 1.5em;
+font-weight: 700;
+color: var(--text-primary);
+margin-bottom: 10px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.modal-subtitle {
+color: var(--text-secondary);
+font-size: 0.9em;
+margin-bottom: 20px;
+}
+
+.scale-row {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr auto;
+gap: 10px;
+margin-bottom: 12px;
+align-items: center;
+animation: slideIn 0.3s ease;
+}
+
+.scale-row input {
+padding: 10px;
+border: 2px solid var(--border-color);
+border-radius: 8px;
+font-size: 14px;
+background: var(--input-bg);
+color: var(--text-primary);
+width: 100%;
+}
+
+.scale-row input:focus {
+border-color: var(--primary);
+outline: none;
+box-shadow: 0 0 0 3px var(--number-bg);
+}
+
+.remove-row-btn {
+background: var(--danger);
+color: white;
+border: none;
+width: 32px;
+height: 32px;
+border-radius: 8px;
+cursor: pointer;
+font-size: 18px;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.2s;
+}
+
+.remove-row-btn:hover {
+transform: scale(1.1);
+background: #ff5252;
+}
+
+.add-row-btn {
+background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+color: white;
+border: none;
+padding: 12px 20px;
+border-radius: 10px;
+cursor: pointer;
+font-weight: 600;
+font-size: 14px;
+margin: 15px 0;
+width: 100%;
+transition: all 0.3s;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+}
+
+.add-row-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.modal-actions {
+display: flex;
+gap: 12px;
+margin-top: 20px;
+}
+
+.modal-btn {
+flex: 1;
+padding: 14px 24px;
+border: none;
+border-radius: 10px;
+font-weight: 700;
+font-size: 15px;
+cursor: pointer;
+transition: all 0.3s;
+}
+
+.modal-btn-primary {
+background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+color: white;
+}
+
+.modal-btn-primary:hover {
+transform: translateY(-2px);
+box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.modal-btn-secondary {
+background: var(--item-bg);
+color: var(--text-secondary);
+border: 2px solid var(--border-color);
+}
+
+.modal-btn-secondary:hover {
+background: var(--border-color);
+}
+
+@media (max-width: 768px) {
+.modal-content { padding: 20px; width: 95%; }
+.scale-row { grid-template-columns: 1fr 1fr 1fr auto; gap: 6px; }
+.scale-row input { padding: 8px; font-size: 13px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="control-panel">
+<!-- 新增：返回首页按钮（位于最左侧） -->
+<button class="control-btn" onclick="window.location.href='/JLU-Toolkit/index.html'" title="返回首页">🏠</button>
+
+<!-- 原有的主题、语言、模式按钮整体右移 -->
+<button class="control-btn" id="themeBtn" onclick="toggleDropdown('themeDropdown')" title="Theme">🎨</button>
+<div class="dropdown-menu" id="themeDropdown"></div>
+<button class="control-btn" id="langBtn" onclick="toggleDropdown('langDropdown')" title="Language">🌐</button>
+<div class="dropdown-menu" id="langDropdown"></div>
+<button class="control-btn" id="modeBtn" onclick="toggleDropdown('modeDropdown')" title="GPA Mode">📊</button>
+<div class="dropdown-menu" id="modeDropdown"></div>
+</div>
+
+<h1 id="title">🦢 综合平均绩点计算器</h1>
+<p class="subtitle" id="subtitle">输入课程信息，确认后计算加权平均绩点 GPA</p>
+<div id="courseList" class="course-list">
+<div class="empty-state" id="emptyState">
+<span id="emptyText">暂无课程，点击下方"新增课程"按钮添加</span>
+</div>
+</div>
+<div class="button-group">
+<button class="main-btn add-btn" onclick="addCourse()">
+<span id="addBtnText">╋ 新增课程</span>
+</button>
+<button class="main-btn calc-btn" onclick="calculateGPA()">
+<span id="calcBtnText">🚀 开始计算</span>
+</button>
+</div>
+<div id="resultSection" class="result-section">
+<div class="result-title" id="resultTitle">加权平均绩点</div>
+<div class="gpa-value" id="gpaValue">0.00000</div>
+<div class="result-details">
+<div class="detail-item">
+<div class="detail-label" id="totalCoursesLabel">总课程数</div>
+<div class="detail-value" id="totalCourses">0</div>
+</div>
+<div class="detail-item">
+<div class="detail-label" id="totalCreditsLabel">总学分</div>
+<div class="detail-value" id="totalCredits">0</div>
+</div>
+</div>
+</div>
+<div id="chartSection" class="chart-section">
+<div class="chart-title" id="chartTitle">📊 各课程对总绩点的贡献比例</div>
+<div class="chart-wrapper" id="chartWrapper">
+<canvas id="contributionChart"></canvas>
+<div class="chart-tooltip" id="chartTooltip"></div>
+</div>
+<div class="legend" id="chartLegend"></div>
+</div>
+<div class="grade-scale-container" id="gradeScaleContainer">
+<div class="grade-scale-header" onclick="toggleGradeScale()">
+<span id="scaleHeaderText">📋 绩点对照表</span>
+<span class="grade-scale-icon">▼</span>
+</div>
+<div class="grade-scale-content" id="gradeScaleContent">
+<div class="scale-cards-grid" id="scaleCardsGrid"></div>
+</div>
+</div>
+</div>
+<div class="modal-overlay" id="customScaleModal">
+<div class="modal-content">
+<div class="modal-header" id="modalTitle">⚙️ 自定义绩点换算规则</div>
+<div class="modal-subtitle" id="modalSubtitle">请添加分数段与绩点的对应关系（分数范围不要重叠）</div>
+<div id="scaleRowsContainer"></div>
+<button class="add-row-btn" onclick="addScaleRow()">
+<span>╋</span> <span id="addRowText">添加规则</span>
+</button>
+<div class="modal-actions">
+<button class="modal-btn modal-btn-secondary" onclick="closeCustomScaleModal()" id="cancelBtn">取消</button>
+<button class="modal-btn modal-btn-primary" onclick="saveCustomScale()" id="confirmBtn">确认并使用</button>
+</div>
+</div>
+</div>
+<div id="toast" class="toast"></div>
+<script>
+let courseCount = 0;
+let currentTheme = 'default';
+let currentLang = 'zh-CN';
+let currentMode = 'jida';
+let courseChartData = [];
+let customScaleData = [];
+let previousMode = null;
+const colors = [
+'#667eea', '#f093fb', '#f5576c', '#11998e', '#38ef7d',
+'#fa709a', '#fee140', '#30cfd0', '#ff9a9e', '#fecfef',
+'#a8edea', '#fed6e3', '#d299c2', '#fef9d7', '#4481eb'
+];
+const themes = [
+{ id: 'default', emoji: '🟣' },
+{ id: 'red', emoji: '🔴' },
+{ id: 'blue', emoji: '🔵' },
+{ id: 'green', emoji: '🟢' },
+{ id: 'yellow', emoji: '🟡' },
+{ id: 'bw', emoji: '⚫' },
+{ id: 'scifi', emoji: '🚀' }
+];
+const languages = [
+{ code: 'zh-CN', emoji: '🇨🇳', name: '简体中文' },
+{ code: 'zh-TW', emoji: '🇭🇰', name: '繁體中文' },
+{ code: 'en', emoji: '🇺🇸', name: 'English' },
+{ code: 'ja', emoji: '🇯🇵', name: '日本語' },
+{ code: 'ko', emoji: '🇰🇷', name: '한국어' },
+{ code: 'de', emoji: '🇩🇪', name: 'Deutsch' }
+];
+const modes = [
+{ id: 'jida', emoji: '🏫' },
+{ id: 'cuc', emoji: '📡' },
+{ id: 'custom', emoji: '⚙️' }
+];
+const cucData = [
+{score: 60, gp: 1.00}, {score: 60.5, gp: 1.07}, {score: 61, gp: 1.15}, {score: 61.5, gp: 1.22},
+{score: 62, gp: 1.29}, {score: 62.5, gp: 1.36}, {score: 63, gp: 1.43}, {score: 63.5, gp: 1.50},
+{score: 64, gp: 1.57}, {score: 64.5, gp: 1.64}, {score: 65, gp: 1.70}, {score: 65.5, gp: 1.77},
+{score: 66, gp: 1.83}, {score: 66.5, gp: 1.90}, {score: 67, gp: 1.96}, {score: 67.5, gp: 2.02},
+{score: 68, gp: 2.08}, {score: 68.5, gp: 2.14}, {score: 69, gp: 2.20}, {score: 69.5, gp: 2.26},
+{score: 70, gp: 2.31}, {score: 70.5, gp: 2.37}, {score: 71, gp: 2.42}, {score: 71.5, gp: 2.48},
+{score: 72, gp: 2.53}, {score: 72.5, gp: 2.58}, {score: 73, gp: 2.63}, {score: 73.5, gp: 2.68},
+{score: 74, gp: 2.73}, {score: 74.5, gp: 2.78}, {score: 75, gp: 2.83}, {score: 75.5, gp: 2.87},
+{score: 76, gp: 2.92}, {score: 76.5, gp: 2.96}, {score: 77, gp: 3.01}, {score: 77.5, gp: 3.05},
+{score: 78, gp: 3.09}, {score: 78.5, gp: 3.13}, {score: 79, gp: 3.17}, {score: 79.5, gp: 3.21},
+{score: 80, gp: 3.25}, {score: 80.5, gp: 3.29}, {score: 81, gp: 3.32}, {score: 81.5, gp: 3.36},
+{score: 82, gp: 3.39}, {score: 82.5, gp: 3.43}, {score: 83, gp: 3.46}, {score: 83.5, gp: 3.49},
+{score: 84, gp: 3.52}, {score: 84.5, gp: 3.55}, {score: 85, gp: 3.58}, {score: 85.5, gp: 3.61},
+{score: 86, gp: 3.63}, {score: 86.5, gp: 3.66}, {score: 87, gp: 3.68}, {score: 87.5, gp: 3.71},
+{score: 88, gp: 3.73}, {score: 88.5, gp: 3.75}, {score: 89, gp: 3.77}, {score: 89.5, gp: 3.79},
+{score: 90, gp: 3.81}, {score: 90.5, gp: 3.83}, {score: 91, gp: 3.85}, {score: 91.5, gp: 3.86},
+{score: 92, gp: 3.88}, {score: 92.5, gp: 3.89}, {score: 93, gp: 3.91}, {score: 93.5, gp: 3.92},
+{score: 94, gp: 3.93}, {score: 94.5, gp: 3.94}, {score: 95, gp: 3.95}, {score: 95.5, gp: 3.96},
+{score: 96, gp: 3.97}, {score: 96.5, gp: 3.98}, {score: 97, gp: 3.98}, {score: 97.5, gp: 3.99},
+{score: 98, gp: 3.99}, {score: 98.5, gp: 4.00}, {score: 99, gp: 4.00}, {score: 99.5, gp: 4.00},
+{score: 100, gp: 4.00}
+];
+const translations = {
+'zh-CN': {
+title: '🦢 综合平均绩点计算器',
+subtitle: '输入课程信息，确认后计算加权平均绩点 GPA',
+empty: '暂无课程，点击下方"新增课程"按钮添加',
+courseName: '课程名称',
+courseNamePlaceholder: '例如：高等数学',
+score: '成绩',
+credit: '学分',
+confirm: '确认',
+delete: '删除课程',
+addCourse: '╋ 新增课程',
+calc: '🚀 开始计算',
+resultTitle: '加权平均绩点',
+totalCourses: '总课程数',
+totalCredits: '总学分',
+chartTitle: '📊 各课程对总绩点的贡献比例',
+scaleTitle: '绩点对照表',
+scaleRange: '成绩区间',
+below60: '60以下',
+themes: ['紫色', '红色', '蓝色', '绿色', '黄色', '黑白', '科幻'],
+modes: ['吉大模式', '中传模式', '自定义模式'],
+modeNames: { jida: '吉大模式', cuc: '中传模式', custom: '自定义模式' },
+scaleClickToExpand: '点击查看详细对照表',
+controls: {
+theme: '主题',
+language: '语言',
+mode: '绩点模式'
+},
+modal: {
+title: '⚙️ 自定义绩点换算规则',
+subtitle: '请添加分数段与绩点的对应关系（分数范围不要重叠）',
+minScore: '最低分',
+maxScore: '最高分',
+gradePoint: '绩点',
+addRow: '添加规则',
+cancel: '取消',
+confirm: '确认并使用',
+validationError: '请填写完整的分数段和绩点信息',
+overlapError: '分数段不能重叠，请检查输入',
+rangeError: '最高分必须大于最低分',
+duplicateError: '存在重复或冲突的分数范围'
+},
+toast: {
+noCourse: '请至少添加一门课程！',
+confirmAll: '请确认所有课程信息！',
+invalidScore: '请输入有效的成绩（0-100）',
+invalidCredit: '请输入有效的学分',
+noName: '请输入课程名称',
+zeroCredit: '总学分不能为0！',
+confirmed: '课程已确认',
+modeSwitch: '已切换至',
+excellent: '🎉 太棒了！成绩非常优秀！',
+good: '👍 成绩不错，继续保持！',
+average: '💪 成绩良好，还有提升空间！',
+improve: '📚 再接再厉，继续加油！',
+customScaleSet: '✅ 已应用自定义换算规则'
+},
+chart: {
+contribution: '贡献比例',
+weighted: '学分×绩点',
+name: '课程',
+gp: '绩点',
+credits: '学分'
+}
+},
+'zh-TW': {
+title: '🦢 綜合平均績點計算器',
+subtitle: '輸入課程資訊，確認後計算加權平均績點 GPA',
+empty: '暫無課程，點擊下方"新增課程"按鈕添加',
+courseName: '課程名稱',
+courseNamePlaceholder: '例如：高等數學',
+score: '成績',
+credit: '學分',
+confirm: '確認',
+delete: '刪除課程',
+addCourse: '╋ 新增課程',
+calc: '🚀 開始計算',
+resultTitle: '加權平均績點',
+totalCourses: '總課程數',
+totalCredits: '總學分',
+chartTitle: '📊 各課程對總績點的貢獻比例',
+scaleTitle: '績點對照表',
+scaleRange: '成績區間',
+below60: '60以下',
+themes: ['紫色', '紅色', '藍色', '綠色', '黃色', '黑白', '科幻'],
+modes: ['吉大模式', '中傳模式', '自定義模式'],
+modeNames: { jida: '吉大模式', cuc: '中傳模式', custom: '自定義模式' },
+scaleClickToExpand: '點擊查看詳細對照表',
+controls: {
+theme: '主題',
+language: '語言',
+mode: '績點模式'
+},
+modal: {
+title: '⚙️ 自定義績點換算規則',
+subtitle: '請添加分數段與績點的對應關係（分數範圍不要重疊）',
+minScore: '最低分',
+maxScore: '最高分',
+gradePoint: '績點',
+addRow: '添加規則',
+cancel: '取消',
+confirm: '確認並使用',
+validationError: '請填寫完整的分數段和績點資訊',
+overlapError: '分數段不能重疊，請檢查輸入',
+rangeError: '最高分必須大於最低分',
+duplicateError: '存在重複或衝突的分數範圍'
+},
+toast: {
+noCourse: '請至少添加一門課程！',
+confirmAll: '請確認所有課程資訊！',
+invalidScore: '請輸入有效的成績（0-100）',
+invalidCredit: '請輸入有效的學分',
+noName: '請輸入課程名稱',
+zeroCredit: '總學分不能為0！',
+confirmed: '課程已確認',
+modeSwitch: '已切換至',
+excellent: '🎉 太棒了！成績非常優秀！',
+good: '👍 成績不錯，繼續保持！',
+average: '💪 成績良好，還有提升空間！',
+improve: '📚 再接再厲，繼續加油！',
+customScaleSet: '✅ 已應用自定義換算規則'
+},
+chart: {
+contribution: '貢獻比例',
+weighted: '學分×績點',
+name: '課程',
+gp: '績點',
+credits: '學分'
+}
+},
+'en': {
+title: '🦢 GPA Calculator',
+subtitle: 'Enter course info to calculate weighted GPA',
+empty: 'No courses yet. Click "Add Course" to start',
+courseName: 'Course Name',
+courseNamePlaceholder: 'e.g. Calculus',
+score: 'Score',
+credit: 'Credits',
+confirm: 'Confirm',
+delete: 'Delete',
+addCourse: '╋ Add Course',
+calc: '🚀 Calculate',
+resultTitle: 'Weighted GPA',
+totalCourses: 'Total Courses',
+totalCredits: 'Total Credits',
+chartTitle: '📊 Contribution by Course',
+scaleTitle: 'Grade Scale',
+scaleRange: 'Score Range',
+below60: '<60',
+themes: ['Purple', 'Red', 'Blue', 'Green', 'Yellow', 'B&W', 'Sci-Fi'],
+modes: ['Jilin Univ.', 'CUC Mode', 'Custom Mode'],
+modeNames: { jida: 'Jilin University', cuc: 'CUC Mode', custom: 'Custom Mode' },
+scaleClickToExpand: 'Click to view detailed scale',
+controls: {
+theme: 'Theme',
+language: 'Language',
+mode: 'GPA Mode'
+},
+modal: {
+title: '⚙️ Custom GPA Scale',
+subtitle: 'Add score ranges and corresponding GPA values (ranges should not overlap)',
+minScore: 'Min Score',
+maxScore: 'Max Score',
+gradePoint: 'GPA',
+addRow: 'Add Rule',
+cancel: 'Cancel',
+confirm: 'Apply & Use',
+validationError: 'Please fill in all score ranges and GPA values',
+overlapError: 'Score ranges cannot overlap, please check your input',
+rangeError: 'Max score must be greater than min score',
+duplicateError: 'Duplicate or conflicting score ranges exist'
+},
+toast: {
+noCourse: 'Please add at least one course!',
+confirmAll: 'Please confirm all courses!',
+invalidScore: 'Please enter valid score (0-100)',
+invalidCredit: 'Please enter valid credits',
+noName: 'Please enter course name',
+zeroCredit: 'Total credits cannot be 0!',
+confirmed: 'Course confirmed',
+modeSwitch: 'Switched to',
+excellent: '🎉 Excellent work! Outstanding GPA!',
+good: '👍 Great job! Keep it up!',
+average: '💪 Good progress! Room for improvement!',
+improve: '📚 Keep working hard!',
+customScaleSet: '✅ Custom scale applied successfully'
+},
+chart: {
+contribution: 'Contribution',
+weighted: 'Credits×GPA',
+name: 'Course',
+gp: 'GPA',
+credits: 'Credits'
+}
+},
+'ja': {
+title: '🦢 GPA計算機',
+subtitle: '成績を入力して加重平均GPAを計算',
+empty: 'コースなし。「コース追加」ボタンをクリック',
+courseName: '科目名',
+courseNamePlaceholder: '例：微積分学',
+score: '成績',
+credit: '単位',
+confirm: '確認',
+delete: '削除',
+addCourse: '╋ コース追加',
+calc: '🚀 計算開始',
+resultTitle: '加重平均GPA',
+totalCourses: '総コース数',
+totalCredits: '総単位数',
+chartTitle: '📊 科目別貢献度',
+scaleTitle: '評価基準',
+scaleRange: '成績範囲',
+below60: '60未満',
+themes: ['紫', '赤', '青', '緑', '黄', '白黒', 'SF'],
+modes: ['吉林大モード', '中伝モード', 'カスタムモード'],
+modeNames: { jida: '吉林大モード', cuc: '中伝モード', custom: 'カスタムモード' },
+scaleClickToExpand: 'クリックして詳細を表示',
+controls: {
+theme: 'テーマ',
+language: '言語',
+mode: '成績方式'
+},
+modal: {
+title: '⚙️ カスタムGPA換算ルール',
+subtitle: 'スコア範囲とGPA値の対応関係を追加（範囲が重複しないように）',
+minScore: '最低得点',
+maxScore: '最高得点',
+gradePoint: 'GPA',
+addRow: 'ルール追加',
+cancel: 'キャンセル',
+confirm: '適用して使用',
+validationError: 'すべてのスコア範囲とGPA値を入力してください',
+overlapError: 'スコア範囲が重複しています。確認してください',
+rangeError: '最高得点は最低得点より大きくなければなりません',
+duplicateError: '重複または競合するスコア範囲が存在します'
+},
+toast: {
+noCourse: '少なくとも1つのコースを追加してください！',
+confirmAll: 'すべてのコースを確認してください！',
+invalidScore: '有効な成績を入力してください（0-100）',
+invalidCredit: '有効な単位数を入力してください',
+noName: '科目名を入力してください',
+zeroCredit: '総単位数は0にできません！',
+confirmed: 'コースが確認されました',
+modeSwitch: '切り替え完了:',
+excellent: '🎉 素晴らしい！非常に優秀な成績です！',
+good: '👍 良い成績です！この調子で！',
+average: '💪 良い進歩です！まだ伸びしろがあります！',
+improve: '📚 頑張り続けましょう！',
+customScaleSet: '✅ カスタム換算ルールを適用しました'
+},
+chart: {
+contribution: '貢献度',
+weighted: '単位×GPA',
+name: '科目',
+gp: 'GPA',
+credits: '単位'
+}
+},
+'ko': {
+title: '🦢 종합 평균 학점 계산기',
+subtitle: '강의 정보를 입력하여 가중 평균 GPA 계산',
+empty: '강의 없음. "강의 추가" 버튼 클릭',
+courseName: '강의명',
+courseNamePlaceholder: '예: 미적분학',
+score: '성적',
+credit: '학점',
+confirm: '확인',
+delete: '삭제',
+addCourse: '╋ 강의 추가',
+calc: '🚀 계산하기',
+resultTitle: '가중 평균 GPA',
+totalCourses: '총 강의 수',
+totalCredits: '총 학점',
+chartTitle: '📊 강의별 기여도',
+scaleTitle: '학점 기준표',
+scaleRange: '성적 구간',
+below60: '60미만',
+themes: ['보라', '빨강', '파랑', '초록', '노랑', '흑백', 'SF'],
+modes: ['길림대 모드', '중전 모드', '사용자 정의'],
+modeNames: { jida: '길림대 모드', cuc: '중전 모드', custom: '사용자 정의' },
+scaleClickToExpand: '클릭하여 상세 보기',
+controls: {
+theme: '테마',
+language: '언어',
+mode: '학점모드'
+},
+modal: {
+title: '⚙️ 사용자 정의 학점 환산 규칙',
+subtitle: '점수 범위와 학점 값을 추가하세요 (범위가 중복되지 않도록)',
+minScore: '최저 점수',
+maxScore: '최고 점수',
+gradePoint: '학점',
+addRow: '규칙 추가',
+cancel: '취소',
+confirm: '적용 및 사용',
+validationError: '모든 점수 범위와 학점 값을 입력하세요',
+overlapError: '점수 범위가 중복됩니다. 확인해주세요',
+rangeError: '최고 점수는 최저 점수보다 커야 합니다',
+duplicateError: '중복되거나 충돌하는 점수 범위가 존재합니다'
+},
+toast: {
+noCourse: '최소 하나의 강의를 추가하세요!',
+confirmAll: '모든 강의를 확인하세요!',
+invalidScore: '유효한 성적을 입력하세요 (0-100)',
+invalidCredit: '유효한 학점을 입력하세요',
+noName: '강의명을 입력하세요',
+zeroCredit: '총 학점은 0이 될 수 없습니다!',
+confirmed: '강의가 확인되었습니다',
+modeSwitch: '변경 완료:',
+excellent: '🎉 훌륭합니다! 매우 우수한 성적입니다!',
+good: '👍 잘했습니다! 계속 유지하세요!',
+average: '💪 좋은 성적입니다! 발전의 여지가 있습니다!',
+improve: '📚 계속 노력하세요!',
+customScaleSet: '✅ 사용자 정의 환산 규칙이 적용되었습니다'
+},
+chart: {
+contribution: '기여도',
+weighted: '학점×학점',
+name: '강의',
+gp: '학점',
+credits: '학점'
+}
+},
+'de': {
+title: '🦢 GPA Rechner',
+subtitle: 'Kursdaten eingeben, gewichteten GPA berechnen',
+empty: 'Keine Kurse. "Kurs hinzufügen" klicken',
+courseName: 'Kursname',
+courseNamePlaceholder: 'z.B. Analysis',
+score: 'Note',
+credit: 'Credits',
+confirm: 'Bestätigen',
+delete: 'Löschen',
+addCourse: '╋ Kurs hinzufügen',
+calc: '🚀 Berechnen',
+resultTitle: 'Gewichteter GPA',
+totalCourses: 'Kurse insgesamt',
+totalCredits: 'Credits insgesamt',
+chartTitle: '📊 Beitrag nach Kurs',
+scaleTitle: 'Notenskala',
+scaleRange: 'Notenbereich',
+below60: '<60',
+themes: ['Lila', 'Rot', 'Blau', 'Grün', 'Gelb', 'S&W', 'Sci-Fi'],
+modes: ['Jilin Uni.', 'CUC Modus', 'Benutzerdefiniert'],
+modeNames: { jida: 'Jilin Universität', cuc: 'CUC Modus', custom: 'Benutzerdefiniert' },
+scaleClickToExpand: 'Klicken für Details',
+controls: {
+theme: 'Thema',
+language: 'Sprache',
+mode: 'Notensystem'
+},
+modal: {
+title: '⚙️ Benutzerdefinierte Notenregeln',
+subtitle: 'Punktbereiche und entsprechende GPA-Werte hinzufügen (Bereiche dürfen sich nicht überschneiden)',
+minScore: 'Min. Punkte',
+maxScore: 'Max. Punkte',
+gradePoint: 'GPA',
+addRow: 'Regel hinzufügen',
+cancel: 'Abbrechen',
+confirm: 'Anwenden & Verwenden',
+validationError: 'Bitte alle Punktbereiche und GPA-Werte ausfüllen',
+overlapError: 'Punktbereiche dürfen sich nicht überschneiden',
+rangeError: 'Max. Punkte müssen größer als Min. Punkte sein',
+duplicateError: 'Doppelte oder konfliktierende Bereiche vorhanden'
+},
+toast: {
+noCourse: 'Bitte mindestens einen Kurs hinzufügen!',
+confirmAll: 'Bitte alle Kurse bestätigen!',
+invalidScore: 'Bitte gültige Note eingeben (0-100)',
+invalidCredit: 'Bitte gültige Credits eingeben',
+noName: 'Bitte Kursnamen eingeben',
+zeroCredit: 'Gesamtcredits dürfen nicht 0 sein!',
+confirmed: 'Kurs bestätigt',
+modeSwitch: 'Gewechselt zu:',
+excellent: '🎉 Hervorragend! Ausgezeichneter GPA!',
+good: '👍 Sehr gut! Weiter so!',
+average: '💪 Gut gemacht! Noch Raum zur Verbesserung!',
+improve: '📚 Weiterhin viel Erfolg!',
+customScaleSet: '✅ Benutzerdefinierte Regeln angewendet'
+},
+chart: {
+contribution: 'Beitrag',
+weighted: 'Credits×GPA',
+name: 'Kurs',
+gp: 'GPA',
+credits: 'Credits'
+}
+}
+};
+function calculateGradePoint(score) {
+if (currentMode === 'jida') {
+if (score >= 90) return 4.0;
+if (score >= 87) return 3.7;
+if (score >= 84) return 3.3;
+if (score >= 80) return 3.0;
+if (score >= 77) return 2.7;
+if (score >= 74) return 2.3;
+if (score >= 70) return 2.0;
+if (score >= 67) return 1.7;
+if (score >= 64) return 1.3;
+if (score >= 60) return 1.0;
+return 0.0;
+} else if (currentMode === 'custom') {
+if (customScaleData.length === 0) return 0.0;
+const sortedRules = [...customScaleData].sort((a, b) => b.min - a.min);
+for (let rule of sortedRules) {
+if (score >= rule.min && score <= rule.max) {
+return rule.gp;
+}
+}
+return 0.0;
+} else {
+if (score < 60) return 0.0;
+if (score >= 100) return 4.0;
+const index = cucData.findIndex(item => item.score >= score);
+if (index === -1) return 4.0;
+return cucData[index].gp;
+}
+}
+function renderGradeScaleCards() {
+const grid = document.getElementById('scaleCardsGrid');
+const t = translations[currentLang];
+grid.innerHTML = '';
+if (currentMode === 'jida') {
+const ranges = [
+{ range: '90-100', gp: '4.0' },
+{ range: '87-89', gp: '3.7' },
+{ range: '84-86', gp: '3.3' },
+{ range: '80-83', gp: '3.0' },
+{ range: '77-79', gp: '2.7' },
+{ range: '74-76', gp: '2.3' },
+{ range: '70-73', gp: '2.0' },
+{ range: '67-69', gp: '1.7' },
+{ range: '64-66', gp: '1.3' },
+{ range: '60-63', gp: '1.0' },
+{ range: t.below60, gp: '0.0' }
+];
+ranges.forEach(item => {
+const card = document.createElement('div');
+card.className = 'scale-card';
+card.innerHTML = `
+<div class="scale-card-range">${item.range}</div>
+<div class="scale-card-value">${item.gp}</div>
+`;
+grid.appendChild(card);
+});
+} else if (currentMode === 'custom') {
+if (customScaleData.length === 0) {
+grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-secondary); padding: 20px;">${t.modal.subtitle}</div>`;
+} else {
+const sortedRules = [...customScaleData].sort((a, b) => a.min - b.min);
+sortedRules.forEach(item => {
+const card = document.createElement('div');
+card.className = 'scale-card';
+card.innerHTML = `
+<div class="scale-card-range">${item.min}-${item.max}</div>
+<div class="scale-card-value">${item.gp.toFixed(1)}</div>
+`;
+grid.appendChild(card);
+});
+const minScore = Math.min(...customScaleData.map(r => r.min));
+if (minScore > 0) {
+const card = document.createElement('div');
+card.className = 'scale-card';
+card.style.opacity = '0.7';
+card.innerHTML = `
+<div class="scale-card-range">${t.below60 || '<' + minScore}</div>
+<div class="scale-card-value">0.0</div>
+`;
+grid.appendChild(card);
+}
+}
+} else {
+cucData.forEach(item => {
+const card = document.createElement('div');
+card.className = 'scale-card';
+card.innerHTML = `
+<div class="scale-card-range">${item.score}</div>
+<div class="scale-card-value">${item.gp.toFixed(2)}</div>
+`;
+grid.appendChild(card);
+});
+}
+}
+function toggleGradeScale() {
+const container = document.getElementById('gradeScaleContainer');
+container.classList.toggle('expanded');
+}
+function openCustomScaleModal() {
+const modal = document.getElementById('customScaleModal');
+const t = translations[currentLang];
+document.getElementById('modalTitle').textContent = t.modal.title;
+document.getElementById('modalSubtitle').textContent = t.modal.subtitle;
+document.getElementById('addRowText').textContent = t.modal.addRow;
+document.getElementById('cancelBtn').textContent = t.modal.cancel;
+document.getElementById('confirmBtn').textContent = t.modal.confirm;
+const container = document.getElementById('scaleRowsContainer');
+container.innerHTML = '';
+if (customScaleData.length > 0) {
+customScaleData.forEach((rule) => {
+addScaleRow(rule.min, rule.max, rule.gp);
+});
+} else {
+addScaleRow();
+addScaleRow();
+addScaleRow();
+}
+modal.classList.add('show');
+}
+function closeCustomScaleModal() {
+document.getElementById('customScaleModal').classList.remove('show');
+const t = translations[currentLang];
+if (customScaleData.length === 0 && previousMode && previousMode !== 'custom') {
+currentMode = previousMode;
+renderDropdowns();
+document.getElementById('scaleHeaderText').textContent = `📋 ${t.scaleTitle} (${t.modeNames[currentMode]})`;
+showToast(`${t.toast.modeSwitch} ${t.modeNames[currentMode]}`);
+}
+}
+function addScaleRow(min = '', max = '', gp = '') {
+const container = document.getElementById('scaleRowsContainer');
+const t = translations[currentLang];
+const rowId = 'scale-row-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+const row = document.createElement('div');
+row.className = 'scale-row';
+row.id = rowId;
+row.innerHTML = `
+<input type="number" placeholder="${t.modal.minScore}" min="0" max="100" value="${min}" class="min-input">
+<input type="number" placeholder="${t.modal.maxScore}" min="0" max="100" value="${max}" class="max-input">
+<input type="number" placeholder="${t.modal.gradePoint}" min="0" max="5" step="0.1" value="${gp}" class="gp-input">
+<button class="remove-row-btn" onclick="removeScaleRow('${rowId}')" title="Delete">×</button>
+`;
+container.appendChild(row);
+}
+function removeScaleRow(rowId) {
+const row = document.getElementById(rowId);
+if (row) {
+row.style.animation = 'fadeIn 0.3s ease reverse';
+setTimeout(() => row.remove(), 300);
+}
+}
+function saveCustomScale() {
+const rows = document.querySelectorAll('.scale-row');
+const t = translations[currentLang];
+const newRules = [];
+for (let row of rows) {
+const min = parseFloat(row.querySelector('.min-input').value);
+const max = parseFloat(row.querySelector('.max-input').value);
+const gp = parseFloat(row.querySelector('.gp-input').value);
+if (isNaN(min) && isNaN(max) && isNaN(gp)) continue;
+if (isNaN(min) || isNaN(max) || isNaN(gp)) {
+showToast(t.modal.validationError);
+return;
+}
+if (min >= max) {
+showToast(t.modal.rangeError);
+row.querySelector('.min-input').classList.add('error-shake');
+setTimeout(() => row.querySelector('.min-input').classList.remove('error-shake'), 500);
+return;
+}
+if (min < 0 || max > 100 || min > 100 || max < 0) {
+showToast(t.toast.invalidScore);
+return;
+}
+newRules.push({ min, max, gp });
+}
+for (let i = 0; i < newRules.length; i++) {
+for (let j = i + 1; j < newRules.length; j++) {
+const a = newRules[i];
+const b = newRules[j];
+if ((a.min <= b.max && a.max >= b.min) || (b.min <= a.max && b.max >= a.min)) {
+showToast(t.modal.overlapError);
+return;
+}
+}
+}
+customScaleData = newRules.sort((a, b) => a.min - b.min);
+previousMode = null;
+closeCustomScaleModal();
+applyModeSettings('custom');
+renderGradeScaleCards();
+document.getElementById('scaleHeaderText').textContent = `📋 ${t.scaleTitle} (${t.modeNames.custom})`;
+document.getElementById('gradeScaleContainer').classList.remove('expanded');
+const courses = document.querySelectorAll('.course-item');
+courses.forEach(course => {
+if (course.dataset.confirmed === 'true') {
+const id = course.id.split('-')[1];
+const score = parseFloat(document.getElementById(`score-${id}`).value);
+const newGP = calculateGradePoint(score);
+course.dataset.gp = newGP;
+const weighted = newGP * parseFloat(course.dataset.credit);
+course.dataset.weighted = weighted.toFixed(2);
+const actionBtn = document.getElementById(`action-${id}`);
+actionBtn.textContent = newGP.toFixed(1);
+actionBtn.classList.remove('high', 'mid', 'low');
+if (newGP >= 3.0) actionBtn.classList.add('high');
+else if (newGP >= 2.0) actionBtn.classList.add('mid');
+else actionBtn.classList.add('low');
+}
+});
+showToast(t.toast.customScaleSet);
+if (document.getElementById('resultSection').classList.contains('show')) {
+calculateGPA();
+}
+}
+function applyModeSettings(mode) {
+const t = translations[currentLang];
+renderGradeScaleCards();
+document.getElementById('scaleHeaderText').textContent = `📋 ${t.scaleTitle} (${t.modeNames[mode]})`;
+document.getElementById('gradeScaleContainer').classList.remove('expanded');
+const courses = document.querySelectorAll('.course-item');
+courses.forEach(course => {
+if (course.dataset.confirmed === 'true') {
+const id = course.id.split('-')[1];
+const score = parseFloat(document.getElementById(`score-${id}`).value);
+const newGP = calculateGradePoint(score);
+course.dataset.gp = newGP;
+const weighted = newGP * parseFloat(course.dataset.credit);
+course.dataset.weighted = weighted.toFixed(2);
+const actionBtn = document.getElementById(`action-${id}`);
+actionBtn.textContent = newGP.toFixed(1);
+actionBtn.classList.remove('high', 'mid', 'low');
+if (newGP >= 3.0) actionBtn.classList.add('high');
+else if (newGP >= 2.0) actionBtn.classList.add('mid');
+else actionBtn.classList.add('low');
+}
+});
+if (document.getElementById('resultSection').classList.contains('show')) {
+calculateGPA();
+}
+showToast(`${t.toast.modeSwitch} ${t.modeNames[mode]}`);
+}
+function renderDropdowns() {
+const t = translations[currentLang];
+const themeDropdown = document.getElementById('themeDropdown');
+themeDropdown.innerHTML = themes.map((theme, index) => `
+<div class="dropdown-item ${currentTheme === theme.id ? 'active' : ''}" onclick="setTheme('${theme.id}', this)">
+${theme.emoji} ${t.themes[index]}
+</div>
+`).join('');
+const langDropdown = document.getElementById('langDropdown');
+langDropdown.innerHTML = languages.map(lang => `
+<div class="dropdown-item ${currentLang === lang.code ? 'active' : ''}" onclick="setLanguage('${lang.code}', this)">
+${lang.emoji} ${lang.name}
+</div>
+`).join('');
+const modeDropdown = document.getElementById('modeDropdown');
+modeDropdown.innerHTML = modes.map((mode, index) => `
+<div class="dropdown-item ${currentMode === mode.id ? 'active' : ''}" onclick="handleModeSelect('${mode.id}')">
+${mode.emoji} ${t.modes[index]}
+</div>
+`).join('');
+}
+function handleModeSelect(mode) {
+if (mode === 'custom') {
+if (currentMode !== 'custom') {
+previousMode = currentMode;
+}
+currentMode = 'custom';
+renderDropdowns();
+document.getElementById('modeDropdown').classList.remove('show');
+openCustomScaleModal();
+} else {
+currentMode = mode;
+renderDropdowns();
+document.getElementById('modeDropdown').classList.remove('show');
+applyModeSettings(mode);
+}
+}
+function toggleDropdown(id) {
+const dropdown = document.getElementById(id);
+const allDropdowns = document.querySelectorAll('.dropdown-menu');
+allDropdowns.forEach(d => {
+if (d.id !== id) d.classList.remove('show');
+});
+dropdown.classList.toggle('show');
+}
+function setTheme(theme, element) {
+document.body.setAttribute('data-theme', theme);
+currentTheme = theme;
+renderDropdowns();
+document.getElementById('themeDropdown').classList.remove('show');
+}
+function setLanguage(lang, element) {
+currentLang = lang;
+renderDropdowns();
+document.getElementById('langDropdown').classList.remove('show');
+updateLanguage();
+}
+function updateLanguage() {
+const t = translations[currentLang];
+document.getElementById('title').textContent = t.title;
+document.getElementById('subtitle').textContent = t.subtitle;
+document.getElementById('emptyText').textContent = t.empty;
+document.getElementById('addBtnText').textContent = t.addCourse;
+document.getElementById('calcBtnText').textContent = t.calc;
+document.getElementById('resultTitle').textContent = t.resultTitle;
+document.getElementById('totalCoursesLabel').textContent = t.totalCourses;
+document.getElementById('totalCreditsLabel').textContent = t.totalCredits;
+document.getElementById('chartTitle').textContent = t.chartTitle;
+document.getElementById('themeBtn').title = t.controls.theme;
+document.getElementById('langBtn').title = t.controls.language;
+document.getElementById('modeBtn').title = t.controls.mode;
+document.getElementById('scaleHeaderText').textContent = `📋 ${t.scaleTitle} (${t.modeNames[currentMode]})`;
+renderGradeScaleCards();
+document.querySelectorAll('.course-item').forEach(course => {
+const id = course.id.split('-')[1];
+const nameInput = document.getElementById(`name-${id}`);
+const scoreInput = document.getElementById(`score-${id}`);
+const creditInput = document.getElementById(`credit-${id}`);
+if (nameInput) {
+nameInput.previousElementSibling.textContent = t.courseName;
+if (!course.dataset.confirmed) {
+nameInput.placeholder = t.courseNamePlaceholder;
+}
+}
+if (scoreInput) scoreInput.previousElementSibling.textContent = t.score;
+if (creditInput) creditInput.previousElementSibling.textContent = t.credit;
+const actionBtn = document.getElementById(`action-${id}`);
+if (actionBtn && !actionBtn.classList.contains('confirmed')) {
+actionBtn.textContent = t.confirm;
+}
+});
+}
+document.addEventListener('click', function(e) {
+if (!e.target.matches('.control-btn')) {
+document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+}
+});
+function showToast(message) {
+const toast = document.getElementById('toast');
+toast.textContent = message;
+toast.classList.add('show');
+setTimeout(() => toast.classList.remove('show'), 3000);
+}
+function addCourse() {
+courseCount++;
+const list = document.getElementById('courseList');
+const emptyState = document.getElementById('emptyState');
+const t = translations[currentLang];
+if (emptyState) emptyState.style.display = 'none';
+const courseDiv = document.createElement('div');
+courseDiv.className = 'course-item';
+courseDiv.id = `course-${courseCount}`;
+courseDiv.innerHTML = `
+<div class="course-number">${courseCount}</div>
+<div class="input-group">
+<label>${t.courseName}</label>
+<input type="text" id="name-${courseCount}" placeholder="${t.courseNamePlaceholder}" required>
+</div>
+<div class="input-group">
+<label>${t.score}</label>
+<input type="number" id="score-${courseCount}" min="0" max="100" placeholder="0-100" class="no-spinner" onwheel="return false;" required>
+</div>
+<div class="input-group">
+<label>${t.credit}</label>
+<input type="number" id="credit-${courseCount}" min="0" step="0.5" placeholder="3.0" onwheel="return false;" required>
+</div>
+<button class="action-btn" id="action-${courseCount}" onclick="confirmCourse(${courseCount})">${t.confirm}</button>
+<button class="delete-btn" onclick="deleteCourse(${courseCount})" title="${t.delete}">×</button>
+`;
+list.appendChild(courseDiv);
+setTimeout(() => document.getElementById(`name-${courseCount}`).focus(), 100);
+}
+function confirmCourse(id) {
+const nameInput = document.getElementById(`name-${id}`);
+const scoreInput = document.getElementById(`score-${id}`);
+const creditInput = document.getElementById(`credit-${id}`);
+const actionBtn = document.getElementById(`action-${id}`);
+const courseDiv = document.getElementById(`course-${id}`);
+const t = translations[currentLang];
+const name = nameInput.value.trim();
+const score = parseFloat(scoreInput.value);
+const credit = parseFloat(creditInput.value);
+if (!name) {
+nameInput.classList.add('error-shake');
+setTimeout(() => nameInput.classList.remove('error-shake'), 500);
+showToast(t.toast.noName);
+return;
+}
+if (isNaN(score) || score < 0 || score > 100) {
+scoreInput.classList.add('error-shake');
+setTimeout(() => scoreInput.classList.remove('error-shake'), 500);
+showToast(t.toast.invalidScore);
+return;
+}
+if (isNaN(credit) || credit < 0) {
+creditInput.classList.add('error-shake');
+setTimeout(() => creditInput.classList.remove('error-shake'), 500);
+showToast(t.toast.invalidCredit);
+return;
+}
+const gp = calculateGradePoint(score);
+actionBtn.textContent = gp.toFixed(1);
+actionBtn.classList.add('confirmed');
+actionBtn.disabled = true;
+actionBtn.onclick = null;
+actionBtn.classList.remove('high', 'mid', 'low');
+if (gp >= 3.0) actionBtn.classList.add('high');
+else if (gp >= 2.0) actionBtn.classList.add('mid');
+else actionBtn.classList.add('low');
+nameInput.readOnly = true;
+scoreInput.readOnly = true;
+creditInput.readOnly = true;
+courseDiv.classList.add('confirmed');
+courseDiv.dataset.confirmed = 'true';
+courseDiv.dataset.name = name;
+courseDiv.dataset.gp = gp;
+courseDiv.dataset.credit = credit;
+courseDiv.dataset.weighted = (gp * credit).toFixed(2);
+showToast(t.toast.confirmed);
+}
+function deleteCourse(id) {
+const course = document.getElementById(`course-${id}`);
+course.style.animation = 'fadeIn 0.3s ease reverse';
+setTimeout(() => {
+course.remove();
+renumberCourses();
+checkEmptyState();
+}, 300);
+}
+function renumberCourses() {
+const courses = document.querySelectorAll('.course-item');
+courses.forEach((course, index) => {
+course.querySelector('.course-number').textContent = index + 1;
+courseCount = index + 1;
+});
+}
+function checkEmptyState() {
+const items = document.querySelectorAll('.course-item');
+const emptyState = document.getElementById('emptyState');
+if (items.length === 0 && emptyState) {
+emptyState.style.display = 'block';
+document.getElementById('resultSection').classList.remove('show');
+document.getElementById('chartSection').classList.remove('show');
+courseCount = 0;
+}
+}
+function drawChart(courseData, totalWeighted) {
+const canvas = document.getElementById('contributionChart');
+const ctx = canvas.getContext('2d');
+const dpr = window.devicePixelRatio || 1;
+const rect = canvas.getBoundingClientRect();
+canvas.width = rect.width * dpr;
+canvas.height = rect.height * dpr;
+ctx.scale(dpr, dpr);
+const width = rect.width, height = rect.height;
+const centerX = width / 2, centerY = height / 2;
+const radius = Math.min(width, height) / 2 - 40;
+const innerRadius = radius * 0.5;
+ctx.clearRect(0, 0, width, height);
+let currentAngle = -Math.PI / 2;
+const t = translations[currentLang];
+courseChartData = [];
+courseData.forEach((course, index) => {
+const contribution = course.weighted / totalWeighted;
+const sliceAngle = contribution * 2 * Math.PI;
+const endAngle = currentAngle + sliceAngle;
+const color = colors[index % colors.length];
+courseChartData.push({
+startAngle: currentAngle,
+endAngle: endAngle,
+course: course,
+contribution: contribution,
+color: color
+});
+ctx.beginPath();
+ctx.arc(centerX, centerY, radius, currentAngle, endAngle);
+ctx.arc(centerX, centerY, innerRadius, endAngle, currentAngle, true);
+ctx.closePath();
+ctx.fillStyle = color;
+ctx.fill();
+ctx.strokeStyle = '#fff';
+ctx.lineWidth = 2;
+ctx.stroke();
+if (contribution > 0.03) {
+const midAngle = currentAngle + sliceAngle / 2;
+const textRadius = innerRadius + (radius - innerRadius) / 2;
+const textX = centerX + Math.cos(midAngle) * textRadius;
+const textY = centerY + Math.sin(midAngle) * textRadius;
+ctx.fillStyle = '#fff';
+ctx.font = 'bold 11px sans-serif';
+ctx.textAlign = 'center';
+ctx.textBaseline = 'middle';
+const shortName = course.name.length > 4 ? course.name.substring(0, 4) + '..' : course.name;
+ctx.fillText(shortName, textX, textY - 6);
+ctx.font = '10px sans-serif';
+ctx.fillText((contribution * 100).toFixed(1) + '%', textX, textY + 6);
+}
+currentAngle = endAngle;
+});
+ctx.beginPath();
+ctx.arc(centerX, centerY, innerRadius - 5, 0, 2 * Math.PI);
+ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--card-bg').trim();
+ctx.fill();
+ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--text-primary').trim();
+ctx.font = 'bold 14px sans-serif';
+ctx.textAlign = 'center';
+ctx.textBaseline = 'middle';
+ctx.fillText(t.chart.contribution, centerX, centerY - 10);
+ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--text-secondary').trim();
+ctx.font = '11px sans-serif';
+ctx.fillText(t.chart.weighted, centerX, centerY + 10);
+const legendDiv = document.getElementById('chartLegend');
+legendDiv.innerHTML = '';
+courseData.forEach((course, index) => {
+const contribution = (course.weighted / totalWeighted * 100).toFixed(1);
+const item = document.createElement('div');
+item.className = 'legend-item';
+item.innerHTML = `<div class="legend-color" style="background: ${colors[index % colors.length]}"></div><span>${course.name} (${contribution}%)</span>`;
+legendDiv.appendChild(item);
+});
+}
+function handleChartClick(e) {
+const canvas = document.getElementById('contributionChart');
+const rect = canvas.getBoundingClientRect();
+const x = e.clientX - rect.left;
+const y = e.clientY - rect.top;
+const centerX = rect.width / 2;
+const centerY = rect.height / 2;
+const radius = Math.min(centerX, centerY) - 40;
+const innerRadius = radius * 0.5;
+const dx = x - centerX;
+const dy = y - centerY;
+const distance = Math.sqrt(dx * dx + dy * dy);
+if (distance < innerRadius || distance > radius) {
+document.getElementById('chartTooltip').classList.remove('show');
+return;
+}
+let angle = Math.atan2(dy, dx);
+angle += Math.PI / 2;
+if (angle < 0) angle += 2 * Math.PI;
+const clickedSlice = courseChartData.find(slice => {
+let start = slice.startAngle + Math.PI / 2;
+let end = slice.endAngle + Math.PI / 2;
+if (start < 0) start += 2 * Math.PI;
+if (end < 0) end += 2 * Math.PI;
+if (start > end) return angle >= start || angle <= end;
+return angle >= start && angle <= end;
+});
+if (clickedSlice) {
+const tooltip = document.getElementById('chartTooltip');
+const t = translations[currentLang];
+tooltip.innerHTML = `
+<strong style="color: ${clickedSlice.color}">${clickedSlice.course.name}</strong>
+<div>${t.chart.gp}: ${clickedSlice.course.gp.toFixed(1)}</div>
+<div>${t.chart.credits}: ${clickedSlice.course.credit}</div>
+<div>${t.chart.weighted}: ${clickedSlice.course.weighted.toFixed(2)}</div>
+<div>${(clickedSlice.contribution * 100).toFixed(1)}%</div>
+`;
+let tooltipX = x + 10;
+let tooltipY = y - 10;
+if (tooltipX + 150 > rect.width) tooltipX = x - 160;
+if (tooltipY + 100 > rect.height) tooltipY = y - 100;
+tooltip.style.left = tooltipX + 'px';
+tooltip.style.top = tooltipY + 'px';
+tooltip.classList.add('show');
+setTimeout(() => tooltip.classList.remove('show'), 3000);
+}
+}
+document.getElementById('chartWrapper').addEventListener('click', handleChartClick);
+function calculateGPA() {
+const courses = document.querySelectorAll('.course-item');
+const t = translations[currentLang];
+if (courses.length === 0) {
+showToast(t.toast.noCourse);
+return;
+}
+let courseData = [];
+let hasUnconfirmed = false;
+courses.forEach(course => {
+if (course.dataset.confirmed !== 'true') {
+hasUnconfirmed = true;
+course.classList.add('error-shake');
+setTimeout(() => course.classList.remove('error-shake'), 500);
+} else {
+courseData.push({
+name: course.dataset.name,
+gp: parseFloat(course.dataset.gp),
+credit: parseFloat(course.dataset.credit),
+weighted: parseFloat(course.dataset.weighted)
+});
+}
+});
+if (hasUnconfirmed) {
+showToast(t.toast.confirmAll);
+return;
+}
+let totalWeighted = 0, totalCredits = 0;
+courseData.forEach(c => {
+totalWeighted += c.weighted;
+totalCredits += c.credit;
+});
+if (totalCredits === 0) {
+showToast(t.toast.zeroCredit);
+return;
+}
+const gpa = totalWeighted / totalCredits;
+document.getElementById('gpaValue').textContent = gpa.toFixed(5);
+document.getElementById('totalCourses').textContent = courseData.length;
+document.getElementById('totalCredits').textContent = totalCredits.toFixed(1);
+document.getElementById('resultSection').classList.add('show');
+document.getElementById('chartSection').classList.add('show');
+drawChart(courseData, totalWeighted);
+setTimeout(() => document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+let message = gpa >= 3.8 ? t.toast.excellent : gpa >= 3.3 ? t.toast.good : gpa >= 2.5 ? t.toast.average : t.toast.improve;
+showToast(message);
+}
+window.onload = function() {
+renderGradeScaleCards();
+renderDropdowns();
+const t = translations[currentLang];
+document.getElementById('scaleHeaderText').textContent = `📋 ${t.scaleTitle} (${t.modeNames[currentMode]})`;
+updateLanguage();
+addCourse();
+};
+document.addEventListener('keypress', function(e) {
+if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
+e.preventDefault();
+const currentId = e.target.id.split('-')[1];
+const currentField = e.target.id.split('-')[0];
+if (currentField === 'name') document.getElementById(`score-${currentId}`).focus();
+else if (currentField === 'score') document.getElementById(`credit-${currentId}`).focus();
+else if (currentField === 'credit') confirmCourse(currentId);
+}
+});
+window.addEventListener('resize', function() {
+if (document.getElementById('chartSection').classList.contains('show')) {
+const courses = document.querySelectorAll('.course-item');
+let courseData = [], totalWeighted = 0;
+courses.forEach(course => {
+if (course.dataset.confirmed === 'true') {
+const data = {
+name: course.dataset.name,
+gp: parseFloat(course.dataset.gp),
+credit: parseFloat(course.dataset.credit),
+weighted: parseFloat(course.dataset.weighted)
+};
+courseData.push(data);
+totalWeighted += data.weighted;
+}
+});
+if (courseData.length > 0) drawChart(courseData, totalWeighted);
+}
+});
+</script>
+</body>
+</html>
