@@ -226,7 +226,7 @@
 
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
             margin-top: 30px;
         }
@@ -251,6 +251,7 @@
         .tool-card:nth-child(1) { animation-delay: 0.1s; }
         .tool-card:nth-child(2) { animation-delay: 0.2s; }
         .tool-card:nth-child(3) { animation-delay: 0.3s; }
+        .tool-card:nth-child(4) { animation-delay: 0.4s; }
 
         .tool-card:hover {
             transform: translateY(-5px);
@@ -365,6 +366,13 @@
                 <div class="tool-desc" data-key="compDesc">查询学校认证学科竞赛信息，助力学术发展</div>
                 <div class="tool-arrow">→</div>
             </a>
+
+            <a href="/JLU-Toolkit/todolist_with_pomodoro.html" class="tool-card">
+                <div class="tool-icon">🍅</div>
+                <div class="tool-title" data-key="todoTitle">任务清单 & 番茄钟</div>
+                <div class="tool-desc" data-key="todoDesc">管理每日任务，番茄工作法助力专注学习</div>
+                <div class="tool-arrow">→</div>
+            </a>
         </div>
 
         <!-- Footer -->
@@ -385,6 +393,8 @@
                 navDesc: '整理校内常用网站链接，一键快速访问',
                 compTitle: '竞赛信息',
                 compDesc: '查询学校认证学科竞赛信息，助力学术发展',
+                todoTitle: '任务清单 & 番茄钟',
+                todoDesc: '管理每日任务，番茄工作法助力专注学习',
                 footer: 'JLU Toolkit - 吉林大学学生学习辅助工具',
                 themes: ['紫色', '红色', '蓝色', '绿色', '黄色', '黑白', '科幻'],
                 langName: '简体中文'
@@ -398,6 +408,8 @@
                 navDesc: 'Quick access to commonly used school websites',
                 compTitle: 'Competition Info',
                 compDesc: 'Search certified academic competition information',
+                todoTitle: 'Todo & Pomodoro',
+                todoDesc: 'Manage daily tasks and focus with Pomodoro technique',
                 footer: 'JLU Toolkit - Student Learning Assistant',
                 themes: ['Purple', 'Red', 'Blue', 'Green', 'Yellow', 'B&W', 'Sci-Fi'],
                 langName: 'English'
