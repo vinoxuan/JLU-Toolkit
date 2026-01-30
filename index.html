@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🦢 吉林大学工具箱 - JLU Toolkit</title>
+    <style>
+        :root {
+            --primary: #667eea;
+            --primary-dark: #764ba2;
+            --secondary: #11998e;
+            --secondary-dark: #38ef7d;
+            --danger: #ff6b6b;
+            --bg-gradient-start: #667eea;
+            --bg-gradient-end: #764ba2;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-primary: #333;
+            --text-secondary: #666;
+            --border-color: #e0e0e0;
+            --input-bg: #fff;
+            --item-bg: #f8f9fa;
+            --item-hover: #f0f4ff;
+            --confirmed-bg: #f0f4ff;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --modal-bg: rgba(0, 0, 0, 0.6);
+        }
+
+        [data-theme="red"] {
+            --primary: #ff6b6b;
+            --primary-dark: #ee5a6f;
+            --bg-gradient-start: #ff6b6b;
+            --bg-gradient-end: #ee5a6f;
+            --item-hover: #ffe6e6;
+            --confirmed-bg: #fff0f0;
+        }
+
+        [data-theme="blue"] {
+            --primary: #4facfe;
+            --primary-dark: #00f2fe;
+            --bg-gradient-start: #4facfe;
+            --bg-gradient-end: #00f2fe;
+            --item-hover: #dbeafe;
+            --confirmed-bg: #e6f4ff;
+        }
+
+        [data-theme="green"] {
+            --primary: #11998e;
+            --primary-dark: #38ef7d;
+            --bg-gradient-start: #11998e;
+            --bg-gradient-end: #38ef7d;
+            --item-hover: #d1fae5;
+            --confirmed-bg: #e6fff3;
+        }
+
+        [data-theme="yellow"] {
+            --primary: #f093fb;
+            --primary-dark: #f5576c;
+            --bg-gradient-start: #fa709a;
+            --bg-gradient-end: #fee140;
+            --item-hover: #fef3c7;
+            --confirmed-bg: #fff9e6;
+        }
+
+        [data-theme="bw"] {
+            --primary: #2c3e50;
+            --primary-dark: #34495e;
+            --bg-gradient-start: #2c3e50;
+            --bg-gradient-end: #4a5568;
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --item-hover: #dde4e6;
+            --confirmed-bg: #ecf0f1;
+            --shadow: rgba(0, 0, 0, 0.5);
+        }
+
+        [data-theme="scifi"] {
+            --primary: #00d2ff;
+            --primary-dark: #3a7bd5;
+            --bg-gradient-start: #00d2ff;
+            --bg-gradient-end: #3a7bd5;
+            --card-bg: rgba(10, 20, 40, 0.95);
+            --text-primary: #e0f7ff;
+            --text-secondary: #90caf9;
+            --border-color: #00d2ff;
+            --input-bg: rgba(0, 210, 255, 0.1);
+            --item-bg: rgba(0, 210, 255, 0.05);
+            --item-hover: rgba(0, 210, 255, 0.15);
+            --confirmed-bg: rgba(0, 255, 135, 0.1);
+            --shadow: rgba(0, 210, 255, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            width: 100%;
+        }
+
+        .header {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px var(--shadow);
+            position: relative;
+            z-index: 100;
+            animation: slideIn 0.5s ease;
+            width: 100%;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .control-panel {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            gap: 8px;
+            z-index: 200;
+        }
+
+        .control-btn {
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 45px;
+            left: 0;
+            background: white;
+            border-radius: 12px;
+            padding: 6px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+            min-width: 150px;
+            z-index: 300;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+            animation: dropdownFade 0.2s ease;
+        }
+
+        @keyframes dropdownFade {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-item {
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 2px;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f5f5;
+        }
+
+        .dropdown-item.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            padding-top: 10px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .tool-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 35px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            animation: slideIn 0.5s ease backwards;
+        }
+
+        .tool-card:nth-child(1) { animation-delay: 0.1s; }
+        .tool-card:nth-child(2) { animation-delay: 0.2s; }
+        .tool-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            border-color: var(--primary);
+        }
+
+        .tool-icon {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+        }
+
+        .tool-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+
+        .tool-desc {
+            color: var(--text-secondary);
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .tool-arrow {
+            margin-top: 15px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover .tool-arrow {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px 20px;
+            color: white;
+            opacity: 0.9;
+            font-size: 0.9em;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .tool-card {
+                padding: 25px 20px;
+            }
+            
+            .header {
+                padding: 70px 20px 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="control-panel">
+                <button class="control-btn" onclick="toggleDropdown('themeDropdown')" title="切换主题">🎨</button>
+                <div class="dropdown-menu" id="themeDropdown"></div>
+                <button class="control-btn" onclick="toggleDropdown('langDropdown')" title="切换语言">🌐</button>
+                <div class="dropdown-menu" id="langDropdown"></div>
+            </div>
+            
+            <h1 id="pageTitle">🦢 吉林大学工具箱</h1>
+            <p class="subtitle" id="pageSubtitle">JLU Toolkit - 助力学业发展的实用工具集合</p>
+        </div>
+
+        <!-- Tools Grid -->
+        <div class="tools-grid">
+            <a href="/JLU-Toolkit/jlu_gpa_calculator.html" class="tool-card">
+                <div class="tool-icon">📊</div>
+                <div class="tool-title" data-key="gpaTitle">GPA计算器</div>
+                <div class="tool-desc" data-key="gpaDesc">快速计算绩点成绩，支持多种算法标准</div>
+                <div class="tool-arrow">→</div>
+            </a>
+
+            <a href="/JLU-Toolkit/jlu_website_navigation.html" class="tool-card">
+                <div class="tool-icon">🧭</div>
+                <div class="tool-title" data-key="navTitle">常用网站导航</div>
+                <div class="tool-desc" data-key="navDesc">整理校内常用网站链接，一键快速访问</div>
+                <div class="tool-arrow">→</div>
+            </a>
+
+            <a href="/JLU-Toolkit/jlu_competition_information.html" class="tool-card">
+                <div class="tool-icon">🏆</div>
+                <div class="tool-title" data-key="compTitle">竞赛信息</div>
+                <div class="tool-desc" data-key="compDesc">查询学校认证学科竞赛信息，助力学术发展</div>
+                <div class="tool-arrow">→</div>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div id="footerText">JLU Toolkit - 吉林大学学生学习辅助工具</div>
+        </div>
+    </div>
+
+    <script>
+        // Translations
+        const translations = {
+            'zh-CN': {
+                title: '🦢 吉林大学工具箱',
+                subtitle: 'JLU Toolkit - 助力学业发展的实用工具集合',
+                gpaTitle: 'GPA计算器',
+                gpaDesc: '快速计算绩点成绩，支持多种算法标准',
+                navTitle: '常用网站导航',
+                navDesc: '整理校内常用网站链接，一键快速访问',
+                compTitle: '竞赛信息',
+                compDesc: '查询学校认证学科竞赛信息，助力学术发展',
+                footer: 'JLU Toolkit - 吉林大学学生学习辅助工具',
+                themes: ['紫色', '红色', '蓝色', '绿色', '黄色', '黑白', '科幻'],
+                langName: '简体中文'
+            },
+            'en': {
+                title: '🦢 JLU Toolkit',
+                subtitle: 'Practical tools for academic development',
+                gpaTitle: 'GPA Calculator',
+                gpaDesc: 'Quickly calculate GPA with multiple standards',
+                navTitle: 'Website Navigation',
+                navDesc: 'Quick access to commonly used school websites',
+                compTitle: 'Competition Info',
+                compDesc: 'Search certified academic competition information',
+                footer: 'JLU Toolkit - Student Learning Assistant',
+                themes: ['Purple', 'Red', 'Blue', 'Green', 'Yellow', 'B&W', 'Sci-Fi'],
+                langName: 'English'
+            }
+        };
+
+        const themes = [
+            { id: 'default', emoji: '🟣' },
+            { id: 'red', emoji: '🔴' },
+            { id: 'blue', emoji: '🔵' },
+            { id: 'green', emoji: '🟢' },
+            { id: 'yellow', emoji: '🟡' },
+            { id: 'bw', emoji: '⚫' },
+            { id: 'scifi', emoji: '🚀' }
+        ];
+
+        const languages = [
+            { code: 'zh-CN', emoji: '🇨🇳', name: '简体中文' },
+            { code: 'en', emoji: '🇺🇸', name: 'English' }
+        ];
+
+        let currentLang = 'zh-CN';
+        let currentTheme = 'default';
+
+        function init() {
+            renderDropdowns();
+            updateLanguage();
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.matches('.control-btn')) {
+                    document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+                }
+            });
+        }
+
+        function renderDropdowns() {
+            const t = translations[currentLang];
+            
+            // Theme dropdown
+            const themeDropdown = document.getElementById('themeDropdown');
+            themeDropdown.innerHTML = themes.map((theme, index) => `
+                <div class="dropdown-item ${currentTheme === theme.id ? 'active' : ''}"
+                     onclick="setTheme('${theme.id}')">
+                    ${theme.emoji} ${t.themes[index]}
+                </div>
+            `).join('');
+
+            // Language dropdown
+            const langDropdown = document.getElementById('langDropdown');
+            langDropdown.innerHTML = languages.map(lang => `
+                <div class="dropdown-item ${currentLang === lang.code ? 'active' : ''}"
+                     onclick="setLanguage('${lang.code}')">
+                    ${lang.emoji} ${lang.name}
+                </div>
+            `).join('');
+        }
+
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            const allDropdowns = document.querySelectorAll('.dropdown-menu');
+            allDropdowns.forEach(d => {
+                if (d.id !== id) d.classList.remove('show');
+            });
+            dropdown.classList.toggle('show');
+        }
+
+        function setTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+            currentTheme = theme;
+            renderDropdowns();
+            document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+            updateLanguage();
+            renderDropdowns();
+        }
+
+        function updateLanguage() {
+            const t = translations[currentLang];
+            document.getElementById('pageTitle').textContent = t.title;
+            document.getElementById('pageSubtitle').textContent = t.subtitle;
+            document.getElementById('footerText').textContent = t.footer;
+            
+            // Update tool cards
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (t[key]) el.textContent = t[key];
+            });
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
