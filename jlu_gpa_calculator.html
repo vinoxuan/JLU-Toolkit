@@ -6,109 +6,57 @@
 <title>GPA Calculator</title>
 <style>
 :root {
---primary: #667eea;
---primary-dark: #764ba2;
---secondary: #11998e;
---secondary-dark: #38ef7d;
---danger: #ff6b6b;
---bg-gradient-start: #667eea;
---bg-gradient-end: #764ba2;
---card-bg: rgba(255, 255, 255, 0.95);
---text-primary: #333;
---text-secondary: #666;
---border-color: #e0e0e0;
---input-bg: #fff;
---item-bg: #f8f9fa;
---item-hover: #f0f4ff;
---confirmed-bg: #f0f4ff;
---number-bg: rgba(102, 126, 234, 0.1);
---number-color: #667eea;
+--primary: #2c5aa0;
+--primary-light: #4a7ab8;
+--bg: #f8f9fa;
+--card-bg: #ffffff;
+--text-primary: #2c3e50;
+--text-secondary: #5a6c7d;
+--border-color: #e1e8ed;
+--input-bg: #ffffff;
+--item-bg: #f1f3f4;
+--item-hover: #e8eaed;
+--confirmed-bg: #e8f0fe;
+--shadow: rgba(0, 0, 0, 0.08);
+--danger: #dc3545;
+--success: #28a745;
+--warning: #ffc107;
+}
+
+[data-theme="dark"] {
+--primary: #5b9bd5;
+--primary-light: #7ab8e8;
+--bg: #1a1d21;
+--card-bg: #242830;
+--text-primary: #e8eaed;
+--text-secondary: #9aa0a6;
+--border-color: #3c4043;
+--input-bg: #2d3139;
+--item-bg: #2d3139;
+--item-hover: #3c4043;
+--confirmed-bg: #1e3a5f;
 --shadow: rgba(0, 0, 0, 0.3);
+--danger: #ef5350;
+--success: #66bb6a;
+--warning: #ffa726;
 }
 
-[data-theme="red"] {
---primary: #ff6b6b;
---primary-dark: #ee5a6f;
---bg-gradient-start: #ff6b6b;
---bg-gradient-end: #ee5a6f;
---secondary: #ff8f8f;
---secondary-dark: #ffb4b4;
---number-bg: rgba(255, 107, 107, 0.1);
---number-color: #ff6b6b;
---confirmed-bg: #fff0f0;
---item-hover: #ffe6e6;
-}
-
-[data-theme="blue"] {
---primary: #4facfe;
---primary-dark: #00f2fe;
---bg-gradient-start: #4facfe;
---bg-gradient-end: #00f2fe;
---secondary: #00c9ff;
---secondary-dark: #92fe9d;
---number-bg: rgba(79, 172, 254, 0.1);
---number-color: #4facfe;
---confirmed-bg: #e6f4ff;
---item-hover: #dbeafe;
-}
-
-[data-theme="green"] {
---primary: #11998e;
---primary-dark: #38ef7d;
---bg-gradient-start: #11998e;
---bg-gradient-end: #38ef7d;
---secondary: #0ba360;
---secondary-dark: #3cba92;
---number-bg: rgba(17, 153, 142, 0.1);
---number-color: #11998e;
---confirmed-bg: #e6fff3;
---item-hover: #d1fae5;
-}
-
-[data-theme="yellow"] {
---primary: #f093fb;
---primary-dark: #f5576c;
---bg-gradient-start: #fa709a;
---bg-gradient-end: #fee140;
---number-bg: rgba(250, 112, 154, 0.1);
---number-color: #fa709a;
---confirmed-bg: #fff9e6;
---item-hover: #fef3c7;
-}
-
-[data-theme="bw"] {
---primary: #2c3e50;
---primary-dark: #34495e;
---bg-gradient-start: #2c3e50;
---bg-gradient-end: #4a5568;
---secondary: #5a6c7d;
---secondary-dark: #7f8c8d;
---card-bg: rgba(255, 255, 255, 0.98);
---number-bg: rgba(44, 62, 80, 0.1);
---number-color: #2c3e50;
---confirmed-bg: #ecf0f1;
---item-hover: #dde4e6;
---shadow: rgba(0, 0, 0, 0.5);
-}
-
-[data-theme="scifi"] {
---primary: #00d2ff;
---primary-dark: #3a7bd5;
---bg-gradient-start: #00d2ff;
---bg-gradient-end: #3a7bd5;
---secondary: #00ff87;
---secondary-dark: #60efff;
---card-bg: rgba(10, 20, 40, 0.95);
---text-primary: #e0f7ff;
---text-secondary: #90caf9;
---border-color: #00d2ff;
---input-bg: rgba(0, 210, 255, 0.1);
---item-bg: rgba(0, 210, 255, 0.05);
---item-hover: rgba(0, 210, 255, 0.15);
---confirmed-bg: rgba(0, 255, 135, 0.1);
---number-bg: rgba(0, 210, 255, 0.2);
---number-color: #00d2ff;
---shadow: rgba(0, 210, 255, 0.3);
+[data-theme="jlu"] {
+--primary: #1e4d8c;
+--primary-light: #2c5aa0;
+--bg: #e8f4f8;
+--card-bg: #ffffff;
+--text-primary: #1a2951;
+--text-secondary: #4a5568;
+--border-color: #c5d9ed;
+--input-bg: #fafcfe;
+--item-bg: #f0f7ff;
+--item-hover: #e1effe;
+--confirmed-bg: #d4e6f7;
+--shadow: rgba(30, 77, 140, 0.15);
+--danger: #c53030;
+--success: #276749;
+--warning: #dd6b20;
 }
 
 * {
@@ -118,27 +66,27 @@ box-sizing: border-box;
 }
 
 body {
-font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+background: var(--bg);
 min-height: 100vh;
 padding: 20px;
 display: flex;
 justify-content: center;
 align-items: flex-start;
 color: var(--text-primary);
+line-height: 1.6;
 }
 
 .container {
 width: 100%;
-max-width: 1000px;
+max-width: 900px;
 background: var(--card-bg);
-backdrop-filter: blur(10px);
-border-radius: 24px;
-box-shadow: 0 20px 60px var(--shadow);
-padding: 60px 40px 40px 40px;
+border-radius: 12px;
+box-shadow: 0 2px 12px var(--shadow);
+padding: 50px 40px 40px 40px;
 margin-top: 20px;
-animation: slideIn 0.5s ease;
 position: relative;
+border: 1px solid var(--border-color);
 }
 
 .control-panel {
@@ -147,44 +95,45 @@ top: 15px;
 left: 15px;
 display: flex;
 flex-direction: row;
-gap: 10px;
+gap: 8px;
 align-items: center;
 z-index: 100;
 }
 
 .control-btn {
-border: none;
-background: rgba(255, 255, 255, 0.2);
-backdrop-filter: blur(10px);
-border-radius: 50%;
-width: 36px;
-height: 36px;
+border: 1px solid var(--border-color);
+background: var(--card-bg);
+border-radius: 6px;
+width: 32px;
+height: 32px;
 cursor: pointer;
-font-size: 16px;
-transition: all 0.3s ease;
+font-size: 14px;
+transition: all 0.2s;
 display: flex;
 align-items: center;
 justify-content: center;
-box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+color: var(--text-secondary);
 position: relative;
 }
 
 .control-btn:hover {
-transform: scale(1.1);
-background: rgba(255, 255, 255, 0.4);
+background: var(--item-hover);
+border-color: var(--primary);
+color: var(--primary);
 }
 
 .dropdown-menu {
 display: none;
 position: absolute;
-top: 45px;
+top: 38px;
 left: 0;
-background: white;
-border-radius: 12px;
-padding: 8px;
-box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-min-width: 140px;
+background: var(--card-bg);
+border-radius: 8px;
+padding: 6px;
+box-shadow: 0 4px 12px var(--shadow);
+min-width: 120px;
 z-index: 101;
+border: 1px solid var(--border-color);
 }
 
 .dropdown-menu.show {
@@ -193,52 +142,38 @@ display: block;
 
 .dropdown-item {
 padding: 8px 12px;
-border-radius: 6px;
+border-radius: 4px;
 cursor: pointer;
 font-size: 13px;
-transition: all 0.2s;
-color: #333;
+transition: all 0.15s;
+color: var(--text-primary);
 display: flex;
 align-items: center;
 gap: 8px;
-white-space: nowrap;
 }
 
 .dropdown-item:hover {
-background: #f0f0f0;
+background: var(--item-hover);
 }
 
 .dropdown-item.active {
-background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+background: var(--primary);
 color: white;
-}
-
-@keyframes slideIn {
-from { opacity: 0; transform: translateY(-30px); }
-to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes scaleIn {
-from { opacity: 0; transform: scale(0.9); }
-to { opacity: 1; transform: scale(1); }
 }
 
 h1 {
 text-align: center;
 color: var(--text-primary);
-margin-bottom: 10px;
-font-size: 2.2em;
-background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
+margin-bottom: 8px;
+font-size: 1.8em;
+font-weight: 600;
 }
 
 .subtitle {
 text-align: center;
 color: var(--text-secondary);
 margin-bottom: 30px;
-font-size: 0.95em;
+font-size: 0.9em;
 }
 
 .course-list {
@@ -247,27 +182,20 @@ margin-bottom: 20px;
 
 .course-item {
 display: grid;
-grid-template-columns: 50px 2fr 1fr 1fr 1fr 50px;
+grid-template-columns: 40px 2fr 1fr 1fr 1fr 40px;
 gap: 12px;
-margin-bottom: 15px;
-padding: 16px;
+margin-bottom: 12px;
+padding: 14px;
 background: var(--item-bg);
-border-radius: 16px;
-border: 2px solid transparent;
-transition: all 0.3s ease;
+border-radius: 8px;
+border: 1px solid var(--border-color);
+transition: all 0.2s;
 align-items: center;
-animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-from { opacity: 0; transform: translateX(-20px); }
-to { opacity: 1; transform: translateX(0); }
 }
 
 .course-item:hover {
-border-color: var(--primary);
-transform: translateX(5px);
-box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+border-color: var(--primary-light);
+box-shadow: 0 2px 8px var(--shadow);
 }
 
 .course-item.confirmed {
@@ -276,15 +204,15 @@ border-color: var(--primary);
 }
 
 .course-number {
-font-weight: 700;
-color: var(--number-color);
-font-size: 1.2em;
+font-weight: 600;
+color: var(--primary);
+font-size: 0.9em;
 text-align: center;
-background: var(--number-bg);
+background: var(--card-bg);
+border: 1px solid var(--border-color);
 border-radius: 50%;
-width: 36px;
-height: 36px;
-min-width: 36px;
+width: 28px;
+height: 28px;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -293,26 +221,23 @@ justify-content: center;
 .input-group {
 display: flex;
 flex-direction: column;
-gap: 5px;
+gap: 4px;
 }
 
 label {
-font-size: 0.85em;
+font-size: 0.8em;
 color: var(--text-secondary);
-font-weight: 600;
-text-transform: uppercase;
-letter-spacing: 0.5px;
+font-weight: 500;
 }
 
 input[type="text"],
 input[type="number"] {
-padding: 10px 12px;
-border: 2px solid var(--border-color);
-border-radius: 10px;
-font-size: 15px;
-transition: all 0.3s ease;
+padding: 8px 12px;
+border: 1px solid var(--border-color);
+border-radius: 6px;
+font-size: 14px;
+transition: all 0.2s;
 outline: none;
-font-family: inherit;
 width: 100%;
 background: var(--input-bg);
 color: var(--text-primary);
@@ -321,7 +246,12 @@ color: var(--text-primary);
 input[type="text"]:focus,
 input[type="number"]:focus {
 border-color: var(--primary);
-box-shadow: 0 0 0 3px var(--number-bg);
+box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
+}
+
+[data-theme="dark"] input[type="text"]:focus,
+[data-theme="dark"] input[type="number"]:focus {
+box-shadow: 0 0 0 3px rgba(91, 155, 213, 0.2);
 }
 
 input.no-spinner::-webkit-outer-spin-button,
@@ -335,16 +265,16 @@ input.no-spinner {
 }
 
 .action-btn {
-background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+background: var(--primary);
 color: white;
 border: none;
-padding: 10px;
-border-radius: 10px;
+padding: 8px 16px;
+border-radius: 6px;
 cursor: pointer;
-font-weight: 700;
-font-size: 0.95em;
-transition: all 0.3s ease;
-height: 42px;
+font-weight: 500;
+font-size: 0.9em;
+transition: all 0.2s;
+height: 36px;
 width: 100%;
 display: flex;
 align-items: center;
@@ -352,141 +282,130 @@ justify-content: center;
 }
 
 .action-btn:hover {
-transform: translateY(-2px);
-box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+background: var(--primary-light);
 }
 
 .action-btn.confirmed {
 cursor: default;
-transform: none;
-box-shadow: none;
+opacity: 0.9;
 }
 
-.action-btn.high { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
-.action-btn.mid { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-.action-btn.low { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); }
+.action-btn.high { background: var(--success); }
+.action-btn.mid { background: var(--warning); color: #000; }
+.action-btn.low { background: var(--danger); }
 
 .delete-btn {
-background: var(--danger);
-color: white;
-border: none;
-width: 36px;
-height: 36px;
-min-width: 36px;
-border-radius: 10px;
+background: transparent;
+color: var(--danger);
+border: 1px solid var(--danger);
+width: 32px;
+height: 32px;
+border-radius: 6px;
 cursor: pointer;
 font-size: 18px;
-transition: all 0.2s ease;
+transition: all 0.2s;
 display: flex;
 align-items: center;
 justify-content: center;
 }
 
 .delete-btn:hover {
-background: #ff5252;
-transform: scale(1.08);
-box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+background: var(--danger);
+color: white;
 }
 
 .button-group {
 display: flex;
-gap: 15px;
-margin-top: 30px;
+gap: 12px;
+margin-top: 24px;
 flex-wrap: wrap;
 }
 
 .main-btn {
 flex: 1;
-min-width: 150px;
-padding: 16px 28px;
+min-width: 140px;
+padding: 12px 24px;
 border: none;
-border-radius: 12px;
-font-size: 16px;
-font-weight: 700;
+border-radius: 8px;
+font-size: 15px;
+font-weight: 500;
 cursor: pointer;
-transition: all 0.3s ease;
-text-transform: uppercase;
-letter-spacing: 0.5px;
+transition: all 0.2s;
 font-family: inherit;
 }
 
 .add-btn {
-background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+background: var(--primary);
 color: white;
-box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 .add-btn:hover {
-transform: translateY(-2px);
-box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+background: var(--primary-light);
+box-shadow: 0 2px 8px var(--shadow);
 }
 
 .calc-btn {
-background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+background: var(--success);
 color: white;
-box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 .calc-btn:hover {
-transform: translateY(-2px);
-box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+opacity: 0.9;
+box-shadow: 0 2px 8px var(--shadow);
 }
 
 .result-section {
-margin-top: 40px;
-padding: 30px;
-background: linear-gradient(135deg, var(--item-bg) 0%, var(--confirmed-bg) 100%);
-border-radius: 20px;
+margin-top: 32px;
+padding: 24px;
+background: var(--item-bg);
+border-radius: 12px;
 text-align: center;
 display: none;
-animation: scaleIn 0.4s ease;
-border: 2px solid var(--border-color);
+border: 1px solid var(--border-color);
 }
 
 .result-section.show { display: block; }
 
 .result-title {
-font-size: 1.2em;
+font-size: 1.1em;
 color: var(--text-secondary);
-margin-bottom: 15px;
-font-weight: 600;
+margin-bottom: 12px;
+font-weight: 500;
 }
 
 .gpa-value {
-font-size: 4em;
-font-weight: 800;
-background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-margin: 10px 0;
+font-size: 3em;
+font-weight: 700;
+color: var(--primary);
+margin: 8px 0;
 line-height: 1.2;
 }
 
 .result-details {
 display: flex;
 justify-content: center;
-gap: 40px;
-margin-top: 20px;
+gap: 32px;
+margin-top: 16px;
 flex-wrap: wrap;
 }
 
 .detail-item {
 background: var(--card-bg);
-padding: 15px 25px;
-border-radius: 12px;
-box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+padding: 12px 24px;
+border-radius: 8px;
+border: 1px solid var(--border-color);
+min-width: 120px;
 }
 
 .detail-label {
-font-size: 0.9em;
+font-size: 0.85em;
 color: var(--text-secondary);
-margin-bottom: 5px;
+margin-bottom: 4px;
 }
 
 .detail-value {
-font-size: 1.4em;
-font-weight: 700;
+font-size: 1.2em;
+font-weight: 600;
 color: var(--text-primary);
 }
 
@@ -494,31 +413,31 @@ color: var(--text-primary);
 text-align: center;
 padding: 40px;
 color: var(--text-secondary);
-font-style: italic;
 background: var(--item-bg);
-border-radius: 16px;
-border: 2px dashed var(--border-color);
+border-radius: 8px;
+border: 1px dashed var(--border-color);
+font-size: 0.95em;
 }
 
 .grade-scale-container {
-margin-top: 30px;
+margin-top: 24px;
 background: var(--item-bg);
-border-radius: 16px;
+border-radius: 8px;
 border: 1px solid var(--border-color);
 overflow: hidden;
 }
 
 .grade-scale-header {
-background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+background: var(--primary);
 color: white;
-padding: 16px 20px;
+padding: 12px 16px;
 cursor: pointer;
 display: flex;
 justify-content: space-between;
 align-items: center;
-font-weight: 600;
-font-size: 1.1em;
-transition: all 0.3s ease;
+font-weight: 500;
+font-size: 1em;
+transition: opacity 0.2s;
 }
 
 .grade-scale-header:hover {
@@ -526,8 +445,8 @@ opacity: 0.95;
 }
 
 .grade-scale-icon {
-transition: transform 0.3s ease;
-font-size: 1.2em;
+font-size: 0.8em;
+transition: transform 0.3s;
 }
 
 .grade-scale-container.expanded .grade-scale-icon {
@@ -537,132 +456,111 @@ transform: rotate(180deg);
 .grade-scale-content {
 max-height: 0;
 overflow: hidden;
-transition: max-height 0.4s ease;
-padding: 0 20px;
+transition: max-height 0.3s ease;
+padding: 0 16px;
 }
 
 .grade-scale-container.expanded .grade-scale-content {
-max-height: 600px;
-overflow-y: auto;
-padding: 20px;
+max-height: 500px;
+padding: 16px;
 }
 
 .scale-cards-grid {
 display: grid;
-grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-gap: 10px;
+grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+gap: 8px;
 }
 
 .scale-card {
-background: var(--input-bg);
-border: 2px solid var(--border-color);
-border-radius: 10px;
-padding: 12px 8px;
+background: var(--card-bg);
+border: 1px solid var(--border-color);
+border-radius: 6px;
+padding: 10px;
 text-align: center;
-transition: all 0.2s ease;
-}
-
-.scale-card:hover {
-border-color: var(--primary);
-transform: translateY(-2px);
-box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+font-size: 0.9em;
 }
 
 .scale-card-range {
 font-size: 0.85em;
 color: var(--text-secondary);
 margin-bottom: 4px;
-font-weight: 600;
 }
 
 .scale-card-value {
-font-size: 1.3em;
-font-weight: 700;
+font-size: 1.1em;
+font-weight: 600;
 color: var(--primary);
 }
 
 @media (max-width: 768px) {
 body { padding: 10px; }
-.container { padding: 60px 20px 20px 20px; border-radius: 16px; }
-.control-panel { top: 10px; left: 10px; gap: 8px; }
-.control-btn { width: 32px; height: 32px; font-size: 14px; }
-.dropdown-menu { min-width: 130px; font-size: 12px; }
+.container { padding: 50px 20px 20px 20px; }
+.control-panel { top: 12px; left: 12px; }
 .course-item {
-grid-template-columns: 40px 1fr 40px;
+grid-template-columns: 36px 1fr 36px;
 grid-template-rows: auto auto auto auto;
-gap: 12px;
-padding: 20px;
+gap: 10px;
+padding: 16px;
 }
-.course-number { grid-column: 1; grid-row: 1; width: 32px; height: 32px; font-size: 1em; align-self: center; }
-.delete-btn { grid-column: 3; grid-row: 1; width: 32px; height: 32px; align-self: center; justify-self: end; }
+.course-number { grid-column: 1; grid-row: 1; width: 28px; height: 28px; font-size: 0.85em; }
+.delete-btn { grid-column: 3; grid-row: 1; width: 28px; height: 28px; font-size: 16px; }
 .course-item .input-group:nth-of-type(1) { grid-column: 2; grid-row: 1; }
 .course-item .input-group:nth-of-type(2) { grid-column: 1 / 4; grid-row: 2; }
 .course-item .input-group:nth-of-type(3) { grid-column: 1 / 4; grid-row: 3; }
-.action-btn { grid-column: 1 / 4; grid-row: 4; height: 45px; font-size: 1em; }
-h1 { font-size: 1.8em; }
-.gpa-value { font-size: 3em; }
-.scale-cards-grid {
-grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-gap: 8px;
-}
-.scale-card { padding: 10px 6px; }
-.scale-card-range { font-size: 0.8em; }
-.scale-card-value { font-size: 1.1em; }
+.action-btn { grid-column: 1 / 4; grid-row: 4; height: 40px; }
+h1 { font-size: 1.5em; }
+.gpa-value { font-size: 2.5em; }
+.scale-cards-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
 }
 
-.error-shake { animation: shake 0.5s; border-color: var(--danger) !important; }
+.error-shake { animation: shake 0.4s; border-color: var(--danger) !important; }
 
 @keyframes shake {
 0%, 100% { transform: translateX(0); }
-25% { transform: translateX(-10px); }
-75% { transform: translateX(10px); }
+25% { transform: translateX(-8px); }
+75% { transform: translateX(8px); }
 }
 
 .chart-section {
-margin-top: 40px;
-padding: 30px;
+margin-top: 32px;
+padding: 24px;
 background: var(--card-bg);
-border-radius: 20px;
-box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+border-radius: 12px;
+border: 1px solid var(--border-color);
 display: none;
-animation: scaleIn 0.5s ease;
-position: relative;
 }
 
 .chart-section.show { display: block; }
 
 .chart-title {
 text-align: center;
-font-size: 1.3em;
+font-size: 1.1em;
 color: var(--text-primary);
-margin-bottom: 20px;
-font-weight: 700;
+margin-bottom: 16px;
+font-weight: 600;
 }
 
 .chart-wrapper {
 position: relative;
 width: 100%;
-max-width: 600px;
+max-width: 500px;
 margin: 0 auto;
-height: 400px;
-cursor: pointer;
+height: 300px;
 }
 
 #contributionChart { width: 100%; height: 100%; }
 
 .chart-tooltip {
 position: absolute;
-background: rgba(0, 0, 0, 0.9);
-color: white;
-padding: 12px 16px;
-border-radius: 8px;
-font-size: 13px;
+background: var(--text-primary);
+color: var(--bg);
+padding: 8px 12px;
+border-radius: 6px;
+font-size: 12px;
 pointer-events: none;
 opacity: 0;
-transition: opacity 0.3s;
+transition: opacity 0.2s;
 z-index: 10;
-max-width: 200px;
-box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .chart-tooltip.show { opacity: 1; }
@@ -671,9 +569,9 @@ box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 display: flex;
 flex-wrap: wrap;
 justify-content: center;
-gap: 12px;
-margin-top: 20px;
-padding-top: 20px;
+gap: 8px;
+margin-top: 16px;
+padding-top: 16px;
 border-top: 1px solid var(--border-color);
 }
 
@@ -681,33 +579,34 @@ border-top: 1px solid var(--border-color);
 display: flex;
 align-items: center;
 gap: 6px;
-font-size: 0.85em;
+font-size: 0.8em;
 color: var(--text-secondary);
 background: var(--item-bg);
-padding: 4px 10px;
-border-radius: 6px;
+padding: 4px 8px;
+border-radius: 4px;
 }
 
 .legend-color {
-width: 12px;
-height: 12px;
-border-radius: 3px;
+width: 10px;
+height: 10px;
+border-radius: 2px;
 }
 
 .toast {
 position: fixed;
-bottom: 30px;
+bottom: 24px;
 left: 50%;
 transform: translateX(-50%) translateY(100px);
-background: rgba(0, 0, 0, 0.9);
-color: white;
-padding: 16px 32px;
-border-radius: 50px;
-font-weight: 600;
-box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+background: var(--text-primary);
+color: var(--bg);
+padding: 12px 24px;
+border-radius: 6px;
+font-weight: 500;
+box-shadow: 0 4px 12px var(--shadow);
 opacity: 0;
-transition: all 0.3s ease;
+transition: all 0.3s;
 z-index: 1000;
+font-size: 0.9em;
 }
 
 .toast.show {
@@ -715,7 +614,6 @@ opacity: 1;
 transform: translateX(-50%) translateY(0);
 }
 
-/* Modal Styles */
 .modal-overlay {
 display: none;
 position: fixed;
@@ -723,195 +621,157 @@ top: 0;
 left: 0;
 width: 100%;
 height: 100%;
-background: rgba(0, 0, 0, 0.6);
-backdrop-filter: blur(5px);
+background: rgba(0, 0, 0, 0.5);
 z-index: 1000;
 justify-content: center;
 align-items: center;
-animation: fadeIn 0.3s ease;
+backdrop-filter: blur(4px);
 }
 
-.modal-overlay.show {
-display: flex;
-}
+.modal-overlay.show { display: flex; }
 
 .modal-content {
 background: var(--card-bg);
-border-radius: 20px;
-padding: 30px;
+border-radius: 12px;
+padding: 24px;
 width: 90%;
-max-width: 600px;
+max-width: 500px;
 max-height: 80vh;
 overflow-y: auto;
-box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-animation: scaleIn 0.3s ease;
-border: 2px solid var(--border-color);
+border: 1px solid var(--border-color);
+box-shadow: 0 4px 20px var(--shadow);
 }
 
 .modal-header {
-font-size: 1.5em;
-font-weight: 700;
+font-size: 1.3em;
+font-weight: 600;
 color: var(--text-primary);
-margin-bottom: 10px;
-display: flex;
-align-items: center;
-gap: 10px;
+margin-bottom: 8px;
 }
 
 .modal-subtitle {
 color: var(--text-secondary);
-font-size: 0.9em;
-margin-bottom: 20px;
+font-size: 0.85em;
+margin-bottom: 16px;
 }
 
 .scale-row {
 display: grid;
 grid-template-columns: 1fr 1fr 1fr auto;
-gap: 10px;
-margin-bottom: 12px;
+gap: 8px;
+margin-bottom: 10px;
 align-items: center;
-animation: slideIn 0.3s ease;
 }
 
 .scale-row input {
-padding: 10px;
-border: 2px solid var(--border-color);
-border-radius: 8px;
+padding: 8px;
+border: 1px solid var(--border-color);
+border-radius: 6px;
 font-size: 14px;
 background: var(--input-bg);
 color: var(--text-primary);
 width: 100%;
 }
 
-.scale-row input:focus {
-border-color: var(--primary);
-outline: none;
-box-shadow: 0 0 0 3px var(--number-bg);
-}
-
 .remove-row-btn {
-background: var(--danger);
-color: white;
-border: none;
-width: 32px;
-height: 32px;
-border-radius: 8px;
+background: transparent;
+color: var(--danger);
+border: 1px solid var(--danger);
+width: 28px;
+height: 28px;
+border-radius: 6px;
 cursor: pointer;
-font-size: 18px;
+font-size: 16px;
 display: flex;
 align-items: center;
 justify-content: center;
-transition: all 0.2s;
 }
 
 .remove-row-btn:hover {
-transform: scale(1.1);
-background: #ff5252;
+background: var(--danger);
+color: white;
 }
 
 .add-row-btn {
-background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+background: var(--success);
 color: white;
 border: none;
-padding: 12px 20px;
-border-radius: 10px;
+padding: 10px;
+border-radius: 6px;
 cursor: pointer;
-font-weight: 600;
-font-size: 14px;
-margin: 15px 0;
+font-weight: 500;
+font-size: 13px;
+margin: 12px 0;
 width: 100%;
-transition: all 0.3s;
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 8px;
-}
-
-.add-row-btn:hover {
-transform: translateY(-2px);
-box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 .modal-actions {
 display: flex;
-gap: 12px;
-margin-top: 20px;
+gap: 10px;
+margin-top: 16px;
 }
 
 .modal-btn {
 flex: 1;
-padding: 14px 24px;
+padding: 10px 20px;
 border: none;
-border-radius: 10px;
-font-weight: 700;
-font-size: 15px;
+border-radius: 6px;
+font-weight: 500;
+font-size: 14px;
 cursor: pointer;
-transition: all 0.3s;
 }
 
 .modal-btn-primary {
-background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+background: var(--primary);
 color: white;
-}
-
-.modal-btn-primary:hover {
-transform: translateY(-2px);
-box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 .modal-btn-secondary {
 background: var(--item-bg);
-color: var(--text-secondary);
-border: 2px solid var(--border-color);
-}
-
-.modal-btn-secondary:hover {
-background: var(--border-color);
+color: var(--text-primary);
+border: 1px solid var(--border-color);
 }
 
 @media (max-width: 768px) {
 .modal-content { padding: 20px; width: 95%; }
-.scale-row { grid-template-columns: 1fr 1fr 1fr auto; gap: 6px; }
-.scale-row input { padding: 8px; font-size: 13px; }
+.scale-row { gap: 6px; }
+.scale-row input { padding: 6px; font-size: 13px; }
 }
 </style>
 </head>
 <body>
 <div class="container">
 <div class="control-panel">
-<!-- 新增：返回首页按钮（位于最左侧） -->
-<button class="control-btn" onclick="window.location.href='/JLU-Toolkit/index.html'" title="返回首页">🏠</button>
-
-<!-- 原有的主题、语言、模式按钮整体右移 -->
-<button class="control-btn" id="themeBtn" onclick="toggleDropdown('themeDropdown')" title="Theme">🎨</button>
+<button class="control-btn" onclick="window.location.href='/JLU-Toolkit/index.html'" title="返回首页">←</button>
+<button class="control-btn" id="themeBtn" onclick="toggleDropdown('themeDropdown')" title="切换主题">☀</button>
 <div class="dropdown-menu" id="themeDropdown"></div>
-<button class="control-btn" id="langBtn" onclick="toggleDropdown('langDropdown')" title="Language">🌐</button>
+<button class="control-btn" id="langBtn" onclick="toggleDropdown('langDropdown')" title="切换语言">文</button>
 <div class="dropdown-menu" id="langDropdown"></div>
-<button class="control-btn" id="modeBtn" onclick="toggleDropdown('modeDropdown')" title="GPA Mode">📊</button>
+<button class="control-btn" id="modeBtn" onclick="toggleDropdown('modeDropdown')" title="GPA模式">◈</button>
 <div class="dropdown-menu" id="modeDropdown"></div>
 </div>
 
-<h1 id="title">🦢 综合平均绩点计算器</h1>
+<h1 id="title">综合绩点计算器</h1>
 <p class="subtitle" id="subtitle">输入课程信息，确认后计算加权平均绩点 GPA</p>
+
 <div id="courseList" class="course-list">
 <div class="empty-state" id="emptyState">
 <span id="emptyText">暂无课程，点击下方"新增课程"按钮添加</span>
 </div>
 </div>
+
 <div class="button-group">
-<button class="main-btn add-btn" onclick="addCourse()">
-<span id="addBtnText">╋ 新增课程</span>
-</button>
-<button class="main-btn calc-btn" onclick="calculateGPA()">
-<span id="calcBtnText">🚀 开始计算</span>
-</button>
+<button class="main-btn add-btn" onclick="addCourse()" id="addBtnText">新增课程</button>
+<button class="main-btn calc-btn" onclick="calculateGPA()" id="calcBtnText">开始计算</button>
 </div>
+
 <div id="resultSection" class="result-section">
 <div class="result-title" id="resultTitle">加权平均绩点</div>
+<!-- 修改：初始显示为 0.00000 -->
 <div class="gpa-value" id="gpaValue">0.00000</div>
 <div class="result-details">
 <div class="detail-item">
-<div class="detail-label" id="totalCoursesLabel">总课程数</div>
+<div class="detail-label" id="totalCoursesLabel">课程数</div>
 <div class="detail-value" id="totalCourses">0</div>
 </div>
 <div class="detail-item">
@@ -920,17 +780,19 @@ background: var(--border-color);
 </div>
 </div>
 </div>
+
 <div id="chartSection" class="chart-section">
-<div class="chart-title" id="chartTitle">📊 各课程对总绩点的贡献比例</div>
+<div class="chart-title" id="chartTitle">各课程贡献占比</div>
 <div class="chart-wrapper" id="chartWrapper">
 <canvas id="contributionChart"></canvas>
 <div class="chart-tooltip" id="chartTooltip"></div>
 </div>
 <div class="legend" id="chartLegend"></div>
 </div>
+
 <div class="grade-scale-container" id="gradeScaleContainer">
 <div class="grade-scale-header" onclick="toggleGradeScale()">
-<span id="scaleHeaderText">📋 绩点对照表</span>
+<span id="scaleHeaderText">绩点对照表</span>
 <span class="grade-scale-icon">▼</span>
 </div>
 <div class="grade-scale-content" id="gradeScaleContent">
@@ -938,21 +800,22 @@ background: var(--border-color);
 </div>
 </div>
 </div>
+
 <div class="modal-overlay" id="customScaleModal">
 <div class="modal-content">
-<div class="modal-header" id="modalTitle">⚙️ 自定义绩点换算规则</div>
-<div class="modal-subtitle" id="modalSubtitle">请添加分数段与绩点的对应关系（分数范围不要重叠）</div>
+<div class="modal-header" id="modalTitle">自定义绩点规则</div>
+<div class="modal-subtitle" id="modalSubtitle">设置分数段与绩点对应关系（范围不可重叠）</div>
 <div id="scaleRowsContainer"></div>
-<button class="add-row-btn" onclick="addScaleRow()">
-<span>╋</span> <span id="addRowText">添加规则</span>
-</button>
+<button class="add-row-btn" onclick="addScaleRow()" id="addRowText">+ 添加规则</button>
 <div class="modal-actions">
 <button class="modal-btn modal-btn-secondary" onclick="closeCustomScaleModal()" id="cancelBtn">取消</button>
-<button class="modal-btn modal-btn-primary" onclick="saveCustomScale()" id="confirmBtn">确认并使用</button>
+<button class="modal-btn modal-btn-primary" onclick="saveCustomScale()" id="confirmBtn">确认使用</button>
 </div>
 </div>
 </div>
+
 <div id="toast" class="toast"></div>
+
 <script>
 let courseCount = 0;
 let currentTheme = 'default';
@@ -961,33 +824,33 @@ let currentMode = 'jida';
 let courseChartData = [];
 let customScaleData = [];
 let previousMode = null;
+
 const colors = [
-'#667eea', '#f093fb', '#f5576c', '#11998e', '#38ef7d',
-'#fa709a', '#fee140', '#30cfd0', '#ff9a9e', '#fecfef',
-'#a8edea', '#fed6e3', '#d299c2', '#fef9d7', '#4481eb'
+'#2c5aa0', '#28a745', '#dc3545', '#5b9bd5', '#ffc107', 
+'#6f42c1', '#20c997', '#fd7e14', '#e83e8c', '#17a2b8'
 ];
+
 const themes = [
-{ id: 'default', emoji: '🟣' },
-{ id: 'red', emoji: '🔴' },
-{ id: 'blue', emoji: '🔵' },
-{ id: 'green', emoji: '🟢' },
-{ id: 'yellow', emoji: '🟡' },
-{ id: 'bw', emoji: '⚫' },
-{ id: 'scifi', emoji: '🚀' }
+{ id: 'default', name: '极光白', icon: '☀' },
+{ id: 'dark', name: '暗夜黑', icon: '☾' },
+{ id: 'jlu', name: '吉大蓝', icon: '▪' }
 ];
+
 const languages = [
-{ code: 'zh-CN', emoji: '🇨🇳', name: '简体中文' },
-{ code: 'zh-TW', emoji: '🇭🇰', name: '繁體中文' },
-{ code: 'en', emoji: '🇺🇸', name: 'English' },
-{ code: 'ja', emoji: '🇯🇵', name: '日本語' },
-{ code: 'ko', emoji: '🇰🇷', name: '한국어' },
-{ code: 'de', emoji: '🇩🇪', name: 'Deutsch' }
+{ code: 'zh-CN', name: '简体中文' },
+{ code: 'zh-TW', name: '繁體中文' },
+{ code: 'en', name: 'English' },
+{ code: 'ja', name: '日本語' },
+{ code: 'ko', name: '한국어' },
+{ code: 'de', name: 'Deutsch' }
 ];
+
 const modes = [
-{ id: 'jida', emoji: '🏫' },
-{ id: 'cuc', emoji: '📡' },
-{ id: 'custom', emoji: '⚙️' }
+{ id: 'jida', name: '吉大模式' },
+{ id: 'cuc', name: '中传模式' },
+{ id: 'custom', name: '自定义' }
 ];
+
 const cucData = [
 {score: 60, gp: 1.00}, {score: 60.5, gp: 1.07}, {score: 61, gp: 1.15}, {score: 61.5, gp: 1.22},
 {score: 62, gp: 1.29}, {score: 62.5, gp: 1.36}, {score: 63, gp: 1.43}, {score: 63.5, gp: 1.50},
@@ -1011,9 +874,10 @@ const cucData = [
 {score: 98, gp: 3.99}, {score: 98.5, gp: 4.00}, {score: 99, gp: 4.00}, {score: 99.5, gp: 4.00},
 {score: 100, gp: 4.00}
 ];
+
 const translations = {
 'zh-CN': {
-title: '🦢 综合平均绩点计算器',
+title: '综合绩点计算器',
 subtitle: '输入课程信息，确认后计算加权平均绩点 GPA',
 empty: '暂无课程，点击下方"新增课程"按钮添加',
 courseName: '课程名称',
@@ -1021,64 +885,54 @@ courseNamePlaceholder: '例如：高等数学',
 score: '成绩',
 credit: '学分',
 confirm: '确认',
-delete: '删除课程',
-addCourse: '╋ 新增课程',
-calc: '🚀 开始计算',
+delete: '删除',
+addCourse: '新增课程',
+calc: '开始计算',
 resultTitle: '加权平均绩点',
-totalCourses: '总课程数',
+totalCourses: '课程数',
 totalCredits: '总学分',
-chartTitle: '📊 各课程对总绩点的贡献比例',
+chartTitle: '各课程贡献占比',
 scaleTitle: '绩点对照表',
-scaleRange: '成绩区间',
+scaleRange: '分数段',
 below60: '60以下',
-themes: ['紫色', '红色', '蓝色', '绿色', '黄色', '黑白', '科幻'],
-modes: ['吉大模式', '中传模式', '自定义模式'],
-modeNames: { jida: '吉大模式', cuc: '中传模式', custom: '自定义模式' },
-scaleClickToExpand: '点击查看详细对照表',
-controls: {
-theme: '主题',
-language: '语言',
-mode: '绩点模式'
-},
+themes: ['极光白', '暗夜黑', '吉大蓝'],
+modes: ['吉大模式', '中传模式', '自定义'],
+modeNames: { jida: '吉大模式', cuc: '中传模式', custom: '自定义' },
+scaleClickToExpand: '点击查看详情',
+controls: { theme: '主题', language: '语言', mode: 'GPA模式' },
 modal: {
-title: '⚙️ 自定义绩点换算规则',
-subtitle: '请添加分数段与绩点的对应关系（分数范围不要重叠）',
+title: '自定义绩点规则',
+subtitle: '设置分数段与绩点对应关系（范围不可重叠）',
 minScore: '最低分',
 maxScore: '最高分',
 gradePoint: '绩点',
 addRow: '添加规则',
 cancel: '取消',
-confirm: '确认并使用',
-validationError: '请填写完整的分数段和绩点信息',
-overlapError: '分数段不能重叠，请检查输入',
+confirm: '确认使用',
+validationError: '请填写完整的分数段和绩点',
+overlapError: '分数段不能重叠',
 rangeError: '最高分必须大于最低分',
 duplicateError: '存在重复或冲突的分数范围'
 },
 toast: {
-noCourse: '请至少添加一门课程！',
-confirmAll: '请确认所有课程信息！',
+noCourse: '请至少添加一门课程',
+confirmAll: '请确认所有课程信息',
 invalidScore: '请输入有效的成绩（0-100）',
 invalidCredit: '请输入有效的学分',
 noName: '请输入课程名称',
-zeroCredit: '总学分不能为0！',
+zeroCredit: '总学分不能为0',
 confirmed: '课程已确认',
 modeSwitch: '已切换至',
-excellent: '🎉 太棒了！成绩非常优秀！',
-good: '👍 成绩不错，继续保持！',
-average: '💪 成绩良好，还有提升空间！',
-improve: '📚 再接再厉，继续加油！',
-customScaleSet: '✅ 已应用自定义换算规则'
+excellent: '成绩优秀，继续保持！',
+good: '成绩良好，还有提升空间',
+average: '成绩尚可，继续努力',
+improve: '继续加油，相信你一定能行',
+customScaleSet: '已应用自定义规则'
 },
-chart: {
-contribution: '贡献比例',
-weighted: '学分×绩点',
-name: '课程',
-gp: '绩点',
-credits: '学分'
-}
+chart: { contribution: '贡献度', weighted: '学分×绩点', name: '课程', gp: '绩点', credits: '学分' }
 },
 'zh-TW': {
-title: '🦢 綜合平均績點計算器',
+title: '綜合績點計算器',
 subtitle: '輸入課程資訊，確認後計算加權平均績點 GPA',
 empty: '暫無課程，點擊下方"新增課程"按鈕添加',
 courseName: '課程名稱',
@@ -1086,65 +940,55 @@ courseNamePlaceholder: '例如：高等數學',
 score: '成績',
 credit: '學分',
 confirm: '確認',
-delete: '刪除課程',
-addCourse: '╋ 新增課程',
-calc: '🚀 開始計算',
+delete: '刪除',
+addCourse: '新增課程',
+calc: '開始計算',
 resultTitle: '加權平均績點',
-totalCourses: '總課程數',
+totalCourses: '課程數',
 totalCredits: '總學分',
-chartTitle: '📊 各課程對總績點的貢獻比例',
+chartTitle: '各課程貢獻佔比',
 scaleTitle: '績點對照表',
-scaleRange: '成績區間',
+scaleRange: '分數段',
 below60: '60以下',
-themes: ['紫色', '紅色', '藍色', '綠色', '黃色', '黑白', '科幻'],
-modes: ['吉大模式', '中傳模式', '自定義模式'],
-modeNames: { jida: '吉大模式', cuc: '中傳模式', custom: '自定義模式' },
-scaleClickToExpand: '點擊查看詳細對照表',
-controls: {
-theme: '主題',
-language: '語言',
-mode: '績點模式'
-},
+themes: ['極光白', '暗夜黑', '吉大藍'],
+modes: ['吉大模式', '中傳模式', '自定義'],
+modeNames: { jida: '吉大模式', cuc: '中傳模式', custom: '自定義' },
+scaleClickToExpand: '點擊查看詳情',
+controls: { theme: '主題', language: '語言', mode: 'GPA模式' },
 modal: {
-title: '⚙️ 自定義績點換算規則',
-subtitle: '請添加分數段與績點的對應關係（分數範圍不要重疊）',
+title: '自定義績點規則',
+subtitle: '設置分數段與績點對應關係（範圍不可重疊）',
 minScore: '最低分',
 maxScore: '最高分',
 gradePoint: '績點',
 addRow: '添加規則',
 cancel: '取消',
-confirm: '確認並使用',
-validationError: '請填寫完整的分數段和績點資訊',
-overlapError: '分數段不能重疊，請檢查輸入',
+confirm: '確認使用',
+validationError: '請填寫完整的分數段和績點',
+overlapError: '分數段不能重疊',
 rangeError: '最高分必須大於最低分',
 duplicateError: '存在重複或衝突的分數範圍'
 },
 toast: {
-noCourse: '請至少添加一門課程！',
-confirmAll: '請確認所有課程資訊！',
+noCourse: '請至少添加一門課程',
+confirmAll: '請確認所有課程資訊',
 invalidScore: '請輸入有效的成績（0-100）',
 invalidCredit: '請輸入有效的學分',
 noName: '請輸入課程名稱',
-zeroCredit: '總學分不能為0！',
+zeroCredit: '總學分不能為0',
 confirmed: '課程已確認',
 modeSwitch: '已切換至',
-excellent: '🎉 太棒了！成績非常優秀！',
-good: '👍 成績不錯，繼續保持！',
-average: '💪 成績良好，還有提升空間！',
-improve: '📚 再接再厲，繼續加油！',
-customScaleSet: '✅ 已應用自定義換算規則'
+excellent: '成績優秀，繼續保持！',
+good: '成績良好，還有提升空間',
+average: '成績尚可，繼續努力',
+improve: '繼續加油，相信你一定能行',
+customScaleSet: '已應用自定義規則'
 },
-chart: {
-contribution: '貢獻比例',
-weighted: '學分×績點',
-name: '課程',
-gp: '績點',
-credits: '學分'
-}
+chart: { contribution: '貢獻度', weighted: '學分×績點', name: '課程', gp: '績點', credits: '學分' }
 },
 'en': {
-title: '🦢 GPA Calculator',
-subtitle: 'Enter course info to calculate weighted GPA',
+title: 'GPA Calculator',
+subtitle: 'Enter course information to calculate weighted GPA',
 empty: 'No courses yet. Click "Add Course" to start',
 courseName: 'Course Name',
 courseNamePlaceholder: 'e.g. Calculus',
@@ -1152,193 +996,163 @@ score: 'Score',
 credit: 'Credits',
 confirm: 'Confirm',
 delete: 'Delete',
-addCourse: '╋ Add Course',
-calc: '🚀 Calculate',
+addCourse: 'Add Course',
+calc: 'Calculate',
 resultTitle: 'Weighted GPA',
-totalCourses: 'Total Courses',
+totalCourses: 'Courses',
 totalCredits: 'Total Credits',
-chartTitle: '📊 Contribution by Course',
+chartTitle: 'Course Contribution',
 scaleTitle: 'Grade Scale',
 scaleRange: 'Score Range',
 below60: '<60',
-themes: ['Purple', 'Red', 'Blue', 'Green', 'Yellow', 'B&W', 'Sci-Fi'],
-modes: ['Jilin Univ.', 'CUC Mode', 'Custom Mode'],
-modeNames: { jida: 'Jilin University', cuc: 'CUC Mode', custom: 'Custom Mode' },
-scaleClickToExpand: 'Click to view detailed scale',
-controls: {
-theme: 'Theme',
-language: 'Language',
-mode: 'GPA Mode'
-},
+themes: ['Aurora White', 'Dark Night', 'JLU Blue'],
+modes: ['JLU Mode', 'CUC Mode', 'Custom'],
+modeNames: { jida: 'JLU Mode', cuc: 'CUC Mode', custom: 'Custom' },
+scaleClickToExpand: 'Click for details',
+controls: { theme: 'Theme', language: 'Language', mode: 'GPA Mode' },
 modal: {
-title: '⚙️ Custom GPA Scale',
-subtitle: 'Add score ranges and corresponding GPA values (ranges should not overlap)',
+title: 'Custom GPA Rules',
+subtitle: 'Set score ranges and corresponding GPA (no overlaps)',
 minScore: 'Min Score',
 maxScore: 'Max Score',
 gradePoint: 'GPA',
 addRow: 'Add Rule',
 cancel: 'Cancel',
-confirm: 'Apply & Use',
+confirm: 'Apply',
 validationError: 'Please fill in all score ranges and GPA values',
-overlapError: 'Score ranges cannot overlap, please check your input',
+overlapError: 'Score ranges cannot overlap',
 rangeError: 'Max score must be greater than min score',
 duplicateError: 'Duplicate or conflicting score ranges exist'
 },
 toast: {
-noCourse: 'Please add at least one course!',
-confirmAll: 'Please confirm all courses!',
+noCourse: 'Please add at least one course',
+confirmAll: 'Please confirm all courses',
 invalidScore: 'Please enter valid score (0-100)',
 invalidCredit: 'Please enter valid credits',
 noName: 'Please enter course name',
-zeroCredit: 'Total credits cannot be 0!',
+zeroCredit: 'Total credits cannot be 0',
 confirmed: 'Course confirmed',
 modeSwitch: 'Switched to',
-excellent: '🎉 Excellent work! Outstanding GPA!',
-good: '👍 Great job! Keep it up!',
-average: '💪 Good progress! Room for improvement!',
-improve: '📚 Keep working hard!',
-customScaleSet: '✅ Custom scale applied successfully'
+excellent: 'Excellent! Keep up the good work!',
+good: 'Good job! Room for improvement',
+average: 'Not bad! Keep working hard',
+improve: 'Keep trying, you can do it',
+customScaleSet: 'Custom rules applied'
 },
-chart: {
-contribution: 'Contribution',
-weighted: 'Credits×GPA',
-name: 'Course',
-gp: 'GPA',
-credits: 'Credits'
-}
+chart: { contribution: 'Contribution', weighted: 'Credits×GPA', name: 'Course', gp: 'GPA', credits: 'Credits' }
 },
 'ja': {
-title: '🦢 GPA計算機',
-subtitle: '成績を入力して加重平均GPAを計算',
-empty: 'コースなし。「コース追加」ボタンをクリック',
+title: 'GPA計算機',
+subtitle: '科目情報を入力して加重平均GPAを計算',
+empty: '科目がありません。「科目を追加」をクリック',
 courseName: '科目名',
 courseNamePlaceholder: '例：微積分学',
 score: '成績',
 credit: '単位',
 confirm: '確認',
 delete: '削除',
-addCourse: '╋ コース追加',
-calc: '🚀 計算開始',
+addCourse: '科目を追加',
+calc: '計算する',
 resultTitle: '加重平均GPA',
-totalCourses: '総コース数',
-totalCredits: '総単位数',
-chartTitle: '📊 科目別貢献度',
+totalCourses: '科目数',
+totalCredits: '合計単位',
+chartTitle: '科目別貢献度',
 scaleTitle: '評価基準',
-scaleRange: '成績範囲',
+scaleRange: '得点範囲',
 below60: '60未満',
-themes: ['紫', '赤', '青', '緑', '黄', '白黒', 'SF'],
-modes: ['吉林大モード', '中伝モード', 'カスタムモード'],
-modeNames: { jida: '吉林大モード', cuc: '中伝モード', custom: 'カスタムモード' },
+themes: ['オーロラホワイト', 'ダークナイト', 'JLUブルー'],
+modes: ['JLUモード', 'CUCモード', 'カスタム'],
+modeNames: { jida: 'JLUモード', cuc: 'CUCモード', custom: 'カスタム' },
 scaleClickToExpand: 'クリックして詳細を表示',
-controls: {
-theme: 'テーマ',
-language: '言語',
-mode: '成績方式'
-},
+controls: { theme: 'テーマ', language: '言語', mode: 'GPAモード' },
 modal: {
-title: '⚙️ カスタムGPA換算ルール',
-subtitle: 'スコア範囲とGPA値の対応関係を追加（範囲が重複しないように）',
+title: 'カスタムGPAルール',
+subtitle: '得点範囲とGPAの対応を設定（重複不可）',
 minScore: '最低得点',
 maxScore: '最高得点',
 gradePoint: 'GPA',
 addRow: 'ルール追加',
 cancel: 'キャンセル',
-confirm: '適用して使用',
-validationError: 'すべてのスコア範囲とGPA値を入力してください',
-overlapError: 'スコア範囲が重複しています。確認してください',
+confirm: '適用',
+validationError: 'すべての得点範囲とGPAを入力してください',
+overlapError: '得点範囲が重複しています',
 rangeError: '最高得点は最低得点より大きくなければなりません',
-duplicateError: '重複または競合するスコア範囲が存在します'
+duplicateError: '重複または競合する得点範囲があります'
 },
 toast: {
-noCourse: '少なくとも1つのコースを追加してください！',
-confirmAll: 'すべてのコースを確認してください！',
+noCourse: '少なくとも1つの科目を追加してください',
+confirmAll: 'すべての科目を確認してください',
 invalidScore: '有効な成績を入力してください（0-100）',
 invalidCredit: '有効な単位数を入力してください',
 noName: '科目名を入力してください',
-zeroCredit: '総単位数は0にできません！',
-confirmed: 'コースが確認されました',
-modeSwitch: '切り替え完了:',
-excellent: '🎉 素晴らしい！非常に優秀な成績です！',
-good: '👍 良い成績です！この調子で！',
-average: '💪 良い進歩です！まだ伸びしろがあります！',
-improve: '📚 頑張り続けましょう！',
-customScaleSet: '✅ カスタム換算ルールを適用しました'
+zeroCredit: '合計単位数は0にできません',
+confirmed: '科目が確認されました',
+modeSwitch: '切り替え完了：',
+excellent: '優秀です！この調子で頑張りましょう！',
+good: '良好です！まだ伸びしろがあります',
+average: 'がんばりましょう！',
+improve: '頑張り続ければ必ずできます',
+customScaleSet: 'カスタムルールを適用しました'
 },
-chart: {
-contribution: '貢献度',
-weighted: '単位×GPA',
-name: '科目',
-gp: 'GPA',
-credits: '単位'
-}
+chart: { contribution: '貢献度', weighted: '単位×GPA', name: '科目', gp: 'GPA', credits: '単位' }
 },
 'ko': {
-title: '🦢 종합 평균 학점 계산기',
-subtitle: '강의 정보를 입력하여 가중 평균 GPA 계산',
-empty: '강의 없음. "강의 추가" 버튼 클릭',
-courseName: '강의명',
+title: '학점계산기',
+subtitle: '과목 정보를 입력하여 가중 평균 GPA 계산',
+empty: '과목이 없습니다. "과목 추가"를 클릭하세요',
+courseName: '과목명',
 courseNamePlaceholder: '예: 미적분학',
 score: '성적',
 credit: '학점',
 confirm: '확인',
 delete: '삭제',
-addCourse: '╋ 강의 추가',
-calc: '🚀 계산하기',
+addCourse: '과목 추가',
+calc: '계산하기',
 resultTitle: '가중 평균 GPA',
-totalCourses: '총 강의 수',
+totalCourses: '과목 수',
 totalCredits: '총 학점',
-chartTitle: '📊 강의별 기여도',
+chartTitle: '과목별 기여도',
 scaleTitle: '학점 기준표',
-scaleRange: '성적 구간',
+scaleRange: '점수 구간',
 below60: '60미만',
-themes: ['보라', '빨강', '파랑', '초록', '노랑', '흑백', 'SF'],
-modes: ['길림대 모드', '중전 모드', '사용자 정의'],
-modeNames: { jida: '길림대 모드', cuc: '중전 모드', custom: '사용자 정의' },
+themes: ['오로라 화이트', '다크 나이트', 'JLU 블루'],
+modes: ['JLU 모드', 'CUC 모드', '사용자 정의'],
+modeNames: { jida: 'JLU 모드', cuc: 'CUC 모드', custom: '사용자 정의' },
 scaleClickToExpand: '클릭하여 상세 보기',
-controls: {
-theme: '테마',
-language: '언어',
-mode: '학점모드'
-},
+controls: { theme: '테마', language: '언어', mode: 'GPA 모드' },
 modal: {
-title: '⚙️ 사용자 정의 학점 환산 규칙',
-subtitle: '점수 범위와 학점 값을 추가하세요 (범위가 중복되지 않도록)',
+title: '사용자 정의 학점 규칙',
+subtitle: '점수 범위와 학점 설정 (중복 불가)',
 minScore: '최저 점수',
 maxScore: '최고 점수',
 gradePoint: '학점',
 addRow: '규칙 추가',
 cancel: '취소',
-confirm: '적용 및 사용',
-validationError: '모든 점수 범위와 학점 값을 입력하세요',
-overlapError: '점수 범위가 중복됩니다. 확인해주세요',
+confirm: '적용',
+validationError: '모든 점수 범위와 학점을 입력하세요',
+overlapError: '점수 범위가 중복됩니다',
 rangeError: '최고 점수는 최저 점수보다 커야 합니다',
-duplicateError: '중복되거나 충돌하는 점수 범위가 존재합니다'
+duplicateError: '중복되거나 충돌하는 점수 범위가 있습니다'
 },
 toast: {
-noCourse: '최소 하나의 강의를 추가하세요!',
-confirmAll: '모든 강의를 확인하세요!',
+noCourse: '최소 한 개의 과목을 추가하세요',
+confirmAll: '모든 과목을 확인하세요',
 invalidScore: '유효한 성적을 입력하세요 (0-100)',
 invalidCredit: '유효한 학점을 입력하세요',
-noName: '강의명을 입력하세요',
-zeroCredit: '총 학점은 0이 될 수 없습니다!',
-confirmed: '강의가 확인되었습니다',
-modeSwitch: '변경 완료:',
-excellent: '🎉 훌륭합니다! 매우 우수한 성적입니다!',
-good: '👍 잘했습니다! 계속 유지하세요!',
-average: '💪 좋은 성적입니다! 발전의 여지가 있습니다!',
-improve: '📚 계속 노력하세요!',
-customScaleSet: '✅ 사용자 정의 환산 규칙이 적용되었습니다'
+noName: '과목명을 입력하세요',
+zeroCredit: '총 학점은 0이 될 수 없습니다',
+confirmed: '과목이 확인되었습니다',
+modeSwitch: '변경 완료: ',
+excellent: '훌륭합니다! 계속 유지하세요!',
+good: '잘했습니다! 발전의 여지가 있습니다',
+average: '계속 노력하세요!',
+improve: '계속 노력하면 반드시 성공합니다',
+customScaleSet: '사용자 정의 규칙이 적용되었습니다'
 },
-chart: {
-contribution: '기여도',
-weighted: '학점×학점',
-name: '강의',
-gp: '학점',
-credits: '학점'
-}
+chart: { contribution: '기여도', weighted: '학점×GPA', name: '과목', gp: 'GPA', credits: '학점' }
 },
 'de': {
-title: '🦢 GPA Rechner',
+title: 'GPA Rechner',
 subtitle: 'Kursdaten eingeben, gewichteten GPA berechnen',
 empty: 'Keine Kurse. "Kurs hinzufügen" klicken',
 courseName: 'Kursname',
@@ -1347,62 +1161,53 @@ score: 'Note',
 credit: 'Credits',
 confirm: 'Bestätigen',
 delete: 'Löschen',
-addCourse: '╋ Kurs hinzufügen',
-calc: '🚀 Berechnen',
+addCourse: 'Kurs hinzufügen',
+calc: 'Berechnen',
 resultTitle: 'Gewichteter GPA',
-totalCourses: 'Kurse insgesamt',
-totalCredits: 'Credits insgesamt',
-chartTitle: '📊 Beitrag nach Kurs',
+totalCourses: 'Kurse',
+totalCredits: 'Credits gesamt',
+chartTitle: 'Kursbeitrag',
 scaleTitle: 'Notenskala',
 scaleRange: 'Notenbereich',
 below60: '<60',
-themes: ['Lila', 'Rot', 'Blau', 'Grün', 'Gelb', 'S&W', 'Sci-Fi'],
-modes: ['Jilin Uni.', 'CUC Modus', 'Benutzerdefiniert'],
-modeNames: { jida: 'Jilin Universität', cuc: 'CUC Modus', custom: 'Benutzerdefiniert' },
-scaleClickToExpand: 'Klicken für Details',
-controls: {
-theme: 'Thema',
-language: 'Sprache',
-mode: 'Notensystem'
-},
+themes: ['Aurora Weiß', 'Dunkle Nacht', 'JLU Blau'],
+modes: ['JLU Modus', 'CUC Modus', 'Benutzerdefiniert'],
+modeNames: { jida: 'JLU Modus', cuc: 'CUC Modus', custom: 'Benutzerdefiniert' },
+scaleClickToExpand: 'Details anzeigen',
+controls: { theme: 'Thema', language: 'Sprache', mode: 'GPA Modus' },
 modal: {
-title: '⚙️ Benutzerdefinierte Notenregeln',
-subtitle: 'Punktbereiche und entsprechende GPA-Werte hinzufügen (Bereiche dürfen sich nicht überschneiden)',
+title: 'Benutzerdefinierte Regeln',
+subtitle: 'Punktbereiche und GPA-Werte festlegen (keine Überschneidungen)',
 minScore: 'Min. Punkte',
 maxScore: 'Max. Punkte',
 gradePoint: 'GPA',
 addRow: 'Regel hinzufügen',
 cancel: 'Abbrechen',
-confirm: 'Anwenden & Verwenden',
+confirm: 'Anwenden',
 validationError: 'Bitte alle Punktbereiche und GPA-Werte ausfüllen',
 overlapError: 'Punktbereiche dürfen sich nicht überschneiden',
 rangeError: 'Max. Punkte müssen größer als Min. Punkte sein',
 duplicateError: 'Doppelte oder konfliktierende Bereiche vorhanden'
 },
 toast: {
-noCourse: 'Bitte mindestens einen Kurs hinzufügen!',
-confirmAll: 'Bitte alle Kurse bestätigen!',
+noCourse: 'Bitte mindestens einen Kurs hinzufügen',
+confirmAll: 'Bitte alle Kurse bestätigen',
 invalidScore: 'Bitte gültige Note eingeben (0-100)',
 invalidCredit: 'Bitte gültige Credits eingeben',
 noName: 'Bitte Kursnamen eingeben',
-zeroCredit: 'Gesamtcredits dürfen nicht 0 sein!',
+zeroCredit: 'Gesamtcredits dürfen nicht 0 sein',
 confirmed: 'Kurs bestätigt',
-modeSwitch: 'Gewechselt zu:',
-excellent: '🎉 Hervorragend! Ausgezeichneter GPA!',
-good: '👍 Sehr gut! Weiter so!',
-average: '💪 Gut gemacht! Noch Raum zur Verbesserung!',
-improve: '📚 Weiterhin viel Erfolg!',
-customScaleSet: '✅ Benutzerdefinierte Regeln angewendet'
+modeSwitch: 'Gewechselt zu: ',
+excellent: 'Hervorragend! Weiter so!',
+good: 'Sehr gut! Noch Raum zur Verbesserung',
+average: 'Nicht schlecht! Weiter arbeiten',
+improve: 'Weiter versuchen, Sie schaffen das',
+customScaleSet: 'Benutzerdefinierte Regeln angewendet'
 },
-chart: {
-contribution: 'Beitrag',
-weighted: 'Credits×GPA',
-name: 'Kurs',
-gp: 'GPA',
-credits: 'Credits'
-}
+chart: { contribution: 'Beitrag', weighted: 'Credits×GPA', name: 'Kurs', gp: 'GPA', credits: 'Credits' }
 }
 };
+
 function calculateGradePoint(score) {
 if (currentMode === 'jida') {
 if (score >= 90) return 4.0;
@@ -1433,6 +1238,7 @@ if (index === -1) return 4.0;
 return cucData[index].gp;
 }
 }
+
 function renderGradeScaleCards() {
 const grid = document.getElementById('scaleCardsGrid');
 const t = translations[currentLang];
@@ -1498,10 +1304,12 @@ grid.appendChild(card);
 });
 }
 }
+
 function toggleGradeScale() {
 const container = document.getElementById('gradeScaleContainer');
 container.classList.toggle('expanded');
 }
+
 function openCustomScaleModal() {
 const modal = document.getElementById('customScaleModal');
 const t = translations[currentLang];
@@ -1523,16 +1331,18 @@ addScaleRow();
 }
 modal.classList.add('show');
 }
+
 function closeCustomScaleModal() {
 document.getElementById('customScaleModal').classList.remove('show');
 const t = translations[currentLang];
 if (customScaleData.length === 0 && previousMode && previousMode !== 'custom') {
 currentMode = previousMode;
 renderDropdowns();
-document.getElementById('scaleHeaderText').textContent = `📋 ${t.scaleTitle} (${t.modeNames[currentMode]})`;
+document.getElementById('scaleHeaderText').textContent = `${t.scaleTitle} (${t.modeNames[currentMode]})`;
 showToast(`${t.toast.modeSwitch} ${t.modeNames[currentMode]}`);
 }
 }
+
 function addScaleRow(min = '', max = '', gp = '') {
 const container = document.getElementById('scaleRowsContainer');
 const t = translations[currentLang];
@@ -1548,13 +1358,14 @@ row.innerHTML = `
 `;
 container.appendChild(row);
 }
+
 function removeScaleRow(rowId) {
 const row = document.getElementById(rowId);
 if (row) {
-row.style.animation = 'fadeIn 0.3s ease reverse';
-setTimeout(() => row.remove(), 300);
+row.remove();
 }
 }
+
 function saveCustomScale() {
 const rows = document.querySelectorAll('.scale-row');
 const t = translations[currentLang];
@@ -1595,7 +1406,7 @@ previousMode = null;
 closeCustomScaleModal();
 applyModeSettings('custom');
 renderGradeScaleCards();
-document.getElementById('scaleHeaderText').textContent = `📋 ${t.scaleTitle} (${t.modeNames.custom})`;
+document.getElementById('scaleHeaderText').textContent = `${t.scaleTitle} (${t.modeNames.custom})`;
 document.getElementById('gradeScaleContainer').classList.remove('expanded');
 const courses = document.querySelectorAll('.course-item');
 courses.forEach(course => {
@@ -1619,10 +1430,11 @@ if (document.getElementById('resultSection').classList.contains('show')) {
 calculateGPA();
 }
 }
+
 function applyModeSettings(mode) {
 const t = translations[currentLang];
 renderGradeScaleCards();
-document.getElementById('scaleHeaderText').textContent = `📋 ${t.scaleTitle} (${t.modeNames[mode]})`;
+document.getElementById('scaleHeaderText').textContent = `${t.scaleTitle} (${t.modeNames[mode]})`;
 document.getElementById('gradeScaleContainer').classList.remove('expanded');
 const courses = document.querySelectorAll('.course-item');
 courses.forEach(course => {
@@ -1646,27 +1458,32 @@ calculateGPA();
 }
 showToast(`${t.toast.modeSwitch} ${t.modeNames[mode]}`);
 }
+
 function renderDropdowns() {
 const t = translations[currentLang];
 const themeDropdown = document.getElementById('themeDropdown');
 themeDropdown.innerHTML = themes.map((theme, index) => `
-<div class="dropdown-item ${currentTheme === theme.id ? 'active' : ''}" onclick="setTheme('${theme.id}', this)">
-${theme.emoji} ${t.themes[index]}
+<div class="dropdown-item ${currentTheme === (theme.id === 'default' ? '' : theme.id) ? 'active' : ''}" 
+onclick="setTheme('${theme.id}', this)">
+${theme.icon} ${t.themes[index]}
 </div>
 `).join('');
 const langDropdown = document.getElementById('langDropdown');
 langDropdown.innerHTML = languages.map(lang => `
-<div class="dropdown-item ${currentLang === lang.code ? 'active' : ''}" onclick="setLanguage('${lang.code}', this)">
-${lang.emoji} ${lang.name}
+<div class="dropdown-item ${currentLang === lang.code ? 'active' : ''}" 
+onclick="setLanguage('${lang.code}', this)">
+${lang.name}
 </div>
 `).join('');
 const modeDropdown = document.getElementById('modeDropdown');
 modeDropdown.innerHTML = modes.map((mode, index) => `
-<div class="dropdown-item ${currentMode === mode.id ? 'active' : ''}" onclick="handleModeSelect('${mode.id}')">
-${mode.emoji} ${t.modes[index]}
+<div class="dropdown-item ${currentMode === mode.id ? 'active' : ''}" 
+onclick="handleModeSelect('${mode.id}')">
+${t.modes[index]}
 </div>
 `).join('');
 }
+
 function handleModeSelect(mode) {
 if (mode === 'custom') {
 if (currentMode !== 'custom') {
@@ -1683,6 +1500,7 @@ document.getElementById('modeDropdown').classList.remove('show');
 applyModeSettings(mode);
 }
 }
+
 function toggleDropdown(id) {
 const dropdown = document.getElementById(id);
 const allDropdowns = document.querySelectorAll('.dropdown-menu');
@@ -1691,18 +1509,26 @@ if (d.id !== id) d.classList.remove('show');
 });
 dropdown.classList.toggle('show');
 }
+
 function setTheme(theme, element) {
+if (theme === 'default') {
+document.body.removeAttribute('data-theme');
+currentTheme = 'default';
+} else {
 document.body.setAttribute('data-theme', theme);
 currentTheme = theme;
+}
 renderDropdowns();
 document.getElementById('themeDropdown').classList.remove('show');
 }
+
 function setLanguage(lang, element) {
 currentLang = lang;
 renderDropdowns();
 document.getElementById('langDropdown').classList.remove('show');
 updateLanguage();
 }
+
 function updateLanguage() {
 const t = translations[currentLang];
 document.getElementById('title').textContent = t.title;
@@ -1717,7 +1543,7 @@ document.getElementById('chartTitle').textContent = t.chartTitle;
 document.getElementById('themeBtn').title = t.controls.theme;
 document.getElementById('langBtn').title = t.controls.language;
 document.getElementById('modeBtn').title = t.controls.mode;
-document.getElementById('scaleHeaderText').textContent = `📋 ${t.scaleTitle} (${t.modeNames[currentMode]})`;
+document.getElementById('scaleHeaderText').textContent = `${t.scaleTitle} (${t.modeNames[currentMode]})`;
 renderGradeScaleCards();
 document.querySelectorAll('.course-item').forEach(course => {
 const id = course.id.split('-')[1];
@@ -1738,17 +1564,20 @@ actionBtn.textContent = t.confirm;
 }
 });
 }
+
 document.addEventListener('click', function(e) {
 if (!e.target.matches('.control-btn')) {
 document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
 }
 });
+
 function showToast(message) {
 const toast = document.getElementById('toast');
 toast.textContent = message;
 toast.classList.add('show');
-setTimeout(() => toast.classList.remove('show'), 3000);
+setTimeout(() => toast.classList.remove('show'), 2500);
 }
+
 function addCourse() {
 courseCount++;
 const list = document.getElementById('courseList');
@@ -1766,11 +1595,13 @@ courseDiv.innerHTML = `
 </div>
 <div class="input-group">
 <label>${t.score}</label>
-<input type="number" id="score-${courseCount}" min="0" max="100" placeholder="0-100" class="no-spinner" onwheel="return false;" required>
+<input type="number" id="score-${courseCount}" min="0" max="100" placeholder="0-100" 
+class="no-spinner" onwheel="return false;" required>
 </div>
 <div class="input-group">
 <label>${t.credit}</label>
-<input type="number" id="credit-${courseCount}" min="0" step="0.5" placeholder="3.0" onwheel="return false;" required>
+<input type="number" id="credit-${courseCount}" min="0" step="0.5" placeholder="3.0" 
+onwheel="return false;" required>
 </div>
 <button class="action-btn" id="action-${courseCount}" onclick="confirmCourse(${courseCount})">${t.confirm}</button>
 <button class="delete-btn" onclick="deleteCourse(${courseCount})" title="${t.delete}">×</button>
@@ -1778,6 +1609,7 @@ courseDiv.innerHTML = `
 list.appendChild(courseDiv);
 setTimeout(() => document.getElementById(`name-${courseCount}`).focus(), 100);
 }
+
 function confirmCourse(id) {
 const nameInput = document.getElementById(`name-${id}`);
 const scoreInput = document.getElementById(`score-${id}`);
@@ -1788,24 +1620,26 @@ const t = translations[currentLang];
 const name = nameInput.value.trim();
 const score = parseFloat(scoreInput.value);
 const credit = parseFloat(creditInput.value);
+
 if (!name) {
 nameInput.classList.add('error-shake');
-setTimeout(() => nameInput.classList.remove('error-shake'), 500);
+setTimeout(() => nameInput.classList.remove('error-shake'), 400);
 showToast(t.toast.noName);
 return;
 }
 if (isNaN(score) || score < 0 || score > 100) {
 scoreInput.classList.add('error-shake');
-setTimeout(() => scoreInput.classList.remove('error-shake'), 500);
+setTimeout(() => scoreInput.classList.remove('error-shake'), 400);
 showToast(t.toast.invalidScore);
 return;
 }
 if (isNaN(credit) || credit < 0) {
 creditInput.classList.add('error-shake');
-setTimeout(() => creditInput.classList.remove('error-shake'), 500);
+setTimeout(() => creditInput.classList.remove('error-shake'), 400);
 showToast(t.toast.invalidCredit);
 return;
 }
+
 const gp = calculateGradePoint(score);
 actionBtn.textContent = gp.toFixed(1);
 actionBtn.classList.add('confirmed');
@@ -1815,6 +1649,7 @@ actionBtn.classList.remove('high', 'mid', 'low');
 if (gp >= 3.0) actionBtn.classList.add('high');
 else if (gp >= 2.0) actionBtn.classList.add('mid');
 else actionBtn.classList.add('low');
+
 nameInput.readOnly = true;
 scoreInput.readOnly = true;
 creditInput.readOnly = true;
@@ -1826,15 +1661,14 @@ courseDiv.dataset.credit = credit;
 courseDiv.dataset.weighted = (gp * credit).toFixed(2);
 showToast(t.toast.confirmed);
 }
+
 function deleteCourse(id) {
 const course = document.getElementById(`course-${id}`);
-course.style.animation = 'fadeIn 0.3s ease reverse';
-setTimeout(() => {
 course.remove();
 renumberCourses();
 checkEmptyState();
-}, 300);
 }
+
 function renumberCourses() {
 const courses = document.querySelectorAll('.course-item');
 courses.forEach((course, index) => {
@@ -1842,6 +1676,7 @@ course.querySelector('.course-number').textContent = index + 1;
 courseCount = index + 1;
 });
 }
+
 function checkEmptyState() {
 const items = document.querySelectorAll('.course-item');
 const emptyState = document.getElementById('emptyState');
@@ -1852,6 +1687,7 @@ document.getElementById('chartSection').classList.remove('show');
 courseCount = 0;
 }
 }
+
 function drawChart(courseData, totalWeighted) {
 const canvas = document.getElementById('contributionChart');
 const ctx = canvas.getContext('2d');
@@ -1860,19 +1696,23 @@ const rect = canvas.getBoundingClientRect();
 canvas.width = rect.width * dpr;
 canvas.height = rect.height * dpr;
 ctx.scale(dpr, dpr);
+
 const width = rect.width, height = rect.height;
 const centerX = width / 2, centerY = height / 2;
-const radius = Math.min(width, height) / 2 - 40;
-const innerRadius = radius * 0.5;
+const radius = Math.min(width, height) / 2 - 30;
+const innerRadius = radius * 0.55;
+
 ctx.clearRect(0, 0, width, height);
 let currentAngle = -Math.PI / 2;
 const t = translations[currentLang];
 courseChartData = [];
+
 courseData.forEach((course, index) => {
 const contribution = course.weighted / totalWeighted;
 const sliceAngle = contribution * 2 * Math.PI;
 const endAngle = currentAngle + sliceAngle;
 const color = colors[index % colors.length];
+
 courseChartData.push({
 startAngle: currentAngle,
 endAngle: endAngle,
@@ -1880,72 +1720,69 @@ course: course,
 contribution: contribution,
 color: color
 });
+
 ctx.beginPath();
 ctx.arc(centerX, centerY, radius, currentAngle, endAngle);
 ctx.arc(centerX, centerY, innerRadius, endAngle, currentAngle, true);
 ctx.closePath();
 ctx.fillStyle = color;
 ctx.fill();
-ctx.strokeStyle = '#fff';
+ctx.strokeStyle = getComputedStyle(document.body).getPropertyValue('--card-bg').trim() || '#ffffff';
 ctx.lineWidth = 2;
 ctx.stroke();
-if (contribution > 0.03) {
-const midAngle = currentAngle + sliceAngle / 2;
-const textRadius = innerRadius + (radius - innerRadius) / 2;
-const textX = centerX + Math.cos(midAngle) * textRadius;
-const textY = centerY + Math.sin(midAngle) * textRadius;
-ctx.fillStyle = '#fff';
-ctx.font = 'bold 11px sans-serif';
-ctx.textAlign = 'center';
-ctx.textBaseline = 'middle';
-const shortName = course.name.length > 4 ? course.name.substring(0, 4) + '..' : course.name;
-ctx.fillText(shortName, textX, textY - 6);
-ctx.font = '10px sans-serif';
-ctx.fillText((contribution * 100).toFixed(1) + '%', textX, textY + 6);
-}
+
 currentAngle = endAngle;
 });
+
 ctx.beginPath();
-ctx.arc(centerX, centerY, innerRadius - 5, 0, 2 * Math.PI);
-ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--card-bg').trim();
+ctx.arc(centerX, centerY, innerRadius - 4, 0, 2 * Math.PI);
+ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--card-bg').trim() || '#ffffff';
 ctx.fill();
+
 ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--text-primary').trim();
-ctx.font = 'bold 14px sans-serif';
+ctx.font = 'bold 13px sans-serif';
 ctx.textAlign = 'center';
 ctx.textBaseline = 'middle';
-ctx.fillText(t.chart.contribution, centerX, centerY - 10);
-ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--text-secondary').trim();
+ctx.fillText(t.chart.contribution, centerX, centerY - 8);
 ctx.font = '11px sans-serif';
-ctx.fillText(t.chart.weighted, centerX, centerY + 10);
+ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--text-secondary').trim();
+ctx.fillText(t.chart.weighted, centerX, centerY + 8);
+
 const legendDiv = document.getElementById('chartLegend');
 legendDiv.innerHTML = '';
 courseData.forEach((course, index) => {
 const contribution = (course.weighted / totalWeighted * 100).toFixed(1);
 const item = document.createElement('div');
 item.className = 'legend-item';
-item.innerHTML = `<div class="legend-color" style="background: ${colors[index % colors.length]}"></div><span>${course.name} (${contribution}%)</span>`;
+item.innerHTML = `<div class="legend-color" style="background: ${colors[index % colors.length]}"></div>
+<span>${course.name} (${contribution}%)</span>`;
 legendDiv.appendChild(item);
 });
 }
+
 function handleChartClick(e) {
 const canvas = document.getElementById('contributionChart');
 const rect = canvas.getBoundingClientRect();
-const x = e.clientX - rect.left;
-const y = e.clientY - rect.top;
+const x = e.offsetX;
+const y = e.offsetY;
 const centerX = rect.width / 2;
 const centerY = rect.height / 2;
-const radius = Math.min(centerX, centerY) - 40;
-const innerRadius = radius * 0.5;
+const radius = Math.min(centerX, centerY) - 30;
+const innerRadius = radius * 0.55;
+
 const dx = x - centerX;
 const dy = y - centerY;
 const distance = Math.sqrt(dx * dx + dy * dy);
+
 if (distance < innerRadius || distance > radius) {
 document.getElementById('chartTooltip').classList.remove('show');
 return;
 }
+
 let angle = Math.atan2(dy, dx);
 angle += Math.PI / 2;
 if (angle < 0) angle += 2 * Math.PI;
+
 const clickedSlice = courseChartData.find(slice => {
 let start = slice.startAngle + Math.PI / 2;
 let end = slice.endAngle + Math.PI / 2;
@@ -1954,27 +1791,25 @@ if (end < 0) end += 2 * Math.PI;
 if (start > end) return angle >= start || angle <= end;
 return angle >= start && angle <= end;
 });
+
 if (clickedSlice) {
 const tooltip = document.getElementById('chartTooltip');
 const t = translations[currentLang];
 tooltip.innerHTML = `
-<strong style="color: ${clickedSlice.color}">${clickedSlice.course.name}</strong>
-<div>${t.chart.gp}: ${clickedSlice.course.gp.toFixed(1)}</div>
-<div>${t.chart.credits}: ${clickedSlice.course.credit}</div>
-<div>${t.chart.weighted}: ${clickedSlice.course.weighted.toFixed(2)}</div>
-<div>${(clickedSlice.contribution * 100).toFixed(1)}%</div>
+<strong style="color: ${clickedSlice.color}">${clickedSlice.course.name}</strong><br>
+${t.chart.gp}: ${clickedSlice.course.gp.toFixed(1)} | 
+${t.chart.credits}: ${clickedSlice.course.credit}<br>
+${(clickedSlice.contribution * 100).toFixed(1)}%
 `;
-let tooltipX = x + 10;
-let tooltipY = y - 10;
-if (tooltipX + 150 > rect.width) tooltipX = x - 160;
-if (tooltipY + 100 > rect.height) tooltipY = y - 100;
-tooltip.style.left = tooltipX + 'px';
-tooltip.style.top = tooltipY + 'px';
+tooltip.style.left = (x + 10) + 'px';
+tooltip.style.top = (y - 10) + 'px';
 tooltip.classList.add('show');
-setTimeout(() => tooltip.classList.remove('show'), 3000);
+setTimeout(() => tooltip.classList.remove('show'), 2000);
 }
 }
+
 document.getElementById('chartWrapper').addEventListener('click', handleChartClick);
+
 function calculateGPA() {
 const courses = document.querySelectorAll('.course-item');
 const t = translations[currentLang];
@@ -1982,13 +1817,14 @@ if (courses.length === 0) {
 showToast(t.toast.noCourse);
 return;
 }
+
 let courseData = [];
 let hasUnconfirmed = false;
 courses.forEach(course => {
 if (course.dataset.confirmed !== 'true') {
 hasUnconfirmed = true;
 course.classList.add('error-shake');
-setTimeout(() => course.classList.remove('error-shake'), 500);
+setTimeout(() => course.classList.remove('error-shake'), 400);
 } else {
 courseData.push({
 name: course.dataset.name,
@@ -1998,38 +1834,47 @@ weighted: parseFloat(course.dataset.weighted)
 });
 }
 });
+
 if (hasUnconfirmed) {
 showToast(t.toast.confirmAll);
 return;
 }
+
 let totalWeighted = 0, totalCredits = 0;
 courseData.forEach(c => {
 totalWeighted += c.weighted;
 totalCredits += c.credit;
 });
+
 if (totalCredits === 0) {
 showToast(t.toast.zeroCredit);
 return;
 }
+
 const gpa = totalWeighted / totalCredits;
+// 修改：保留五位小数
 document.getElementById('gpaValue').textContent = gpa.toFixed(5);
 document.getElementById('totalCourses').textContent = courseData.length;
 document.getElementById('totalCredits').textContent = totalCredits.toFixed(1);
 document.getElementById('resultSection').classList.add('show');
 document.getElementById('chartSection').classList.add('show');
 drawChart(courseData, totalWeighted);
-setTimeout(() => document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
-let message = gpa >= 3.8 ? t.toast.excellent : gpa >= 3.3 ? t.toast.good : gpa >= 2.5 ? t.toast.average : t.toast.improve;
+
+let message = gpa >= 3.7 ? t.toast.excellent : 
+gpa >= 3.0 ? t.toast.good : 
+gpa >= 2.0 ? t.toast.average : t.toast.improve;
 showToast(message);
 }
+
 window.onload = function() {
 renderGradeScaleCards();
 renderDropdowns();
 const t = translations[currentLang];
-document.getElementById('scaleHeaderText').textContent = `📋 ${t.scaleTitle} (${t.modeNames[currentMode]})`;
+document.getElementById('scaleHeaderText').textContent = `${t.scaleTitle} (${t.modeNames[currentMode]})`;
 updateLanguage();
 addCourse();
 };
+
 document.addEventListener('keypress', function(e) {
 if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
 e.preventDefault();
@@ -2040,6 +1885,7 @@ else if (currentField === 'score') document.getElementById(`credit-${currentId}`
 else if (currentField === 'credit') confirmCourse(currentId);
 }
 });
+
 window.addEventListener('resize', function() {
 if (document.getElementById('chartSection').classList.contains('show')) {
 const courses = document.querySelectorAll('.course-item');
