@@ -23,7 +23,8 @@
 ## 🛠️ 功能介绍 | Features Overview
 
 ### 1. 🏠 统一门户主页 | Home Portal
-&lt;img src="/JLU-Toolkit/index.png" alt="主页截图" width="100%" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);"&gt;
+<img width="2506" height="1296" alt="index" src="https://github.com/user-attachments/assets/74575679-845a-49bc-b294-cc85fc0271b3" />
+
 
 - 全工具统一入口，卡片式布局直观清晰
 - 顶部集成全局设置面板（语言切换 + 主题切换）
@@ -32,7 +33,8 @@
 ---
 
 ### 2. 📊 GPA计算器 | GPA Calculator
-&lt;img src="/JLU-Toolkit/gpa.png" alt="GPA计算器截图" width="100%" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);"&gt;
+<img width="2072" height="1606" alt="gpa" src="https://github.com/user-attachments/assets/f3ec7f58-f60b-4c25-aee1-fb4f5303d3e6" />
+
 
 - 支持多种 GPA 计算标准（吉大模式、中传模式、自定义模式）
 - 支持加权平均与算术平均双模式
@@ -40,7 +42,8 @@
 ---
 
 ### 3. 🧭 常用网站导航 | Website Navigation
-&lt;img src="/JLU-Toolkit/website.png" alt="网站导航截图" width="100%" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);"&gt;
+<img width="2448" height="1554" alt="website" src="https://github.com/user-attachments/assets/f348e88a-0bb1-4ad3-a1a1-ee56d032eebe" />
+
 
 - 收录吉林大学教务系统、图书馆、邮箱等官方入口
 - 分类整理学术资源、生活服务等常用链接
@@ -48,7 +51,8 @@
 ---
 
 ### 4. 🏆 竞赛信息查询 | Competition Info
-&lt;img src="/JLU-Toolkit/competition.png" alt="竞赛信息截图" width="100%" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);"&gt;
+<img width="2442" height="1574" alt="competition" src="https://github.com/user-attachments/assets/b691ff3b-3cc7-4c3f-8ce3-2d9d757336bf" />
+
 
 - 收录吉林大学官方认定的 A/B/C 类学科竞赛列表（共207项）
 - 支持按竞赛名称搜索，按级别筛选
@@ -57,7 +61,8 @@
 ---
 
 ### 5. 🍅 任务清单 & 番茄钟 | Todo & Pomodoro
-&lt;img src="/JLU-Toolkit/pomodoro.png" alt="番茄钟截图" width="100%" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);"&gt;
+<img width="2150" height="1584" alt="pomodoro" src="https://github.com/user-attachments/assets/c391d235-6f01-41f0-b828-3de0e07c303f" />
+
 
 - 任务清单支持增删改查，数据本地持久化
 - 内置番茄工作法计时器（25分钟专注 + 5分钟休息）
