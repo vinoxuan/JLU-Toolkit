@@ -6,97 +6,57 @@
 <title>吉林大学网站导航 | JLU Website Navigation</title>
 <style>
 :root {
---primary: #667eea;
---primary-dark: #764ba2;
---secondary: #11998e;
---secondary-dark: #38ef7d;
---danger: #ff6b6b;
---bg-gradient-start: #667eea;
---bg-gradient-end: #764ba2;
---card-bg: rgba(255, 255, 255, 0.95);
---text-primary: #333;
---text-secondary: #666;
---border-color: #e0e0e0;
---input-bg: #fff;
---item-bg: #f8f9fa;
---item-hover: #f0f4ff;
---confirmed-bg: #f0f4ff;
+--primary: #2c5aa0;
+--primary-light: #4a7ab8;
+--bg: #f8f9fa;
+--card-bg: #ffffff;
+--text-primary: #2c3e50;
+--text-secondary: #5a6c7d;
+--border-color: #e1e8ed;
+--input-bg: #ffffff;
+--item-bg: #f1f3f4;
+--item-hover: #e8eaed;
+--confirmed-bg: #e8f0fe;
+--shadow: rgba(0, 0, 0, 0.08);
+--danger: #dc3545;
+--success: #28a745;
+--warning: #ffc107;
+}
+
+[data-theme="dark"] {
+--primary: #5b9bd5;
+--primary-light: #7ab8e8;
+--bg: #1a1d21;
+--card-bg: #242830;
+--text-primary: #e8eaed;
+--text-secondary: #9aa0a6;
+--border-color: #3c4043;
+--input-bg: #2d3139;
+--item-bg: #2d3139;
+--item-hover: #3c4043;
+--confirmed-bg: #1e3a5f;
 --shadow: rgba(0, 0, 0, 0.3);
+--danger: #ef5350;
+--success: #66bb6a;
+--warning: #ffa726;
 }
 
-[data-theme="red"] {
---primary: #ff6b6b;
---primary-dark: #ee5a6f;
---bg-gradient-start: #ff6b6b;
---bg-gradient-end: #ee5a6f;
---secondary: #ff8f8f;
---secondary-dark: #ffb4b4;
---item-hover: #ffe6e6;
---confirmed-bg: #fff0f0;
-}
-
-[data-theme="blue"] {
---primary: #4facfe;
---primary-dark: #00f2fe;
---bg-gradient-start: #4facfe;
---bg-gradient-end: #00f2fe;
---secondary: #00c9ff;
---secondary-dark: #92fe9d;
---item-hover: #dbeafe;
---confirmed-bg: #e6f4ff;
-}
-
-[data-theme="green"] {
---primary: #11998e;
---primary-dark: #38ef7d;
---bg-gradient-start: #11998e;
---bg-gradient-end: #38ef7d;
---secondary: #0ba360;
---secondary-dark: #3cba92;
---item-hover: #d1fae5;
---confirmed-bg: #e6fff3;
-}
-
-[data-theme="yellow"] {
---primary: #f093fb;
---primary-dark: #f5576c;
---bg-gradient-start: #fa709a;
---bg-gradient-end: #fee140;
---secondary: #f5576c;
---secondary-dark: #ff9a9e;
---item-hover: #fef3c7;
---confirmed-bg: #fff9e6;
-}
-
-[data-theme="bw"] {
---primary: #2c3e50;
---primary-dark: #34495e;
---bg-gradient-start: #2c3e50;
---bg-gradient-end: #4a5568;
---secondary: #5a6c7d;
---secondary-dark: #7f8c8d;
---card-bg: rgba(255, 255, 255, 0.98);
---item-hover: #dde4e6;
---confirmed-bg: #ecf0f1;
---shadow: rgba(0, 0, 0, 0.5);
-}
-
-[data-theme="scifi"] {
---primary: #00d2ff;
---primary-dark: #3a7bd5;
---bg-gradient-start: #00d2ff;
---bg-gradient-end: #3a7bd5;
---secondary: #00ff87;
---secondary-dark: #60efff;
---card-bg: rgba(10, 20, 40, 0.95);
---text-primary: #e0f7ff;
---text-secondary: #90caf9;
---border-color: #00d2ff;
---input-bg: rgba(0, 210, 255, 0.1);
---item-bg: rgba(0, 210, 255, 0.05);
---item-hover: rgba(0, 210, 255, 0.15);
---confirmed-bg: rgba(0, 255, 135, 0.1);
---shadow: rgba(0, 210, 255, 0.3);
+[data-theme="jlu"] {
+--primary: #1e4d8c;
+--primary-light: #2c5aa0;
+--bg: #e8f4f8;
+--card-bg: #ffffff;
+--text-primary: #1a2951;
+--text-secondary: #4a5568;
+--border-color: #c5d9ed;
+--input-bg: #fafcfe;
+--item-bg: #f0f7ff;
+--item-hover: #e1effe;
+--confirmed-bg: #d4e6f7;
+--shadow: rgba(30, 77, 140, 0.15);
+--danger: #c53030;
+--success: #276749;
+--warning: #dd6b20;
 }
 
 * {
@@ -106,32 +66,32 @@ box-sizing: border-box;
 }
 
 body {
-font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+background: var(--bg);
 min-height: 100vh;
 padding: 20px;
 color: var(--text-primary);
+line-height: 1.6;
 }
 
 .container {
+width: 100%;
 max-width: 1200px;
 margin: 0 auto;
 position: relative;
-width: 100%;
 }
 
 /* Header - 提升层级确保在下拉菜单和按钮下方内容之上 */
 .header {
 background: var(--card-bg);
-backdrop-filter: blur(10px);
-border-radius: 20px;
-padding: 30px;
+border-radius: 12px;
+padding: 50px 40px 40px 40px;
 margin-bottom: 30px;
-box-shadow: 0 10px 40px var(--shadow);
+box-shadow: 0 2px 12px var(--shadow);
 position: relative;
 z-index: 100;
 animation: slideIn 0.5s ease;
-width: 100%;
+border: 1px solid var(--border-color);
 }
 
 @keyframes slideIn {
@@ -139,53 +99,54 @@ from { opacity: 0; transform: translateY(-20px); }
 to { opacity: 1; transform: translateY(0); }
 }
 
+/* 控制面板 - 参考GPA计算器风格 */
 .control-panel {
 position: absolute;
 top: 15px;
 left: 15px;
 display: flex;
-gap: 10px;
+flex-direction: row;
+gap: 8px;
+align-items: center;
 z-index: 200;
 }
 
 .control-btn {
-border: none;
-background: rgba(255, 255, 255, 0.9);
-backdrop-filter: blur(10px);
-border-radius: 50%;
-width: 38px;
-height: 38px;
+border: 1px solid var(--border-color);
+background: var(--card-bg);
+border-radius: 6px;
+width: 32px;
+height: 32px;
 cursor: pointer;
-font-size: 18px;
-transition: all 0.3s ease;
+font-size: 14px;
+transition: all 0.2s;
 display: flex;
 align-items: center;
 justify-content: center;
-box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-text-decoration: none;
-color: inherit;
+color: var(--text-secondary);
+position: relative;
+font-weight: 500;
 }
 
 .control-btn:hover {
-transform: scale(1.1);
-background: rgba(255, 255, 255, 1);
-box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+background: var(--item-hover);
+border-color: var(--primary);
+color: var(--primary);
 }
 
-/* 下拉菜单定位优化，紧贴按钮 */
+/* 下拉菜单 - 参考GPA计算器风格 */
 .dropdown-menu {
 display: none;
 position: absolute;
-top: 45px;
+top: 38px;
 left: 0;
-background: white;
-border-radius: 12px;
+background: var(--card-bg);
+border-radius: 8px;
 padding: 6px;
-box-shadow: 0 8px 32px rgba(0,0,0,0.25);
-min-width: 150px;
+box-shadow: 0 4px 12px var(--shadow);
+min-width: 120px;
 z-index: 300;
-max-height: 70vh;
-overflow-y: auto;
+border: 1px solid var(--border-color);
 }
 
 .dropdown-menu.show {
@@ -199,43 +160,39 @@ to { opacity: 1; transform: translateY(0); }
 }
 
 .dropdown-item {
-padding: 10px 14px;
-border-radius: 8px;
+padding: 8px 12px;
+border-radius: 4px;
 cursor: pointer;
-font-size: 14px;
-transition: all 0.2s;
-color: #333;
+font-size: 13px;
+transition: all 0.15s;
+color: var(--text-primary);
 display: flex;
 align-items: center;
 gap: 8px;
-margin-bottom: 2px;
 }
 
 .dropdown-item:hover {
-background: #f5f5f5;
+background: var(--item-hover);
 }
 
 .dropdown-item.active {
-background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+background: var(--primary);
 color: white;
 }
 
 h1 {
 text-align: center;
-font-size: 2em;
-margin-bottom: 10px;
-padding-top: 10px;
-background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
+color: var(--text-primary);
+margin-bottom: 8px;
+font-size: 1.8em;
+font-weight: 600;
 }
 
 .subtitle {
 text-align: center;
 color: var(--text-secondary);
 margin-bottom: 25px;
-font-size: 0.95em;
+font-size: 0.9em;
 }
 
 /* Search Box */
@@ -243,155 +200,122 @@ font-size: 0.95em;
 max-width: 600px;
 margin: 0 auto;
 position: relative;
-width: 100%;
 }
 
 .search-input {
 width: 100%;
-padding: 15px 20px 15px 50px;
-border: 2px solid var(--border-color);
-border-radius: 50px;
-font-size: 16px;
+padding: 12px 20px 12px 45px;
+border: 1px solid var(--border-color);
+border-radius: 8px;
+font-size: 15px;
 background: var(--input-bg);
 color: var(--text-primary);
-transition: all 0.3s ease;
+transition: all 0.2s;
 outline: none;
 }
 
 .search-input:focus {
 border-color: var(--primary);
-box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
+}
+
+[data-theme="dark"] .search-input:focus {
+box-shadow: 0 0 0 3px rgba(91, 155, 213, 0.2);
 }
 
 .search-icon {
 position: absolute;
-left: 20px;
+left: 15px;
 top: 50%;
 transform: translateY(-50%);
-font-size: 20px;
+font-size: 18px;
 color: var(--text-secondary);
 pointer-events: none;
 }
 
 .clear-btn {
 position: absolute;
-right: 15px;
+right: 12px;
 top: 50%;
 transform: translateY(-50%);
 background: none;
 border: none;
-font-size: 18px;
+font-size: 16px;
 cursor: pointer;
 color: var(--text-secondary);
 display: none;
-padding: 5px;
+padding: 4px 8px;
+border-radius: 4px;
+}
+
+.clear-btn:hover {
+background: var(--item-hover);
 }
 
 .clear-btn.show {
 display: block;
 }
 
-/* Grid - 降低层级确保不遮挡Header中的菜单 */
+/* Grid */
 .sites-grid {
 display: grid;
 grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-gap: 20px;
+gap: 16px;
 margin-bottom: 30px;
 position: relative;
 z-index: 1;
-width: 100%;
 }
 
-/* 移动端适配 - 统一所有卡片宽度 */
+/* 移动端适配 */
 @media (max-width: 768px) {
-body {
-padding: 10px;
-}
+body { padding: 10px; }
 
-.container {
-padding: 0;
-width: 100%;
-}
+.container { padding: 0; }
 
 .header {
-padding: 70px 20px 25px 20px;
+padding: 50px 20px 25px 20px;
 margin-bottom: 20px;
-border-radius: 16px;
-width: 100%;
 }
 
 .sites-grid {
 grid-template-columns: 1fr;
 gap: 12px;
-width: 100%;
 }
 
-.control-panel {
-position: absolute;
-top: 15px;
-left: 15px;
-transform: none;
+.control-panel { top: 12px; left: 12px; }
+
+h1 { font-size: 1.5em; }
+
+.subtitle { font-size: 0.85em; margin-bottom: 20px; }
+
+.search-input { padding: 10px 40px 10px 40px; font-size: 14px; }
 }
 
-.dropdown-menu {
-left: 0;
-top: 45px;
-}
-
-h1 {
-font-size: 1.5em;
-padding-top: 5px;
-}
-
-.subtitle {
-font-size: 0.9em;
-margin-bottom: 20px;
-}
-
-.search-input {
-padding: 12px 45px 12px 45px;
-font-size: 15px;
-}
-}
-
-/* Site Card - 不创建新的层上下文避免干扰 */
+/* Site Card - 参考GPA计算器卡片风格 */
 .site-card {
 background: var(--card-bg);
-border-radius: 16px;
-padding: 20px;
+border-radius: 8px;
+padding: 16px;
 cursor: pointer;
-transition: all 0.3s ease;
-border: 2px solid transparent;
-box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+transition: all 0.2s;
+border: 1px solid var(--border-color);
+box-shadow: 0 2px 8px var(--shadow);
 display: flex;
 align-items: center;
-gap: 15px;
+gap: 12px;
 position: relative;
-width: 100%;
 }
 
 @media (max-width: 768px) {
-.site-card {
-border-radius: 12px;
-padding: 16px;
-}
-
-.site-emoji {
-font-size: 2em;
-}
-
-.site-name {
-font-size: 1em;
-}
-
-.site-url {
-font-size: 0.75em;
-}
+.site-card { padding: 14px; }
+.site-emoji { font-size: 2em; }
+.site-name { font-size: 0.95em; }
+.site-url { font-size: 0.75em; }
 }
 
 .site-card:hover {
-transform: translateY(-3px);
-box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+transform: translateY(-2px);
+box-shadow: 0 4px 12px var(--shadow);
 border-color: var(--primary);
 }
 
@@ -400,7 +324,7 @@ display: none;
 }
 
 .site-emoji {
-font-size: 2.5em;
+font-size: 2.2em;
 line-height: 1;
 flex-shrink: 0;
 }
@@ -412,8 +336,8 @@ min-width: 0;
 
 .site-name {
 font-weight: 600;
-font-size: 1.1em;
-margin-bottom: 5px;
+font-size: 1em;
+margin-bottom: 4px;
 color: var(--text-primary);
 white-space: nowrap;
 overflow: hidden;
@@ -429,7 +353,7 @@ text-overflow: ellipsis;
 font-family: monospace;
 }
 
-/* Modal */
+/* Modal - 参考GPA计算器弹窗风格 */
 .modal-overlay {
 display: none;
 position: fixed;
@@ -437,12 +361,11 @@ top: 0;
 left: 0;
 width: 100%;
 height: 100%;
-background: rgba(0, 0, 0, 0.6);
-backdrop-filter: blur(5px);
+background: rgba(0, 0, 0, 0.5);
 z-index: 2000;
 justify-content: center;
 align-items: center;
-animation: fadeIn 0.3s ease;
+backdrop-filter: blur(4px);
 padding: 20px;
 }
 
@@ -452,14 +375,13 @@ display: flex;
 
 .modal-content {
 background: var(--card-bg);
-border-radius: 24px;
-padding: 35px;
-max-width: 500px;
+border-radius: 12px;
+padding: 32px;
+max-width: 450px;
 width: 100%;
-box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+box-shadow: 0 4px 20px var(--shadow);
+border: 1px solid var(--border-color);
 animation: scaleIn 0.3s ease;
-border: 2px solid var(--border-color);
-box-sizing: border-box;
 }
 
 @keyframes scaleIn {
@@ -469,108 +391,84 @@ to { opacity: 1; transform: scale(1); }
 
 .modal-header {
 text-align: center;
-margin-bottom: 25px;
-width: 100%;
+margin-bottom: 20px;
 }
 
 .modal-emoji {
-font-size: 4em;
-margin-bottom: 15px;
+font-size: 3.5em;
+margin-bottom: 12px;
 display: block;
 }
 
 .modal-title {
-font-size: 1.5em;
-font-weight: 700;
+font-size: 1.3em;
+font-weight: 600;
 color: var(--text-primary);
 margin-bottom: 8px;
-width: 100%;
-text-align: center;
 }
 
 .modal-url {
-font-size: 0.9em;
+font-size: 0.85em;
 color: var(--text-secondary);
 word-break: break-all;
 background: var(--item-bg);
-padding: 12px;
-border-radius: 8px;
-margin: 15px 0;
+padding: 10px 12px;
+border-radius: 6px;
+margin: 16px 0;
 font-family: monospace;
-width: 100%;
+border: 1px solid var(--border-color);
 }
 
 .modal-actions {
 display: flex;
 gap: 12px;
-margin-top: 25px;
-width: 100%;
-justify-content: center;
+margin-top: 24px;
 }
 
 .modal-btn {
 flex: 1;
-padding: 14px 24px;
+padding: 10px 20px;
 border: none;
-border-radius: 12px;
-font-weight: 700;
-font-size: 16px;
+border-radius: 6px;
+font-weight: 500;
+font-size: 14px;
 cursor: pointer;
-transition: all 0.3s;
-max-width: 200px;
+transition: all 0.2s;
 }
 
 .modal-btn-primary {
-background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+background: var(--primary);
 color: white;
 }
 
 .modal-btn-primary:hover {
-transform: translateY(-2px);
-box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+background: var(--primary-light);
 }
 
 .modal-btn-secondary {
 background: var(--item-bg);
-color: var(--text-secondary);
-border: 2px solid var(--border-color);
+color: var(--text-primary);
+border: 1px solid var(--border-color);
 }
 
 .modal-btn-secondary:hover {
-background: var(--border-color);
+background: var(--item-hover);
 }
 
-/* 移动端弹窗适配 - 垂直排列且与标题栏同宽 */
+/* 移动端弹窗适配 */
 @media (max-width: 480px) {
 .modal-content {
-padding: 25px 20px;
+padding: 24px 20px;
 margin: 10px;
-max-width: 100%;
-border-radius: 16px;
 }
 
-.modal-title {
-font-size: 1.3em;
-}
+.modal-title { font-size: 1.2em; }
 
-.modal-actions {
-flex-direction: column;
-gap: 12px;
-align-items: center;
-margin-top: 20px;
-}
+.modal-actions { flex-direction: column; gap: 10px; }
 
-.modal-btn {
-width: 100%;
-max-width: 100%;
-flex: none;
-padding: 14px 20px;
-font-size: 16px;
-}
+.modal-btn { width: 100%; }
 
-.modal-emoji {
-font-size: 3em;
-}
+.modal-emoji { font-size: 3em; }
 }
 
 /* No Results */
@@ -578,45 +476,34 @@ font-size: 3em;
 text-align: center;
 padding: 60px 20px;
 color: var(--text-secondary);
-font-size: 1.2em;
+font-size: 1.1em;
 display: none;
 }
 
-.no-results.show {
-display: block;
-}
+.no-results.show { display: block; }
 
 .no-results-icon {
-font-size: 4em;
-margin-bottom: 20px;
+font-size: 3.5em;
+margin-bottom: 16px;
 opacity: 0.5;
 }
 
 @media (max-width: 768px) {
-.no-results {
-padding: 40px 20px;
-}
-
-.no-results-icon {
-font-size: 3em;
-}
+.no-results { padding: 40px 20px; }
+.no-results-icon { font-size: 3em; }
 }
 
 /* Footer */
 .footer {
 text-align: center;
 padding: 30px;
-color: white;
-opacity: 0.9;
+color: var(--text-secondary);
 font-size: 0.9em;
-text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+opacity: 0.8;
 }
 
 @media (max-width: 768px) {
-.footer {
-padding: 20px;
-font-size: 0.85em;
-}
+.footer { padding: 20px; font-size: 0.85em; }
 }
 
 /* 回顶按钮 */
@@ -624,30 +511,29 @@ font-size: 0.85em;
 position: fixed;
 bottom: 30px;
 right: 30px;
-width: 50px;
-height: 50px;
+width: 44px;
+height: 44px;
 border-radius: 50%;
 background: var(--card-bg);
-border: 2px solid var(--border-color);
-box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+border: 1px solid var(--border-color);
+box-shadow: 0 2px 8px var(--shadow);
 cursor: pointer;
-font-size: 20px;
+font-size: 18px;
 display: flex;
 align-items: center;
 justify-content: center;
 opacity: 0;
 visibility: hidden;
-transition: all 0.3s ease;
+transition: all 0.2s;
 z-index: 99;
 color: var(--text-primary);
 }
 
 .back-to-top:hover {
-transform: translateY(-5px) scale(1.1);
-box-shadow: 0 8px 25px rgba(0,0,0,0.3);
 background: var(--primary);
 color: white;
 border-color: var(--primary);
+transform: translateY(-2px);
 }
 
 .back-to-top.show {
@@ -659,9 +545,9 @@ visibility: visible;
 .back-to-top {
 bottom: 20px;
 right: 20px;
-width: 45px;
-height: 45px;
-font-size: 18px;
+width: 40px;
+height: 40px;
+font-size: 16px;
 }
 }
 </style>
@@ -672,9 +558,9 @@ font-size: 18px;
 <div class="header">
 <div class="control-panel">
 <button class="control-btn" onclick="window.location.href='/JLU-Toolkit/index.html'" title="返回首页">🏠</button>
-<button class="control-btn" onclick="toggleDropdown('themeDropdown')" title="Theme">🎨</button>
+<button class="control-btn" id="themeBtn" onclick="toggleDropdown('themeDropdown')" title="切换主题">☀</button>
 <div class="dropdown-menu" id="themeDropdown"></div>
-<button class="control-btn" onclick="toggleDropdown('langDropdown')" title="Language">🌐</button>
+<button class="control-btn" id="langBtn" onclick="toggleDropdown('langDropdown')" title="切换语言">简</button>
 <div class="dropdown-menu" id="langDropdown"></div>
 </div>
 <h1 id="pageTitle">🦢 吉林大学网站导航</h1>
@@ -708,7 +594,7 @@ font-size: 18px;
 <div class="modal-title" id="modalSiteName">网站名称</div>
 </div>
 <div class="modal-url" id="modalUrl">https://example.com</div>
-<div style="text-align: center; color: var(--text-secondary); font-size: 0.95em; margin: 20px 0;" id="modalConfirmText">
+<div style="text-align: center; color: var(--text-secondary); font-size: 0.9em; margin: 16px 0;" id="modalConfirmText">
 确定要跳转到该网站吗？
 </div>
 <div class="modal-actions">
@@ -723,7 +609,21 @@ let currentLang = 'zh-CN';
 let currentTheme = 'default';
 let currentUrl = '';
 
-// Translations
+// 三种主题配置，带图标（与GPA计算器一致）
+const themes = [
+{ id: 'default', name: '极光白', icon: '☀' },
+{ id: 'dark', name: '暗夜黑', icon: '☾' },
+{ id: 'jlu', name: '吉大蓝', icon: '◆' }
+];
+
+// 三种语言配置，带图标（与GPA计算器一致）
+const languages = [
+{ code: 'zh-CN', name: '简体中文', icon: '简' },
+{ code: 'zh-TW', name: '繁體中文', icon: '繁' },
+{ code: 'en', name: 'English', icon: 'EN' }
+];
+
+// Translations（保留原有翻译内容）
 const translations = {
 'zh-CN': {
 title: '🦢 吉林大学网站导航',
@@ -735,9 +635,10 @@ cancel: '取消',
 confirm: '确认跳转',
 controls: {
 theme: '主题',
-language: '语言'
+language: '语言',
+home: '返回首页'
 },
-themes: ['紫色', '红色', '蓝色', '绿色', '黄色', '黑白', '科幻'],
+themes: ['极光白', '暗夜黑', '吉大蓝'],
 langs: ['简体中文', '繁體中文', 'English']
 },
 'zh-TW': {
@@ -750,9 +651,10 @@ cancel: '取消',
 confirm: '確認跳轉',
 controls: {
 theme: '主題',
-language: '語言'
+language: '語言',
+home: '返回首頁'
 },
-themes: ['紫色', '紅色', '藍色', '綠色', '黃色', '黑白', '科幻'],
+themes: ['極光白', '暗夜黑', '吉大藍'],
 langs: ['简体中文', '繁體中文', 'English']
 },
 'en': {
@@ -765,14 +667,15 @@ cancel: 'Cancel',
 confirm: 'Confirm',
 controls: {
 theme: 'Theme',
-language: 'Language'
+language: 'Language',
+home: 'Home'
 },
-themes: ['Purple', 'Red', 'Blue', 'Green', 'Yellow', 'B&W', 'Sci-Fi'],
+themes: ['Aurora White', 'Dark Night', 'JLU Blue'],
 langs: ['简体中文', '繁體中文', 'English']
 }
 };
 
-// Website Data
+// Website Data（保留原有数据）
 const websites = [
 { emoji: '🏛️', url: 'https://www.jlu.edu.cn/', name: { 'zh-CN': '吉大官网', 'zh-TW': '吉大官網', 'en': 'JLU Official Website' }},
 { emoji: '📚', url: 'https://iedu.jlu.edu.cn/', name: { 'zh-CN': '教务管理系统', 'zh-TW': '教務管理系統', 'en': 'Academic Management System' }},
@@ -799,22 +702,6 @@ const websites = [
 { emoji: '📋', url: 'http://sais.jlu.edu.cn/', name: { 'zh-CN': '学生事务管理系统', 'zh-TW': '學生事務管理系統', 'en': 'Student Affairs System' }}
 ];
 
-const themes = [
-{ id: 'default', emoji: '🟣' },
-{ id: 'red', emoji: '🔴' },
-{ id: 'blue', emoji: '🔵' },
-{ id: 'green', emoji: '🟢' },
-{ id: 'yellow', emoji: '🟡' },
-{ id: 'bw', emoji: '⚫' },
-{ id: 'scifi', emoji: '🚀' }
-];
-
-const languages = [
-{ code: 'zh-CN', emoji: '🇨🇳' },
-{ code: 'zh-TW', emoji: '🇭🇰' },
-{ code: 'en', emoji: '🇺🇸' }
-];
-
 function init() {
 renderDropdowns();
 renderSites();
@@ -824,20 +711,19 @@ initBackToTop();
 
 function renderDropdowns() {
 const t = translations[currentLang];
-// Theme dropdown
 const themeDropdown = document.getElementById('themeDropdown');
 themeDropdown.innerHTML = themes.map((theme, index) => `
 <div class="dropdown-item ${currentTheme === theme.id ? 'active' : ''}"
 onclick="setTheme('${theme.id}')">
-${theme.emoji} ${t.themes[index]}
+${theme.icon} ${t.themes[index]}
 </div>
 `).join('');
-// Language dropdown
+
 const langDropdown = document.getElementById('langDropdown');
-langDropdown.innerHTML = languages.map((lang, index) => `
+langDropdown.innerHTML = languages.map((lang) => `
 <div class="dropdown-item ${currentLang === lang.code ? 'active' : ''}"
 onclick="setLanguage('${lang.code}')">
-${lang.emoji} ${lang.code === 'zh-CN' ? '简体中文' : lang.code === 'zh-TW' ? '繁體中文' : 'English'}
+${lang.icon} ${lang.name}
 </div>
 `).join('');
 }
@@ -865,23 +751,37 @@ if (d.id !== id) d.classList.remove('show');
 dropdown.classList.toggle('show');
 }
 
-function setTheme(theme) {
-document.body.setAttribute('data-theme', theme);
-currentTheme = theme;
+function setTheme(themeId) {
+currentTheme = themeId;
+if (themeId === 'default') {
+document.body.removeAttribute('data-theme');
+} else {
+document.body.setAttribute('data-theme', themeId);
+}
+// 更新主题按钮图标
+const themeObj = themes.find(t => t.id === themeId);
+if (themeObj) {
+document.getElementById('themeBtn').textContent = themeObj.icon;
+}
 renderDropdowns();
-document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+document.getElementById('themeDropdown').classList.remove('show');
 }
 
-function setLanguage(lang) {
-currentLang = lang;
-document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+function setLanguage(langCode) {
+currentLang = langCode;
+// 更新语言按钮图标
+const langObj = languages.find(l => l.code === langCode);
+if (langObj) {
+document.getElementById('langBtn').textContent = langObj.icon;
+}
+renderDropdowns();
+document.getElementById('langDropdown').classList.remove('show');
 updateLanguage();
-// Update site names
+// 更新网站名称
 websites.forEach((site, index) => {
 const nameEl = document.querySelector(`[data-key="name-${index}"]`);
 if (nameEl) nameEl.textContent = site.name[currentLang];
 });
-renderDropdowns();
 }
 
 function updateLanguage() {
@@ -893,6 +793,8 @@ document.getElementById('noResultsText').textContent = t.noResults;
 document.getElementById('modalConfirmText').textContent = t.confirmText;
 document.getElementById('modalCancel').textContent = t.cancel;
 document.getElementById('modalConfirm').textContent = t.confirm;
+document.getElementById('themeBtn').title = t.controls.theme;
+document.getElementById('langBtn').title = t.controls.language;
 }
 
 function handleSearch() {
@@ -948,7 +850,6 @@ closeModal();
 // 回顶按钮功能
 function initBackToTop() {
 const backToTopBtn = document.getElementById('backToTop');
-// 监听滚动事件
 window.addEventListener('scroll', function() {
 if (window.pageYOffset > 300) {
 backToTopBtn.classList.add('show');
