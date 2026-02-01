@@ -114,6 +114,7 @@ align-items: center;
 justify-content: center;
 color: var(--text-secondary);
 position: relative;
+font-weight: 500;
 }
 
 .control-btn:hover {
@@ -743,9 +744,11 @@ border: 1px solid var(--border-color);
 <div class="container">
 <div class="control-panel">
 <button class="control-btn" onclick="window.location.href='/JLU-Toolkit/index.html'" title="返回首页">←</button>
+<!-- 主题按钮，初始显示☀（极光白） -->
 <button class="control-btn" id="themeBtn" onclick="toggleDropdown('themeDropdown')" title="切换主题">☀</button>
 <div class="dropdown-menu" id="themeDropdown"></div>
-<button class="control-btn" id="langBtn" onclick="toggleDropdown('langDropdown')" title="切换语言">文</button>
+<!-- 语言按钮，初始显示"简"（简体中文） -->
+<button class="control-btn" id="langBtn" onclick="toggleDropdown('langDropdown')" title="切换语言">简</button>
 <div class="dropdown-menu" id="langDropdown"></div>
 <button class="control-btn" id="modeBtn" onclick="toggleDropdown('modeDropdown')" title="GPA模式">◈</button>
 <div class="dropdown-menu" id="modeDropdown"></div>
@@ -767,7 +770,6 @@ border: 1px solid var(--border-color);
 
 <div id="resultSection" class="result-section">
 <div class="result-title" id="resultTitle">加权平均绩点</div>
-<!-- 修改：初始显示为 0.00000 -->
 <div class="gpa-value" id="gpaValue">0.00000</div>
 <div class="result-details">
 <div class="detail-item">
@@ -830,19 +832,18 @@ const colors = [
 '#6f42c1', '#20c997', '#fd7e14', '#e83e8c', '#17a2b8'
 ];
 
+// 三种主题配置，带图标
 const themes = [
 { id: 'default', name: '极光白', icon: '☀' },
 { id: 'dark', name: '暗夜黑', icon: '☾' },
-{ id: 'jlu', name: '吉大蓝', icon: '▪' }
+{ id: 'jlu', name: '吉大蓝', icon: '◆' }
 ];
 
+// 三种语言配置，带图标（简中/繁中/英语）
 const languages = [
-{ code: 'zh-CN', name: '简体中文' },
-{ code: 'zh-TW', name: '繁體中文' },
-{ code: 'en', name: 'English' },
-{ code: 'ja', name: '日本語' },
-{ code: 'ko', name: '한국어' },
-{ code: 'de', name: 'Deutsch' }
+{ code: 'zh-CN', name: '简体中文', icon: '简' },
+{ code: 'zh-TW', name: '繁體中文', icon: '繁' },
+{ code: 'en', name: 'English', icon: 'EN' }
 ];
 
 const modes = [
@@ -875,6 +876,7 @@ const cucData = [
 {score: 100, gp: 4.00}
 ];
 
+// 只保留简中、繁中、英语的翻译
 const translations = {
 'zh-CN': {
 title: '综合绩点计算器',
@@ -1040,171 +1042,6 @@ improve: 'Keep trying, you can do it',
 customScaleSet: 'Custom rules applied'
 },
 chart: { contribution: 'Contribution', weighted: 'Credits×GPA', name: 'Course', gp: 'GPA', credits: 'Credits' }
-},
-'ja': {
-title: 'GPA計算機',
-subtitle: '科目情報を入力して加重平均GPAを計算',
-empty: '科目がありません。「科目を追加」をクリック',
-courseName: '科目名',
-courseNamePlaceholder: '例：微積分学',
-score: '成績',
-credit: '単位',
-confirm: '確認',
-delete: '削除',
-addCourse: '科目を追加',
-calc: '計算する',
-resultTitle: '加重平均GPA',
-totalCourses: '科目数',
-totalCredits: '合計単位',
-chartTitle: '科目別貢献度',
-scaleTitle: '評価基準',
-scaleRange: '得点範囲',
-below60: '60未満',
-themes: ['オーロラホワイト', 'ダークナイト', 'JLUブルー'],
-modes: ['JLUモード', 'CUCモード', 'カスタム'],
-modeNames: { jida: 'JLUモード', cuc: 'CUCモード', custom: 'カスタム' },
-scaleClickToExpand: 'クリックして詳細を表示',
-controls: { theme: 'テーマ', language: '言語', mode: 'GPAモード' },
-modal: {
-title: 'カスタムGPAルール',
-subtitle: '得点範囲とGPAの対応を設定（重複不可）',
-minScore: '最低得点',
-maxScore: '最高得点',
-gradePoint: 'GPA',
-addRow: 'ルール追加',
-cancel: 'キャンセル',
-confirm: '適用',
-validationError: 'すべての得点範囲とGPAを入力してください',
-overlapError: '得点範囲が重複しています',
-rangeError: '最高得点は最低得点より大きくなければなりません',
-duplicateError: '重複または競合する得点範囲があります'
-},
-toast: {
-noCourse: '少なくとも1つの科目を追加してください',
-confirmAll: 'すべての科目を確認してください',
-invalidScore: '有効な成績を入力してください（0-100）',
-invalidCredit: '有効な単位数を入力してください',
-noName: '科目名を入力してください',
-zeroCredit: '合計単位数は0にできません',
-confirmed: '科目が確認されました',
-modeSwitch: '切り替え完了：',
-excellent: '優秀です！この調子で頑張りましょう！',
-good: '良好です！まだ伸びしろがあります',
-average: 'がんばりましょう！',
-improve: '頑張り続ければ必ずできます',
-customScaleSet: 'カスタムルールを適用しました'
-},
-chart: { contribution: '貢献度', weighted: '単位×GPA', name: '科目', gp: 'GPA', credits: '単位' }
-},
-'ko': {
-title: '학점계산기',
-subtitle: '과목 정보를 입력하여 가중 평균 GPA 계산',
-empty: '과목이 없습니다. "과목 추가"를 클릭하세요',
-courseName: '과목명',
-courseNamePlaceholder: '예: 미적분학',
-score: '성적',
-credit: '학점',
-confirm: '확인',
-delete: '삭제',
-addCourse: '과목 추가',
-calc: '계산하기',
-resultTitle: '가중 평균 GPA',
-totalCourses: '과목 수',
-totalCredits: '총 학점',
-chartTitle: '과목별 기여도',
-scaleTitle: '학점 기준표',
-scaleRange: '점수 구간',
-below60: '60미만',
-themes: ['오로라 화이트', '다크 나이트', 'JLU 블루'],
-modes: ['JLU 모드', 'CUC 모드', '사용자 정의'],
-modeNames: { jida: 'JLU 모드', cuc: 'CUC 모드', custom: '사용자 정의' },
-scaleClickToExpand: '클릭하여 상세 보기',
-controls: { theme: '테마', language: '언어', mode: 'GPA 모드' },
-modal: {
-title: '사용자 정의 학점 규칙',
-subtitle: '점수 범위와 학점 설정 (중복 불가)',
-minScore: '최저 점수',
-maxScore: '최고 점수',
-gradePoint: '학점',
-addRow: '규칙 추가',
-cancel: '취소',
-confirm: '적용',
-validationError: '모든 점수 범위와 학점을 입력하세요',
-overlapError: '점수 범위가 중복됩니다',
-rangeError: '최고 점수는 최저 점수보다 커야 합니다',
-duplicateError: '중복되거나 충돌하는 점수 범위가 있습니다'
-},
-toast: {
-noCourse: '최소 한 개의 과목을 추가하세요',
-confirmAll: '모든 과목을 확인하세요',
-invalidScore: '유효한 성적을 입력하세요 (0-100)',
-invalidCredit: '유효한 학점을 입력하세요',
-noName: '과목명을 입력하세요',
-zeroCredit: '총 학점은 0이 될 수 없습니다',
-confirmed: '과목이 확인되었습니다',
-modeSwitch: '변경 완료: ',
-excellent: '훌륭합니다! 계속 유지하세요!',
-good: '잘했습니다! 발전의 여지가 있습니다',
-average: '계속 노력하세요!',
-improve: '계속 노력하면 반드시 성공합니다',
-customScaleSet: '사용자 정의 규칙이 적용되었습니다'
-},
-chart: { contribution: '기여도', weighted: '학점×GPA', name: '과목', gp: 'GPA', credits: '학점' }
-},
-'de': {
-title: 'GPA Rechner',
-subtitle: 'Kursdaten eingeben, gewichteten GPA berechnen',
-empty: 'Keine Kurse. "Kurs hinzufügen" klicken',
-courseName: 'Kursname',
-courseNamePlaceholder: 'z.B. Analysis',
-score: 'Note',
-credit: 'Credits',
-confirm: 'Bestätigen',
-delete: 'Löschen',
-addCourse: 'Kurs hinzufügen',
-calc: 'Berechnen',
-resultTitle: 'Gewichteter GPA',
-totalCourses: 'Kurse',
-totalCredits: 'Credits gesamt',
-chartTitle: 'Kursbeitrag',
-scaleTitle: 'Notenskala',
-scaleRange: 'Notenbereich',
-below60: '<60',
-themes: ['Aurora Weiß', 'Dunkle Nacht', 'JLU Blau'],
-modes: ['JLU Modus', 'CUC Modus', 'Benutzerdefiniert'],
-modeNames: { jida: 'JLU Modus', cuc: 'CUC Modus', custom: 'Benutzerdefiniert' },
-scaleClickToExpand: 'Details anzeigen',
-controls: { theme: 'Thema', language: 'Sprache', mode: 'GPA Modus' },
-modal: {
-title: 'Benutzerdefinierte Regeln',
-subtitle: 'Punktbereiche und GPA-Werte festlegen (keine Überschneidungen)',
-minScore: 'Min. Punkte',
-maxScore: 'Max. Punkte',
-gradePoint: 'GPA',
-addRow: 'Regel hinzufügen',
-cancel: 'Abbrechen',
-confirm: 'Anwenden',
-validationError: 'Bitte alle Punktbereiche und GPA-Werte ausfüllen',
-overlapError: 'Punktbereiche dürfen sich nicht überschneiden',
-rangeError: 'Max. Punkte müssen größer als Min. Punkte sein',
-duplicateError: 'Doppelte oder konfliktierende Bereiche vorhanden'
-},
-toast: {
-noCourse: 'Bitte mindestens einen Kurs hinzufügen',
-confirmAll: 'Bitte alle Kurse bestätigen',
-invalidScore: 'Bitte gültige Note eingeben (0-100)',
-invalidCredit: 'Bitte gültige Credits eingeben',
-noName: 'Bitte Kursnamen eingeben',
-zeroCredit: 'Gesamtcredits dürfen nicht 0 sein',
-confirmed: 'Kurs bestätigt',
-modeSwitch: 'Gewechselt zu: ',
-excellent: 'Hervorragend! Weiter so!',
-good: 'Sehr gut! Noch Raum zur Verbesserung',
-average: 'Nicht schlecht! Weiter arbeiten',
-improve: 'Weiter versuchen, Sie schaffen das',
-customScaleSet: 'Benutzerdefinierte Regeln angewendet'
-},
-chart: { contribution: 'Beitrag', weighted: 'Credits×GPA', name: 'Kurs', gp: 'GPA', credits: 'Credits' }
 }
 };
 
@@ -1463,16 +1300,16 @@ function renderDropdowns() {
 const t = translations[currentLang];
 const themeDropdown = document.getElementById('themeDropdown');
 themeDropdown.innerHTML = themes.map((theme, index) => `
-<div class="dropdown-item ${currentTheme === (theme.id === 'default' ? '' : theme.id) ? 'active' : ''}" 
-onclick="setTheme('${theme.id}', this)">
+<div class="dropdown-item ${currentTheme === theme.id ? 'active' : ''}" 
+onclick="setTheme('${theme.id}')">
 ${theme.icon} ${t.themes[index]}
 </div>
 `).join('');
 const langDropdown = document.getElementById('langDropdown');
 langDropdown.innerHTML = languages.map(lang => `
 <div class="dropdown-item ${currentLang === lang.code ? 'active' : ''}" 
-onclick="setLanguage('${lang.code}', this)">
-${lang.name}
+onclick="setLanguage('${lang.code}')">
+${lang.icon} ${lang.name}
 </div>
 `).join('');
 const modeDropdown = document.getElementById('modeDropdown');
@@ -1510,20 +1347,31 @@ if (d.id !== id) d.classList.remove('show');
 dropdown.classList.toggle('show');
 }
 
-function setTheme(theme, element) {
-if (theme === 'default') {
+function setTheme(themeId) {
+// 更新当前主题
+currentTheme = themeId;
+// 应用主题到body
+if (themeId === 'default') {
 document.body.removeAttribute('data-theme');
-currentTheme = 'default';
 } else {
-document.body.setAttribute('data-theme', theme);
-currentTheme = theme;
+document.body.setAttribute('data-theme', themeId);
+}
+// 更新主题按钮图标
+const themeObj = themes.find(t => t.id === themeId);
+if (themeObj) {
+document.getElementById('themeBtn').textContent = themeObj.icon;
 }
 renderDropdowns();
 document.getElementById('themeDropdown').classList.remove('show');
 }
 
-function setLanguage(lang, element) {
-currentLang = lang;
+function setLanguage(langCode) {
+currentLang = langCode;
+// 更新语言按钮图标
+const langObj = languages.find(l => l.code === langCode);
+if (langObj) {
+document.getElementById('langBtn').textContent = langObj.icon;
+}
 renderDropdowns();
 document.getElementById('langDropdown').classList.remove('show');
 updateLanguage();
@@ -1852,7 +1700,6 @@ return;
 }
 
 const gpa = totalWeighted / totalCredits;
-// 修改：保留五位小数
 document.getElementById('gpaValue').textContent = gpa.toFixed(5);
 document.getElementById('totalCourses').textContent = courseData.length;
 document.getElementById('totalCredits').textContent = totalCredits.toFixed(1);
@@ -1866,7 +1713,18 @@ gpa >= 2.0 ? t.toast.average : t.toast.improve;
 showToast(message);
 }
 
+// 初始化函数
 window.onload = function() {
+// 设置初始主题按钮图标
+const initialTheme = themes.find(t => t.id === currentTheme);
+if (initialTheme) {
+document.getElementById('themeBtn').textContent = initialTheme.icon;
+}
+// 设置初始语言按钮图标
+const initialLang = languages.find(l => l.code === currentLang);
+if (initialLang) {
+document.getElementById('langBtn').textContent = initialLang.icon;
+}
 renderGradeScaleCards();
 renderDropdowns();
 const t = translations[currentLang];
