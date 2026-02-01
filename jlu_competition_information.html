@@ -87,15 +87,16 @@ body {
   position: relative;
 }
 
+/* 控制面板样式 - 位于header内部左上角 */
 .control-panel {
-  position: fixed;
-  top: 20px;
-  left: 20px;
+  position: absolute;
+  top: 15px;
+  left: 15px;
   display: flex;
   flex-direction: row;
   gap: 8px;
   align-items: center;
-  z-index: 1000;
+  z-index: 200;
 }
 
 .control-btn {
@@ -118,7 +119,6 @@ body {
   background: var(--item-hover);
   border-color: var(--primary);
   color: var(--primary);
-  transform: translateY(-2px);
 }
 
 .dropdown-menu {
@@ -131,7 +131,7 @@ body {
   padding: 6px;
   box-shadow: 0 4px 12px var(--shadow);
   min-width: 140px;
-  z-index: 1001;
+  z-index: 201;
   border: 1px solid var(--border-color);
 }
 
@@ -169,11 +169,12 @@ body {
 .header {
   background: var(--card-bg);
   border-radius: 16px;
-  padding: 40px;
+  padding: 60px 40px 40px 40px;
   margin-bottom: 30px;
   box-shadow: 0 2px 12px var(--shadow);
   border: 1px solid var(--border-color);
-  margin-top: 60px;
+  position: relative;
+  margin-top: 20px;
 }
 
 h1 {
@@ -270,6 +271,8 @@ h1 {
   height: 28px;
   border-radius: 50%;
   transition: all 0.2s;
+  align-items: center;
+  justify-content: center;
 }
 
 .clear-btn:hover {
@@ -279,8 +282,6 @@ h1 {
 
 .clear-btn.show {
   display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .level-filter-container {
@@ -611,7 +612,6 @@ h1 {
 .modal-btn-zhihu { background: var(--zhihu); color: white; }
 .modal-btn-xhs { background: var(--xiaohongshu); color: white; }
 
-/* Detail Modal Specific */
 .detail-content {
   padding: 28px;
 }
@@ -664,19 +664,12 @@ h1 {
   color: inherit;
 }
 
-/* Mobile Responsive */
 @media (max-width: 768px) {
   body { padding: 10px; }
   
-  .control-panel {
-    top: 10px;
-    left: 10px;
-  }
-  
   .header {
     padding: 50px 20px 25px;
-    margin-top: 50px;
-    border-radius: 12px;
+    margin-top: 10px;
   }
   
   h1 { font-size: 1.5em; }
@@ -692,9 +685,7 @@ h1 {
   
   .search-input { font-size: 14px; }
   
-  .level-filter-container {
-    gap: 8px;
-  }
+  .level-filter-container { gap: 8px; }
   
   .level-filter-btn {
     padding: 6px 12px;
@@ -720,9 +711,7 @@ h1 {
     padding: 16px 20px;
   }
   
-  .detail-actions {
-    grid-template-columns: 1fr;
-  }
+  .detail-actions { grid-template-columns: 1fr; }
   
   .modal-title { font-size: 1.1em; }
 }
@@ -730,17 +719,17 @@ h1 {
 </head>
 <body>
 <div class="container">
-  <!-- Control Panel -->
-  <div class="control-panel">
-    <button class="control-btn" onclick="window.location.href='/JLU-Toolkit/index.html'" title="返回首页">←</button>
-    <button class="control-btn" id="themeBtn" onclick="toggleDropdown('themeDropdown')" title="切换主题">☀</button>
-    <div class="dropdown-menu" id="themeDropdown"></div>
-    <button class="control-btn" id="langBtn" onclick="toggleDropdown('langDropdown')" title="切换语言">简</button>
-    <div class="dropdown-menu" id="langDropdown"></div>
-  </div>
-
-  <!-- Header -->
+  <!-- Header 包含控制面板 -->
   <div class="header">
+    <!-- 控制面板 - 位于白色方框内左上角 -->
+    <div class="control-panel">
+      <button class="control-btn" onclick="window.location.href='/JLU-Toolkit/index.html'" title="返回首页">🏠</button>
+      <button class="control-btn" id="themeBtn" onclick="toggleDropdown('themeDropdown')" title="切换主题">☀</button>
+      <div class="dropdown-menu" id="themeDropdown"></div>
+      <button class="control-btn" id="langBtn" onclick="toggleDropdown('langDropdown')" title="切换语言">简</button>
+      <div class="dropdown-menu" id="langDropdown"></div>
+    </div>
+
     <h1 id="pageTitle">🦢 吉林大学学生竞赛信息查询</h1>
     <p class="subtitle" id="pageSubtitle">查询学校认证学科竞赛信息，助力学术发展</p>
     
@@ -894,12 +883,7 @@ const translations = {
     xiaohongshu: '小红书',
     source: '信息来源：',
     footer: 'JLU Competition Information Portal',
-    levels: {
-      'A': 'A类',
-      'B': 'B类',
-      'B*': 'B*类',
-      'C': 'C类'
-    }
+    levels: { 'A': 'A类', 'B': 'B类', 'B*': 'B*类', 'C': 'C类' }
   },
   'zh-TW': {
     title: '🦢 吉林大學學生競賽信息查詢',
@@ -924,12 +908,7 @@ const translations = {
     xiaohongshu: '小紅書',
     source: '信息來源：',
     footer: 'JLU Competition Information Portal',
-    levels: {
-      'A': 'A類',
-      'B': 'B類',
-      'B*': 'B*類',
-      'C': 'C類'
-    }
+    levels: { 'A': 'A類', 'B': 'B類', 'B*': 'B*類', 'C': 'C類' }
   },
   'en': {
     title: '🦢 JLU Competition Information',
@@ -954,18 +933,13 @@ const translations = {
     xiaohongshu: 'RedNote',
     source: 'Source: ',
     footer: 'JLU Competition Information Portal',
-    levels: {
-      'A': 'Class A',
-      'B': 'Class B',
-      'B*': 'Class B*',
-      'C': 'Class C'
-    }
+    levels: { 'A': 'Class A', 'B': 'Class B', 'B*': 'Class B*', 'C': 'Class C' }
   }
 };
 
-// 竞赛数据（包含全部207项）
+// 完整的207项竞赛数据
 const competitions = [
-  // A类
+  // A类（9项）
   {id: 1, name: '中国"互联网+"大学生创新创业大赛', nameEn: 'China International "Internet+" College Students Innovation and Entrepreneurship Competition', level: 'A'},
   {id: 2, name: '"挑战杯"全国大学生课外学术科技作品竞赛', nameEn: '"Challenge Cup" National College Student Extracurricular Academic Science and Technology Works Competition', level: 'A'},
   {id: 3, name: '"挑战杯"中国大学生创业计划大赛', nameEn: '"Challenge Cup" China College Student Business Plan Competition', level: 'A'},
@@ -975,23 +949,249 @@ const competitions = [
   {id: 7, name: '国际生物分子设计大赛（BIOMOD）', nameEn: 'International Bio-molecular Design Competition (BIOMOD)', level: 'A'},
   {id: 8, name: '中国大学生医学技术技能大赛', nameEn: 'China Medical Skills Competition for College Students', level: 'A'},
   {id: 9, name: '中国大学生工程实践与创新能力大赛', nameEn: 'China College Students Engineering Practice and Innovation Competition', level: 'A'},
-  // B类（部分示例，完整数据见原文件）
+  
+  // B类（37项）
   {id: 10, name: 'ACM-ICPC国际大学生程序设计竞赛', nameEn: 'ACM International Collegiate Programming Contest', level: 'B'},
   {id: 11, name: '全国大学生数学建模竞赛', nameEn: 'China Undergraduate Mathematical Contest in Modeling', level: 'B'},
   {id: 12, name: '全国大学生电子设计竞赛', nameEn: 'National Undergraduate Electronics Design Contest', level: 'B'},
-  // ... 此处省略中间数据，实际使用时应包含全部207项
-  // C类（部分示例）
+  {id: 13, name: '全国大学生化学实验邀请赛', nameEn: 'National College Students Chemistry Experiment Invitation Tournament', level: 'B'},
+  {id: 14, name: '全国大学生机械创新设计大赛', nameEn: 'National College Students Mechanical Innovation Design Competition', level: 'B'},
+  {id: 15, name: '全国大学生结构设计竞赛', nameEn: 'National Structural Design Competition for College Students', level: 'B'},
+  {id: 16, name: '全国大学生广告艺术大赛', nameEn: 'National College Students Advertising Art Competition', level: 'B'},
+  {id: 17, name: '全国大学生智能汽车竞赛', nameEn: 'National College Students Smart Car Competition', level: 'B'},
+  {id: 18, name: '全国大学生交通科技大赛', nameEn: 'National College Students Traffic Science and Technology Competition', level: 'B'},
+  {id: 19, name: '全国大学生电子商务"创新、创意及创业"挑战赛', nameEn: 'National College Students E-commerce "Innovation, Creativity and Entrepreneurship" Challenge', level: 'B'},
+  {id: 20, name: '全国大学生节能减排社会实践与科技竞赛', nameEn: 'National College Students Energy Saving and Emission Reduction Social Practice and Technology Competition', level: 'B'},
+  {id: 21, name: '全国大学生物流设计大赛', nameEn: 'National College Students Logistics Design Competition', level: 'B'},
+  {id: 22, name: '"外研社杯"Uchallenge全国英语演讲大赛', nameEn: 'FLTRP Cup Uchallenge National English Public Speaking Contest', level: 'B'},
+  {id: 23, name: '全国大学生机器人大赛RoboMaster机甲大师赛', nameEn: 'National College Students Robot Competition RoboMaster', level: 'B'},
+  {id: 24, name: '"西门子杯"中国智能制造挑战赛', nameEn: 'Siemens Cup China Intelligent Manufacturing Challenge', level: 'B'},
+  {id: 25, name: '全国大学生化工设计竞赛', nameEn: 'National College Students Chemical Engineering Design Competition', level: 'B'},
+  {id: 26, name: '全国大学生先进成图技术与产品信息建模创新大赛', nameEn: 'National College Students Advanced Mapping Technology and Product Information Modeling Innovation Competition', level: 'B'},
+  {id: 27, name: '全国三维数字化创新设计大赛（大学生组）', nameEn: 'National 3D Digital Innovation Design Competition (College Group)', level: 'B'},
+  {id: 28, name: '中国大学生计算机设计大赛', nameEn: 'China College Students Computer Design Competition', level: 'B'},
+  {id: 29, name: '全国大学生市场调查与分析大赛', nameEn: 'National College Students Market Survey and Analysis Competition', level: 'B'},
+  {id: 30, name: '中国大学生服务外包创新创业大赛', nameEn: 'China College Students Service Outsourcing Innovation and Entrepreneurship Competition', level: 'B'},
+  {id: 31, name: '两岸新锐设计竞赛"华灿奖"', nameEn: 'Cross-Strait Emerging Designers Competition "Huacan Award"', level: 'B'},
+  {id: 32, name: '长江钢琴-全国高校钢琴大赛', nameEn: 'Yangtze River Piano National College Piano Competition', level: 'B'},
+  {id: 33, name: '中国高校计算机大赛', nameEn: 'China College Computing Contest', level: 'B'},
+  {id: 34, name: '全国大学生动物医学专业（本科）技能大赛', nameEn: 'National College Students Animal Medicine Major (Undergraduate) Skills Competition', level: 'B'},
+  {id: 35, name: '全国大学生铸造工艺大赛', nameEn: 'National College Students Casting Process Competition', level: 'B'},
+  {id: 36, name: '全国大学生地质技能竞赛', nameEn: 'National College Students Geological Skills Competition', level: 'B'},
+  {id: 37, name: 'iCAN全国大学生创新创业大赛', nameEn: 'iCAN National College Students Innovation and Entrepreneurship Competition', level: 'B'},
+  {id: 38, name: '全国大学生数学竞赛', nameEn: 'National College Students Mathematics Competition', level: 'B'},
+  {id: 39, name: '全国高校思政课大赛', nameEn: 'National College Teachers Ideological and Political Course Teaching Competition', level: 'B'},
+  {id: 40, name: '全国大学生生命科学竞赛', nameEn: 'National College Students Life Science Competition', level: 'B'},
+  {id: 41, name: '全国大学生物理实验竞赛', nameEn: 'National College Students Physics Experiment Competition', level: 'B'},
+  {id: 42, name: '中国日报社"21世纪杯"全国英语演讲比赛', nameEn: 'China Daily "21st Century Cup" National English Speaking Competition', level: 'B'},
+  {id: 43, name: '全国基础医学创新论坛暨实验设计大赛', nameEn: 'National Basic Medical Innovation Forum and Experimental Design Competition', level: 'B'},
+  {id: 44, name: '"东方杯"全国大学生勘探地球物理大赛', nameEn: '"Orient Cup" National College Students Exploration Geophysics Competition', level: 'B'},
+  {id: 45, name: '全国食品类专业工程实践训练综合能力竞赛', nameEn: 'National Food Major Engineering Practice Training Comprehensive Ability Competition', level: 'B'},
+  {id: 46, name: '国际大学生智能农业装备创新大赛', nameEn: 'International College Students Intelligent Agricultural Equipment Innovation Competition', level: 'B'},
+  
+  // B*类（23项）
+  {id: 47, name: '全国周培源大学生力学竞赛', nameEn: 'National Zhou Peiyuan College Students Mechanics Competition', level: 'B*'},
+  {id: 48, name: '全国大学生嵌入式芯片与系统设计竞赛', nameEn: 'National College Students Embedded Chip and System Design Competition', level: 'B*'},
+  {id: 49, name: '"学创杯"全国大学生创业综合模拟大赛', nameEn: '"Xuechuang Cup" National College Students Entrepreneurship Comprehensive Simulation Competition', level: 'B*'},
+  {id: 50, name: '中国大学生机械工程创新创意大赛-智能制造大赛', nameEn: 'China College Students Mechanical Engineering Innovation Competition - Intelligent Manufacturing Competition', level: 'B*'},
+  {id: 51, name: '全国大学生信息安全竞赛', nameEn: 'National College Students Information Security Competition', level: 'B*'},
+  {id: 52, name: '中国机器人大赛', nameEn: 'China Robot Competition', level: 'B*'},
+  {id: 53, name: '中国高校智能机器人创意大赛', nameEn: 'China College Intelligent Robot Creative Competition', level: 'B*'},
+  {id: 54, name: '全国高校数字艺术设计大赛（未来设计师NCDA大赛）', nameEn: 'National College Digital Art Design Competition (Future Designer NCDA)', level: 'B*'},
+  {id: 55, name: '米兰设计周-中国高校设计学科师生优秀作品展', nameEn: 'Milan Design Week - China College Design Discipline Teachers and Students Excellent Works Exhibition', level: 'B*'},
+  {id: 56, name: '中国机器人及人工智能大赛', nameEn: 'China Robot and Artificial Intelligence Competition', level: 'B*'},
+  {id: 57, name: '全国大学生金相技能大赛', nameEn: 'National College Students Metallographic Skills Competition', level: 'B*'},
+  {id: 58, name: '华为ICT大赛', nameEn: 'Huawei ICT Competition', level: 'B*'},
+  {id: 59, name: '全国大学生交通运输科技大赛', nameEn: 'National College Students Transportation Technology Competition', level: 'B*'},
+  {id: 60, name: '蓝桥杯全国软件和信息技术专业人才大赛', nameEn: 'Lanqiao Cup National Software and Information Technology Professionals Competition', level: 'B*'},
+  {id: 61, name: '全国大学生光电设计竞赛', nameEn: 'National College Students Optoelectronic Design Competition', level: 'B*'},
+  {id: 62, name: '全国大学生集成电路创新创业大赛', nameEn: 'National College Students Integrated Circuit Innovation and Entrepreneurship Competition', level: 'B*'},
+  {id: 63, name: '"中国软件杯"大学生软件设计大赛', nameEn: '"China Software Cup" College Students Software Design Competition', level: 'B*'},
+  {id: 64, name: '中美青年创客大赛', nameEn: 'China-US Young Makers Competition', level: 'B*'},
+  {id: 65, name: 'RoboCom机器人开发者大赛', nameEn: 'RoboCom Robot Developer Competition', level: 'B*'},
+  {id: 66, name: '"大唐杯"全国大学生移动通信5G技术大赛', nameEn: '"Datang Cup" National College Students Mobile Communication 5G Technology Competition', level: 'B*'},
+  {id: 67, name: '全国高校BIM毕业设计创新大赛', nameEn: 'National College BIM Graduation Design Innovation Competition', level: 'B*'},
+  {id: 68, name: '全国高校商业精英挑战赛', nameEn: 'National College Business Elite Challenge', level: 'B*'},
+  {id: 69, name: '中国好创意暨全国数字艺术设计大赛', nameEn: 'China Good Creativity and National Digital Art Design Competition', level: 'B*'},
+  
+  // C类（138项）
+  {id: 70, name: '全国大学生不动产估价技能大赛', nameEn: 'National College Students Real Estate Appraisal Skills Competition', level: 'C'},
+  {id: 71, name: '全国大学生测井技能大赛', nameEn: 'National College Students Well Logging Skills Competition', level: 'C'},
+  {id: 72, name: '全国高等学校大学生测绘技能大赛', nameEn: 'National College Students Surveying and Mapping Skills Competition', level: 'C'},
+  {id: 73, name: '全国大学生GIS应用技能大赛', nameEn: 'National College Students GIS Application Skills Competition', level: 'C'},
+  {id: 74, name: 'SuperMap杯全国高校GIS大赛', nameEn: 'SuperMap Cup National College GIS Competition', level: 'C'},
+  {id: 75, name: 'ESRI杯中国大学生GIS软件开发大赛', nameEn: 'ESRI Cup China College Students GIS Software Development Competition', level: 'C'},
+  {id: 76, name: '全国高校GIS技能大赛（MAPGIS）', nameEn: 'National College GIS Skills Competition (MAPGIS)', level: 'C'},
+  {id: 77, name: '中国（国际）传感器创新创业大赛', nameEn: 'China (International) Sensor Innovation and Entrepreneurship Competition', level: 'C'},
+  {id: 78, name: '"雄鹰杯"小动物医师技能大赛', nameEn: '"Xiongying Cup" Small Animal Veterinarian Skills Competition', level: 'C'},
+  {id: 79, name: '"理律杯"全国高校模拟法庭竞赛', nameEn: '"Lilv Cup" National College Moot Court Competition', level: 'C'},
+  {id: 80, name: '"贸仲杯"国际商事仲裁模拟仲裁庭辩论赛', nameEn: '"CIETAC Cup" International Commercial Arbitration Moot Court Competition', level: 'C'},
+  {id: 81, name: '国际刑事法院（ICC）模拟法庭审判竞赛（英文）', nameEn: 'International Criminal Court (ICC) Moot Court Competition (English)', level: 'C'},
+  {id: 82, name: 'Philip C. Jessup国际法模拟法庭大赛', nameEn: 'Philip C. Jessup International Law Moot Court Competition', level: 'C'},
+  {id: 83, name: '国际人道法（IHL）模拟法庭竞赛', nameEn: 'International Humanitarian Law (IHL) Moot Court Competition', level: 'C'},
+  {id: 84, name: '法兰克福国际投资模拟仲裁庭-贸仲中国（内地）赛', nameEn: 'Frankfurt International Investment Moot Court - CIETAC China (Mainland) Session', level: 'C'},
+  {id: 85, name: '美国大学生数学建模竞赛', nameEn: 'Mathematical Contest in Modeling (MCM/ICM)', level: 'C'},
+  {id: 86, name: '全国大学生英语竞赛', nameEn: 'National College Students English Competition', level: 'C'},
+  {id: 87, name: 'Uchallenge全国英语写作大赛', nameEn: 'Uchallenge National English Writing Contest', level: 'C'},
+  {id: 88, name: 'Uchallenge全国英语阅读大赛', nameEn: 'Uchallenge National English Reading Contest', level: 'C'},
+  {id: 89, name: '金蝶云管理创新杯互联网+管理应用大赛', nameEn: 'Kingdee Cloud Management Innovation Cup Internet+ Management Application Competition', level: 'C'},
+  {id: 90, name: 'IE亮剑全国大学生工业工程案例大赛', nameEn: 'IE Liangjian National College Students Industrial Engineering Case Competition', level: 'C'},
+  {id: 91, name: '中国"TRIZ"杯大学生创新方法大赛', nameEn: 'China "TRIZ" Cup College Students Innovation Method Competition', level: 'C'},
+  {id: 92, name: '全国企业创新方法大赛', nameEn: 'National Enterprise Innovation Method Competition', level: 'C'},
+  {id: 93, name: 'BICES中国-国际工程机械及专用车创意设计大赛', nameEn: 'BICES China - International Construction Machinery and Special Vehicle Creative Design Competition', level: 'C'},
+  {id: 94, name: '国际机构学机器科学大学生国际奥林匹克竞赛', nameEn: 'International Olympiad on Mechanism and Machine Science for College Students', level: 'C'},
+  {id: 95, name: 'CCSP大学生计算机系统与程序设计竞赛', nameEn: 'CCSP (College Computer Systems & Programming Contest)', level: 'C'},
+  {id: 96, name: '全国大学生物联网设计竞赛', nameEn: 'National College Students Internet of Things Design Competition', level: 'C'},
+  {id: 97, name: 'CCPC中国大学生程序设计竞赛', nameEn: 'CCPC (China Collegiate Programming Contest)', level: 'C'},
+  {id: 98, name: '全国大学生计算机应用能力与信息素养大赛', nameEn: 'National College Students Computer Application Ability and Information Literacy Competition', level: 'C'},
+  {id: 99, name: '全国高校智能交通创新创业大赛', nameEn: 'National College Intelligent Transportation Innovation and Entrepreneurship Competition', level: 'C'},
+  {id: 100, name: '全国大学生农业建筑环境与能源工程相关专业创新创业竞赛', nameEn: 'National College Students Agricultural Building Environment and Energy Engineering Innovation and Entrepreneurship Competition', level: 'C'},
+  {id: 101, name: '全国大学生包装结构设计大赛', nameEn: 'National College Students Packaging Structure Design Competition', level: 'C'},
+  {id: 102, name: '德国红点奖', nameEn: 'Red Dot Design Award', level: 'C'},
+  {id: 103, name: 'HONDA中国节能竞技大赛', nameEn: 'HONDA China Energy Saving Competition', level: 'C'},
+  {id: 104, name: '中国大学生巴哈越野汽车大赛', nameEn: 'China College Students Baja Off-Road Vehicle Competition', level: 'C'},
+  {id: 105, name: '国际企业管理挑战赛(Global Management Challenge)', nameEn: 'Global Management Challenge (GMC)', level: 'C'},
+  {id: 106, name: '全国大学生金融投资模拟交易大赛', nameEn: 'National College Students Financial Investment Simulation Trading Competition', level: 'C'},
+  {id: 107, name: '全国高等院校企业竞争模拟大赛', nameEn: 'National College Enterprise Competition Simulation Competition', level: 'C'},
+  {id: 108, name: '"用友新道杯"全国大学生ERP沙盘模拟经营大赛', nameEn: '"Yonyou New Dao Cup" National College Students ERP Sand Table Simulation Competition', level: 'C'},
+  {id: 109, name: '全国高校密码数学挑战赛', nameEn: 'National College Cryptography Mathematics Challenge', level: 'C'},
+  {id: 110, name: '世界机器人大赛', nameEn: 'World Robot Contest', level: 'C'},
+  {id: 111, name: '国际水中机器人大赛', nameEn: 'International Underwater Robot Competition', level: 'C'},
+  {id: 112, name: '全国口译大赛', nameEn: 'National Interpreting Competition', level: 'C'},
+  {id: 113, name: 'CCTV"希望之星"英语风采大赛', nameEn: 'CCTV "Star of Outlook" English Talent Competition', level: 'C'},
+  {id: 114, name: '全国高校俄语大赛', nameEn: 'National College Russian Language Competition', level: 'C'},
+  {id: 115, name: 'CCTV西班牙语大赛', nameEn: 'CCTV Spanish Language Competition', level: 'C'},
+  {id: 116, name: '上海外国语大学CASIO杯中国大学生·研究生日语演讲辩论大赛', nameEn: 'SISU CASIO Cup China College Students Japanese Speech and Debate Competition', level: 'C'},
+  {id: 117, name: '中华全国日语演讲比赛', nameEn: 'All-China Japanese Speech Contest', level: 'C'},
+  {id: 118, name: '"笹川杯"全国高校日本知识大赛', nameEn: '"Sasakawa Cup" National College Japan Knowledge Competition', level: 'C'},
+  {id: 119, name: '中国人日语作文大赛', nameEn: 'Chinese Japanese Essay Contest', level: 'C'},
+  {id: 120, name: '多语种全国口译大赛', nameEn: 'National Multilingual Interpreting Competition', level: 'C'},
+  {id: 121, name: '笹川杯日本研究论文大赛', nameEn: 'Sasakawa Cup Japan Research Paper Competition', level: 'C'},
+  {id: 122, name: '全国大学生日语演讲暨综合技能大赛', nameEn: 'National College Students Japanese Speech and Comprehensive Skills Competition', level: 'C'},
+  {id: 123, name: '纽约全美模拟联合国大会', nameEn: 'New York National Model United Nations (NYCNMUN)', level: 'C'},
+  {id: 124, name: '视友杯中国高校电视奖', nameEn: 'Shiyou Cup China College Television Award', level: 'C'},
+  {id: 125, name: '全国大学生主持人大赛', nameEn: 'National College Students Host Competition', level: 'C'},
+  {id: 126, name: '时报金犊奖', nameEn: 'Times Young Creative Awards', level: 'C'},
+  {id: 127, name: 'One Show中华青年创意奖', nameEn: 'One Show China Youth Creative Awards', level: 'C'},
+  {id: 128, name: '戛纳国际创意节戛纳幼狮中国区选拔赛', nameEn: 'Cannes Lions Young Lions China Selection', level: 'C'},
+  {id: 129, name: '靳埭强设计奖', nameEn: 'Kan Tai-Keung Design Award', level: 'C'},
+  {id: 130, name: '全球华语朗诵大赛暨"曹灿杯"朗诵大赛', nameEn: 'Global Chinese Language Recitation Contest and "Cao Can Cup" Recitation Competition', level: 'C'},
+  {id: 131, name: '语文朗读大会', nameEn: 'Chinese Language Reading Conference', level: 'C'},
+  {id: 132, name: '夏青杯朗诵大赛', nameEn: 'Xia Qing Cup Recitation Competition', level: 'C'},
+  {id: 133, name: '中国大学生物理学术竞赛', nameEn: 'China Undergraduate Physics Tournament (CUPT)', level: 'C'},
+  {id: 134, name: '全国大学生水利创新设计大赛', nameEn: 'National College Students Water Conservancy Innovation Design Competition', level: 'C'},
+  {id: 135, name: '全国环境友好科技竞赛', nameEn: 'National Environment Friendly Science and Technology Competition', level: 'C'},
+  {id: 136, name: '全国大学生电子设计竞赛嵌入式邀请赛', nameEn: 'National College Students Electronic Design Competition Embedded Invitation Competition', level: 'C'},
+  {id: 137, name: '全国大学生电气与自动化大赛', nameEn: 'National College Students Electrical and Automation Competition', level: 'C'},
+  {id: 138, name: '国际大学生雪雕大赛', nameEn: 'International College Students Snow Sculpture Competition', level: 'C'},
+  {id: 139, name: '全国高校企业价值创造实战竞赛', nameEn: 'National College Enterprise Value Creation Practical Competition', level: 'C'},
+  {id: 140, name: '全国大学生信息安全竞赛', nameEn: 'National College Students Information Security Competition', level: 'C'},
+  {id: 141, name: '"华为杯"中国大学生智能设计竞赛', nameEn: '"Huawei Cup" China College Students Intelligent Design Competition', level: 'C'},
+  {id: 142, name: '全国高校大数据应用创新大赛', nameEn: 'National College Big Data Application Innovation Competition', level: 'C'},
+  {id: 143, name: '中国高校计算机大赛（微信小程序开发赛）', nameEn: 'China College Computing Contest (WeChat Mini Program Development)', level: 'C'},
+  {id: 144, name: '盼盼食品杯烘焙食品创意大赛', nameEn: 'Panpan Food Cup Baking Food Creative Competition', level: 'C'},
+  {id: 145, name: '"三菱电机杯"全国大学生电气与自动化大赛', nameEn: '"Mitsubishi Electric Cup" National College Students Electrical and Automation Competition', level: 'C'},
+  {id: 146, name: '全国高校海洋法模拟法庭邀请赛', nameEn: 'National College Law of the Sea Moot Court Invitation Competition', level: 'C'},
+  {id: 147, name: '国际刑事法院（ICC）模拟法庭审判竞赛（中文）', nameEn: 'International Criminal Court (ICC) Moot Court Competition (Chinese)', level: 'C'},
+  {id: 148, name: '金企鹅网络模拟法庭竞赛', nameEn: 'Golden Penguin Network Moot Court Competition', level: 'C'},
+  {id: 149, name: '全国大学生化学实验创新设计竞赛', nameEn: 'National College Students Chemistry Experiment Innovation Design Competition', level: 'C'},
+  {id: 150, name: '北京国际电影节·大学生电影节', nameEn: 'Beijing International Film Festival · College Student Film Festival', level: 'C'},
+  {id: 151, name: '中国国际大学生纪录片大赛', nameEn: 'China International College Students Documentary Film Festival', level: 'C'},
+  {id: 152, name: '全国大学生中华经典美文诵读大赛', nameEn: 'National College Students Chinese Classic Literature Recitation Competition', level: 'C'},
+  {id: 153, name: '全国大学生有声阅读大赛', nameEn: 'National College Students Audio Reading Competition', level: 'C'},
+  {id: 154, name: '今日头条新写作大赛', nameEn: 'Toutiao New Writing Competition', level: 'C'},
+  {id: 155, name: '中国数据新闻大赛', nameEn: 'China Data News Competition', level: 'C'},
+  {id: 156, name: '《中国日报》"大学新闻奖"', nameEn: 'China Daily "University News Award"', level: 'C'},
+  {id: 157, name: '全国日语专业配音大赛', nameEn: 'National Japanese Major Dubbing Competition', level: 'C'},
+  {id: 158, name: '韩素音国际翻译大赛', nameEn: 'Han Suyin International Translation Competition', level: 'C'},
+  {id: 159, name: '"俄罗斯文艺"文学翻译奖全球俄汉互译大赛', nameEn: '"Russian Literature" Literary Translation Award Global Russian-Chinese Translation Competition', level: 'C'},
+  {id: 160, name: '全国校园冰雪创意设计大赛', nameEn: 'National Campus Ice and Snow Creative Design Competition', level: 'C'},
+  {id: 161, name: '中国大学生广告艺术节学院奖', nameEn: 'China College Students Advertising Art Festival Academy Award', level: 'C'},
+  {id: 162, name: '模拟国际投资仲裁深圳赛（FDIMootShenzhen）', nameEn: 'FDI Moot Shenzhen', level: 'C'},
+  {id: 163, name: '"从法杯"全国大学生"法治中国"调研大赛', nameEn: '"Congfa Cup" National College Students "Rule of Law in China" Research Competition', level: 'C'},
+  {id: 164, name: '全国大学生物流仿真设计大赛', nameEn: 'National College Students Logistics Simulation Design Competition', level: 'C'},
+  {id: 165, name: '全国大学生人力资源管理知识技能竞赛', nameEn: 'National College Students Human Resource Management Knowledge and Skills Competition', level: 'C'},
+  {id: 166, name: '全国大学生房地产策划大赛', nameEn: 'National College Students Real Estate Planning Competition', level: 'C'},
+  {id: 167, name: '全国大学生数智人力大赛', nameEn: 'National College Students Digital Intelligence Human Resources Competition', level: 'C'},
+  {id: 168, name: '"尖烽时刻"全国商业模拟大赛', nameEn: '"Peak Time" National Business Simulation Competition', level: 'C'},
+  {id: 169, name: '"我心中的思政课"全国高校大学生微电影展示', nameEn: '"Ideological and Political Course in My Heart" National College Micro Film Exhibition', level: 'C'},
+  {id: 170, name: '全国大学生化工实验大赛', nameEn: 'National College Students Chemical Engineering Experiment Competition', level: 'C'},
+  {id: 171, name: '全国大学生化工安全设计大赛', nameEn: 'National College Students Chemical Engineering Safety Design Competition', level: 'C'},
+  {id: 172, name: '中国国际飞行器设计挑战赛', nameEn: 'China International Aircraft Design Challenge (CADC)', level: 'C'},
+  {id: 173, name: 'SAE国际航空设计大赛', nameEn: 'SAE International Aero Design Competition', level: 'C'},
+  {id: 174, name: '中国壳牌汽车环保马拉松挑战赛', nameEn: 'Shell Eco-marathon China', level: 'C'},
+  {id: 175, name: '中国优秀工业设计奖', nameEn: 'China Excellent Industrial Design Award', level: 'C'},
+  {id: 176, name: '中国大学生无人驾驶汽车大赛', nameEn: 'China College Students Driverless Car Competition', level: 'C'},
+  {id: 177, name: '好设计', nameEn: 'Good Design Award (China)', level: 'C'},
+  {id: 178, name: '全国机械工业设计创新大赛', nameEn: 'National Machinery Industry Design Innovation Competition', level: 'C'},
+  {id: 179, name: '中国制冷空调行业大学生竞赛', nameEn: 'China Refrigeration and Air Conditioning Industry College Students Competition', level: 'C'},
+  {id: 180, name: '上汽设计国际汽车设计大赛', nameEn: 'SAIC Design International Car Design Competition', level: 'C'},
+  {id: 181, name: '全国大学生焊接创新大赛', nameEn: 'National College Students Welding Innovation Competition', level: 'C'},
+  {id: 182, name: '"天食杯"食品研究开发创新创意大赛', nameEn: '"Tianshi Cup" Food Research and Development Innovation Competition', level: 'C'},
+  {id: 183, name: '全国大学生机器人大赛（ROBOCOM）', nameEn: 'National College Students Robot Competition (ROBOCOM)', level: 'C'},
+  {id: 184, name: '无人飞行器智能感知技术竞赛', nameEn: 'Unmanned Aerial Vehicle Intelligent Perception Technology Competition', level: 'C'},
+  {id: 185, name: '全国高校网安联赛XNUCA', nameEn: 'National College Network Security League (XNUCA)', level: 'C'},
+  {id: 186, name: '全国大学生FPGA创新设计竞赛', nameEn: 'National College Students FPGA Innovation Design Competition', level: 'C'},
+  {id: 187, name: '中国大学生计算机博弈大赛', nameEn: 'China College Students Computer Game Competition', level: 'C'},
+  {id: 188, name: '全国大学生土地国情调查大赛', nameEn: 'National College Students Land National Conditions Survey Competition', level: 'C'},
+  {id: 189, name: '全国大学生国土空间规划技能大赛', nameEn: 'National College Students Territorial Space Planning Skills Competition', level: 'C'},
+  {id: 190, name: '全国大学生自然资源科技作品大赛', nameEn: 'National College Students Natural Resources Science and Technology Works Competition', level: 'C'},
+  {id: 191, name: '全国油气地质大赛', nameEn: 'National Oil and Gas Geology Competition', level: 'C'},
+  {id: 192, name: '"创新杯"全国大学生地球物理知识竞赛', nameEn: '"Innovation Cup" National College Students Geophysical Knowledge Competition', level: 'C'},
+  {id: 193, name: '中国虚拟现实大赛', nameEn: 'China Virtual Reality Competition', level: 'C'},
+  {id: 194, name: '"中科星图杯"国际高分遥感图像解译大赛', nameEn: '"Geovis Cup" International High Resolution Remote Sensing Image Interpretation Competition', level: 'C'},
+  {id: 195, name: '全国大学生测绘创新创业开发大赛', nameEn: 'National College Students Surveying and Mapping Innovation Development Competition', level: 'C'},
+  {id: 196, name: '全国大学生工程地质创新实践大赛', nameEn: 'National College Students Engineering Geology Innovation Practice Competition', level: 'C'},
+  {id: 197, name: '国际大学生钻井机器人大赛', nameEn: 'International College Students Drilling Robot Competition', level: 'C'},
+  {id: 198, name: '水科学数值模拟创新大赛', nameEn: 'Water Science Numerical Simulation Innovation Competition', level: 'C'},
+  {id: 199, name: '全国大学生市政环境类创新实践能力大赛', nameEn: 'National College Students Municipal Environmental Innovation Practice Ability Competition', level: 'C'},
+  {id: 200, name: '全国虚拟仪器设计大赛', nameEn: 'National Virtual Instrument Design Competition', level: 'C'},
+  {id: 201, name: '全国高校电力电子应用设计大赛', nameEn: 'National College Power Electronics Application Design Competition', level: 'C'},
+  {id: 202, name: '全国大学生植物保护专业能力大赛', nameEn: 'National College Students Plant Protection Professional Ability Competition', level: 'C'},
+  {id: 203, name: '全国青年科普创新实验暨作品大赛', nameEn: 'National Youth Science Popularization Innovation Experiment and Works Competition', level: 'C'},
+  {id: 204, name: '全国农科大学生创新创业大赛', nameEn: 'National Agricultural Science Students Innovation and Entrepreneurship Competition', level: 'C'},
+  {id: 205, name: '全国大学生动物科学专业技能大赛', nameEn: 'National College Students Animal Science Professional Skills Competition', level: 'C'},
+  {id: 206, name: '全国高校军事课教学展示比赛', nameEn: 'National College Military Course Teaching Demonstration Competition', level: 'C'},
   {id: 207, name: '国际青年人工智能大赛', nameEn: 'International Youth Artificial Intelligence Competition', level: 'C'}
 ];
 
 // 管理办法内容
 const regulationContent = `
 <div class="chapter">第一章 总则</div>
-<p class="article"><strong>第一条</strong> 为全面提高学生的综合素质，促进吉林大学本科学生学科竞赛管理工作的科学化、规范化与系统化...</p>
+<p class="article"><strong>第一条</strong> 为全面提高学生的综合素质，促进吉林大学本科学生学科竞赛管理工作的科学化、规范化与系统化，支撑学生学科竞赛全面深入开展，保障学生学科竞赛管理和支持体系的顺畅运行，结合学校实际，制定本办法。</p>
+<p class="article"><strong>第二条</strong> 开展学生学科竞赛，旨在营造校园学术氛围，培育学生创新思维，激发学生创新活力，让学生在动手实践中提高解决实际问题的能力，培养团队合作精神与竞争意识，造就知识、能力、素质协调发展的创新创业优秀人才。</p>
+<p class="article"><strong>第三条</strong> 本办法所称竞赛是指吉林大学本科学生参加的实践类竞赛，分为国家级（或国际性、地区性）竞赛、省（部）级竞赛和校级竞赛。</p>
+<p>国家级竞赛是指国家政府部门或专业教学指导委员会等全国性学术团体、行业学会（协会）组织的学科竞赛；国际性、地区性学科竞赛（含分区赛），是指联合国教科文组织或其他国际学术团体，或某一国家、某一地区学术团体面向全球组织的学科竞赛，视同国家级学科竞赛。</p>
+<p>省级竞赛是指省政府有关部门或省级学术团体等机构组织的全省或跨省区的学科竞赛，以及全国性学科竞赛的赛区竞赛。</p>
+<p>校级竞赛是指由学校组织、学科覆盖两个及以上学院的学科竞赛。</p>
+<p>学校按A、B、C三类筹建学科竞赛体系，根据竞赛开展情况实施定期动态调整，新申请纳入学科竞赛体系的项目，须经学校教务处申请校教学委员会讨论确认。</p>
+
 <div class="chapter">第二章 组织与管理</div>
-<p class="article"><strong>第四条</strong> 吉林大学本科学生学科竞赛的组织和管理工作分别由教务处、校团委负责...</p>
+<p class="article"><strong>第四条</strong> 吉林大学本科学生学科竞赛的组织和管理工作分别由教务处、校团委负责。"互联网+"创新创业大赛及"挑战杯系列"竞赛由校团委负责组织，其余学科竞赛由教务处、创新创业教育学院负责组织。</p>
+<p class="article"><strong>第五条 职责分工：</strong></p>
+<p>（一）教务处、创新创业教育学院、校团委负责各级学生学科竞赛的组织与协调工作，承办省级以上竞赛，负责落实经费、实施奖励、总结交流等；主办校级竞赛工作，制定校级竞赛章程及组织实施；成立竞赛研究团队进行专门教学研究，推进教学改革。</p>
+<p>（二）承办校级竞赛的教学单位，教学副院长、学院分管本科学生工作党委副书记负责落实竞赛实施工作。提供必要的场地及仪器设备，协助学校聘请专家评委，做好竞赛命题、过程评审及颁奖工作等，建立竞赛档案。</p>
+<p>（三）参赛学生所在教学单位，宣传竞赛章程及实施方案，积极组织学生参赛；选派高水平教师进行赛前辅导，提供赛期后勤保障等工作。</p>
+<p class="article"><strong>第六条</strong> 依据竞赛级别、成果表现形式，学校为各教学单位提供实验条件与经费支持。A类、B类竞赛负责人每年1月份上报当年年度竞赛项目预算，学校将根据年度预算情况酌情调整预算分配；学校原则上仅支持A类、B类的省级竞赛（分区赛）和全国总决赛的差旅费（参赛学生高铁二等座及以下交通费、住宿费，不予核算补助；依照竞赛要求选派的指导教师按教师差旅核算）及运输费、竞赛耗材费等；如竞赛最高级别为省级赛，且竞赛包含作品测评、实验数据上报报告、答辩等多环节，学校支持竞赛耗材及省内差旅等经费。</p>
+<p class="article"><strong>第七条</strong> 参赛者原则上应为在校全日制本科生。学校鼓励跨学院、跨专业组成参赛队。学生可以自愿报名参加校级各学科竞赛，校级竞赛优胜者有资格报名参加省级以上级别竞赛。竞赛级别应列连续的竞赛项目，需经层层选拔，参加上一级竞赛，如竞赛级别应列不连续，学校可根据情况选择优秀学生参加上一级竞赛。</p>
+<p class="article"><strong>第八条</strong> 学生学科竞赛指导教师应为具有较高教学、科研水平和一定竞赛指导工作经验的专业教师或实验（工程）技术人员。教师指导本专业所属学科竞赛，单项赛中不得超过3支参赛队，教师指导非本专业所属学科竞赛，单项赛中不得超过2支参赛队，且同一指导教师在一年内最多指导两项赛事。</p>
+<p class="article"><strong>第九条</strong> 凡是由学校资助经费产出的竞赛作品，知识产权归学校所有。竞赛作品由竞赛承办单位或学生所在单位负责存档。</p>
+
 <div class="chapter">第三章 竞赛奖惩</div>
-<p class="article"><strong>第十条</strong> 竞赛所获荣誉归参赛学生、指导教师、责任学院和学校共有...</p>
+<p class="article"><strong>第十条</strong> 竞赛所获荣誉归参赛学生、指导教师、责任学院和学校共有。学校将根据竞赛级别、获奖等级，对参赛学生、指导教师予以奖励。一次参赛多次评奖的竞赛项目，或同一竞赛项目（参赛者）在不同级别竞赛中获奖，指导教师及参赛学生均按最高获奖等级进行一次性奖励。</p>
+<p class="article"><strong>第十一条</strong> 指导学生参加省级以上竞赛，学校为指导教师（组）核算相应的教学工作量。以团队形式参赛的赛事，以队为单位核算工作量，省级赛二等奖以上参赛队每队40个标准学时，A类竞赛每队120个标准学时；B类竞赛每队80个标准学时；C类竞赛每队50个标准学时；学生个人参加的赛事，指导教师工作量按团队参赛的50%核算。</p>
+<p class="article"><strong>第十二条</strong> 指导教师（组）指导学生团队获奖，参照《吉林大学教师业绩奖励津贴分配工作实施方案》，仅对A类、B类竞赛指导教师获奖予以奖励。奖励标准如下：</p>
+<p>对A类学生学科竞赛国家级特等奖获奖者指导教师（组）奖励30绩点/项；对A类学生学科竞赛国家级一等奖获奖者指导教师（组）奖励20绩点/项；对A类学生学科竞赛国家级二等奖获奖者指导教师（组）奖励10绩点/项；A类学生学科竞赛国家级三等奖获奖者指导教师（组）奖励6绩点/项。</p>
+<p>对B类学生学科竞赛国家级特等奖获奖者指导教师（组）奖励18绩点/项；B类学生学科竞赛国家级一等奖获奖者指导教师（组）奖励12绩点/项；对B类学生学科竞赛国家级二等奖获奖者指导教师（组）奖励6绩点/项。</p>
+<p class="article"><strong>第十三条</strong> 指导教师（组）指导学生个人获奖，按指导教师指导学生组队参赛同一获奖等级奖励酬金的60%核算。</p>
+<p class="article"><strong>第十四条</strong> 学校对获奖学生（团队）颁发"创新实践成果奖学金"，奖学金由团队成员平均分配。奖励标准按照《吉林大学本科学生创新实践成果奖励办法》执行。</p>
+<p class="article"><strong>第十五条</strong> 参与指导学生学科竞赛获奖的教师（组）可获得教学业绩认定，应用于当年年度考核、职称晋升、评奖评优等环节。竞赛获奖学生及其创新成果，应用于评奖评优、课外培养计划学分认定等环节。</p>
+<p>各教学单位在业绩认定过程中应制定本单位《获奖成果应用实施细则》，经学院教学委员会审议、党政联席会议讨论通过后实施，报教务处备案。</p>
+<p class="article"><strong>第十六条</strong> 学生参加各类竞赛，须遵守相关章程、严守学术诚信。学校依照吉林大学考试考纪等相关规定，对在竞赛中存在违反学术道德等行为的相关学生给予相应处分；按照吉林大学教学事故认定处罚相关规定，对存在违反学术道德等行为的指导教师及相关责任人，给予处分；对涉嫌犯罪的，移交司法机关依法处理。</p>
+
+<div class="chapter">第四章 附则</div>
+<p class="article"><strong>第十七条</strong> 本办法由教务处、创新创业教育学院负责解释。</p>
+<p class="article"><strong>第十八条</strong> 本办法自发布之日起施行，原《吉林大学本科学生学科竞赛管理办法》（校发〔2019〕216号）同时废止。</p>
 `;
 
 let currentLang = 'zh-CN';
@@ -1022,7 +1222,6 @@ function init() {
 function renderDropdowns() {
   const t = translations[currentLang];
   
-  // Theme dropdown
   const themeDropdown = document.getElementById('themeDropdown');
   themeDropdown.innerHTML = themes.map((theme) => `
     <div class="dropdown-item ${currentTheme === theme.id ? 'active' : ''}" 
@@ -1031,7 +1230,6 @@ function renderDropdowns() {
     </div>
   `).join('');
   
-  // Language dropdown
   const langDropdown = document.getElementById('langDropdown');
   langDropdown.innerHTML = languages.map((lang) => `
     <div class="dropdown-item ${currentLang === lang.code ? 'active' : ''}" 
@@ -1049,7 +1247,6 @@ function applyTheme(themeId) {
     document.body.setAttribute('data-theme', themeId);
   }
   
-  // Update button icon
   const themeObj = themes.find(t => t.id === themeId);
   if (themeObj) {
     document.getElementById('themeBtn').textContent = themeObj.icon;
@@ -1089,11 +1286,9 @@ function updateLanguage() {
   document.getElementById('filterLabel').textContent = t.filterLabel;
   document.getElementById('footerText').textContent = t.footer;
   
-  // Update source link
   document.getElementById('sourceLink').innerHTML = 
     t.source + '<a href="https://cxcyjyxy.jlu.edu.cn/info/1060/1474.htm" target="_blank">https://cxcyjyxy.jlu.edu.cn/info/1060/1474.htm</a>';
   
-  // Update buttons
   document.getElementById('bingLink').innerHTML = `<span>🔍</span><span>${t.bing}</span>`;
   document.getElementById('bilibiliLink').innerHTML = `<span>📺</span><span>${t.bilibili}</span>`;
   document.getElementById('zhihuLink').innerHTML = `<span>💡</span><span>${t.zhihu}</span>`;
@@ -1142,7 +1337,7 @@ function renderCompetitions() {
     
     return `
       <div class="competition-card" data-id="${comp.id}" data-name="${safeName}" data-name-en="${safeNameEn}" data-level="${comp.level}"
-           onclick="openDetailModal(${comp.id})" style="animation: fadeIn 0.5s ease ${index * 0.02}s backwards;">
+           onclick="openDetailModal(${comp.id})" style="animation: fadeIn 0.5s ease ${index * 0.005}s backwards;">
         <div class="competition-header">
           <div class="competition-name">${safeDisplayName}</div>
           <div class="level-badge ${levelClass}">${levelText}</div>
@@ -1299,7 +1494,6 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// 初始化
 window.onload = init;
 </script>
 </body>
