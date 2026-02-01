@@ -23,7 +23,8 @@
 ## 🛠️ 功能介绍 | Features Overview
 
 ### 1. 🏠 统一门户主页 | Home Portal
-<img width="2506" height="1296" alt="index" src="https://github.com/user-attachments/assets/74575679-845a-49bc-b294-cc85fc0271b3" />
+<img width="1848" height="1473" alt="image" src="https://github.com/user-attachments/assets/a6c26f28-9cd2-4daa-bf68-dab4d30c5a85" />
+
 
 
 - 全工具统一入口，卡片式布局直观清晰
@@ -33,7 +34,8 @@
 ---
 
 ### 2. 📊 GPA计算器 | GPA Calculator
-<img width="2072" height="1606" alt="gpa" src="https://github.com/user-attachments/assets/f3ec7f58-f60b-4c25-aee1-fb4f5303d3e6" />
+<img width="1842" height="897" alt="image" src="https://github.com/user-attachments/assets/1da6a97f-ff75-4ec4-9fa9-3b141c30d00f" />
+
 
 
 - 支持多种 GPA 计算标准（吉大模式、中传模式、自定义模式）
@@ -42,7 +44,7 @@
 ---
 
 ### 3. 🧭 常用网站导航 | Website Navigation
-<img width="2448" height="1554" alt="website" src="https://github.com/user-attachments/assets/f348e88a-0bb1-4ad3-a1a1-ee56d032eebe" />
+<img width="2433" height="1521" alt="image" src="https://github.com/user-attachments/assets/49b614d2-b52e-49ac-9048-e68da552c166" />
 
 
 - 收录吉林大学教务系统、图书馆、邮箱等官方入口
@@ -61,7 +63,8 @@
 ---
 
 ### 5. 🍅 任务清单 & 番茄钟 | Todo & Pomodoro
-<img width="2150" height="1584" alt="pomodoro" src="https://github.com/user-attachments/assets/c391d235-6f01-41f0-b828-3de0e07c303f" />
+<img width="1896" height="1496" alt="image" src="https://github.com/user-attachments/assets/d4d2598b-17a7-4c5e-99ad-ed32b5e2f941" />
+
 
 
 - 任务清单支持增删改查，数据本地持久化
@@ -87,6 +90,17 @@
 **修复 | Fixed**
 - [ ] 无
 
+### 2026-2-1
+**新增 | Added**
+- [ ] 网站首页添加项目主页跳转链接
+
+**优化 | Improved**
+- [ ] 网站首页以及GPA计算器、校园常用网站链接、竞赛信息查询、番茄钟等5个网页的重新设计
+- [ ] 语言切换系统更加精简，仅保留简繁中文、英语
+
+**修复 | Fixed**
+- [ ] 无
+
 ---
 
 ## 🚧 TODO | 开发计划
@@ -103,7 +117,6 @@
 
 ### 长期目标 Long-term
 - [ ] 完善“下课吃什么”小工具商家收录
-- [ ] 修改网站风格，避免AI味太重
 
 ### 参与贡献 | Contributing
 欢迎提交 Issue 或 Pull Request！如果您有好的工具想法，或者发现了 Bug，请随时联系。
@@ -119,6 +132,8 @@
 3. **隐私声明**：本工具所有数据均存储于用户浏览器本地（LocalStorage），**不会上传任何个人信息至服务器**，开发者无法访问您的任何数据。
 
 4. **使用风险**：使用本工具产生的任何后果由使用者自行承担，开发者不对因使用本工具而导致的任何直接或间接损失负责。
+
+5. **版权声明**：本项目全部前端网页由作者（vinoxuan）提供prompt，大模型KIMI生成。
 
 ---
 
