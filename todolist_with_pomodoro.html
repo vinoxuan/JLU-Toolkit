@@ -6,97 +6,57 @@
     <title>番茄钟与待办事项 | Pomodoro & Todo</title>
     <style>
         :root {
-            --primary: #667eea;
-            --primary-dark: #764ba2;
-            --secondary: #11998e;
-            --secondary-dark: #38ef7d;
-            --danger: #ff6b6b;
-            --bg-gradient-start: #667eea;
-            --bg-gradient-end: #764ba2;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --text-primary: #333;
-            --text-secondary: #666;
-            --border-color: #e0e0e0;
-            --input-bg: #fff;
-            --item-bg: #f8f9fa;
-            --item-hover: #f0f4ff;
-            --confirmed-bg: #f0f4ff;
+            --primary: #2c5aa0;
+            --primary-light: #4a7ab8;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-primary: #2c3e50;
+            --text-secondary: #5a6c7d;
+            --border-color: #e1e8ed;
+            --input-bg: #ffffff;
+            --item-bg: #f1f3f4;
+            --item-hover: #e8eaed;
+            --confirmed-bg: #e8f0fe;
+            --shadow: rgba(0, 0, 0, 0.08);
+            --danger: #dc3545;
+            --success: #28a745;
+            --warning: #ffc107;
+        }
+
+        [data-theme="dark"] {
+            --primary: #5b9bd5;
+            --primary-light: #7ab8e8;
+            --bg: #1a1d21;
+            --card-bg: #242830;
+            --text-primary: #e8eaed;
+            --text-secondary: #9aa0a6;
+            --border-color: #3c4043;
+            --input-bg: #2d3139;
+            --item-bg: #2d3139;
+            --item-hover: #3c4043;
+            --confirmed-bg: #1e3a5f;
             --shadow: rgba(0, 0, 0, 0.3);
+            --danger: #ef5350;
+            --success: #66bb6a;
+            --warning: #ffa726;
         }
 
-        [data-theme="red"] {
-            --primary: #ff6b6b;
-            --primary-dark: #ee5a6f;
-            --bg-gradient-start: #ff6b6b;
-            --bg-gradient-end: #ee5a6f;
-            --secondary: #ff8f8f;
-            --secondary-dark: #ffb4b4;
-            --item-hover: #ffe6e6;
-            --confirmed-bg: #fff0f0;
-        }
-
-        [data-theme="blue"] {
-            --primary: #4facfe;
-            --primary-dark: #00f2fe;
-            --bg-gradient-start: #4facfe;
-            --bg-gradient-end: #00f2fe;
-            --secondary: #00c9ff;
-            --secondary-dark: #92fe9d;
-            --item-hover: #dbeafe;
-            --confirmed-bg: #e6f4ff;
-        }
-
-        [data-theme="green"] {
-            --primary: #11998e;
-            --primary-dark: #38ef7d;
-            --bg-gradient-start: #11998e;
-            --bg-gradient-end: #38ef7d;
-            --secondary: #0ba360;
-            --secondary-dark: #3cba92;
-            --item-hover: #d1fae5;
-            --confirmed-bg: #e6fff3;
-        }
-
-        [data-theme="yellow"] {
-            --primary: #f093fb;
-            --primary-dark: #f5576c;
-            --bg-gradient-start: #fa709a;
-            --bg-gradient-end: #fee140;
-            --secondary: #f5576c;
-            --secondary-dark: #ff9a9e;
-            --item-hover: #fef3c7;
-            --confirmed-bg: #fff9e6;
-        }
-
-        [data-theme="bw"] {
-            --primary: #2c3e50;
-            --primary-dark: #34495e;
-            --bg-gradient-start: #2c3e50;
-            --bg-gradient-end: #4a5568;
-            --secondary: #5a6c7d;
-            --secondary-dark: #7f8c8d;
-            --card-bg: rgba(255, 255, 255, 0.98);
-            --item-hover: #dde4e6;
-            --confirmed-bg: #ecf0f1;
-            --shadow: rgba(0, 0, 0, 0.5);
-        }
-
-        [data-theme="scifi"] {
-            --primary: #00d2ff;
-            --primary-dark: #3a7bd5;
-            --bg-gradient-start: #00d2ff;
-            --bg-gradient-end: #3a7bd5;
-            --secondary: #00ff87;
-            --secondary-dark: #60efff;
-            --card-bg: rgba(10, 20, 40, 0.95);
-            --text-primary: #e0f7ff;
-            --text-secondary: #90caf9;
-            --border-color: #00d2ff;
-            --input-bg: rgba(0, 210, 255, 0.1);
-            --item-bg: rgba(0, 210, 255, 0.05);
-            --item-hover: rgba(0, 210, 255, 0.15);
-            --confirmed-bg: rgba(0, 255, 135, 0.1);
-            --shadow: rgba(0, 210, 255, 0.3);
+        [data-theme="jlu"] {
+            --primary: #1e4d8c;
+            --primary-light: #2c5aa0;
+            --bg: #e8f4f8;
+            --card-bg: #ffffff;
+            --text-primary: #1a2951;
+            --text-secondary: #4a5568;
+            --border-color: #c5d9ed;
+            --input-bg: #fafcfe;
+            --item-bg: #f0f7ff;
+            --item-hover: #e1effe;
+            --confirmed-bg: #d4e6f7;
+            --shadow: rgba(30, 77, 140, 0.15);
+            --danger: #c53030;
+            --success: #276749;
+            --warning: #dd6b20;
         }
 
         * {
@@ -106,133 +66,123 @@
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg);
             min-height: 100vh;
             padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
             color: var(--text-primary);
+            line-height: 1.6;
         }
 
         .container {
+            width: 100%;
             max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        /* Header Styles */
-        .header {
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 40px var(--shadow);
+            border-radius: 12px;
+            box-shadow: 0 2px 12px var(--shadow);
+            padding: 50px 40px 40px 40px;
+            margin-top: 20px;
             position: relative;
-            z-index: 100;
-            animation: slideIn 0.5s ease;
+            border: 1px solid var(--border-color);
         }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Header Styles - 参考GPA计算器 */
+        .header {
+            position: relative;
+            margin-bottom: 30px;
+            padding-top: 10px;
         }
 
         .control-panel {
             position: absolute;
-            top: 15px;
-            left: 15px;
+            top: -35px;
+            left: -25px;
             display: flex;
+            flex-direction: row;
             gap: 8px;
-            z-index: 200;
+            align-items: center;
+            z-index: 100;
         }
 
         .control-btn {
-            border: none;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 50%;
-            width: 38px;
-            height: 38px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            border-radius: 6px;
+            width: 32px;
+            height: 32px;
             cursor: pointer;
-            font-size: 18px;
-            transition: all 0.3s ease;
+            font-size: 14px;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            color: var(--text-secondary);
+            position: relative;
+            font-weight: 500;
             text-decoration: none;
-            color: var(--text-primary);
         }
 
         .control-btn:hover {
-            transform: scale(1.1);
-            background: rgba(255, 255, 255, 1);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            background: var(--item-hover);
+            border-color: var(--primary);
+            color: var(--primary);
         }
 
         .dropdown-menu {
             display: none;
             position: absolute;
-            top: 45px;
+            top: 38px;
             left: 0;
-            background: white;
-            border-radius: 12px;
+            background: var(--card-bg);
+            border-radius: 8px;
             padding: 6px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.25);
-            min-width: 150px;
-            z-index: 300;
-            max-height: 70vh;
-            overflow-y: auto;
+            box-shadow: 0 4px 12px var(--shadow);
+            min-width: 120px;
+            z-index: 101;
+            border: 1px solid var(--border-color);
         }
 
         .dropdown-menu.show {
             display: block;
-            animation: dropdownFade 0.2s ease;
-        }
-
-        @keyframes dropdownFade {
-            from { opacity: 0; transform: translateY(-8px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .dropdown-item {
-            padding: 10px 14px;
-            border-radius: 8px;
+            padding: 8px 12px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 14px;
-            transition: all 0.2s;
-            color: #333;
+            font-size: 13px;
+            transition: all 0.15s;
+            color: var(--text-primary);
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 2px;
         }
 
         .dropdown-item:hover {
-            background: #f5f5f5;
+            background: var(--item-hover);
         }
 
         .dropdown-item.active {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: var(--primary);
             color: white;
         }
 
         h1 {
             text-align: center;
-            font-size: 2em;
-            margin-bottom: 10px;
-            padding-top: 10px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-size: 1.8em;
+            font-weight: 600;
         }
 
         .subtitle {
             text-align: center;
             color: var(--text-secondary);
-            margin-bottom: 25px;
-            font-size: 0.95em;
+            margin-bottom: 30px;
+            font-size: 0.9em;
         }
 
         /* Main Layout */
@@ -247,26 +197,36 @@
             .main-content {
                 grid-template-columns: 1fr;
             }
+            
+            .container {
+                padding: 50px 20px 20px 20px;
+            }
+            
+            .control-panel {
+                top: -40px;
+                left: 0;
+            }
         }
 
         /* Card Styles */
         .card {
             background: var(--card-bg);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 40px var(--shadow);
-            animation: slideIn 0.5s ease;
-            height: fit-content;
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px var(--shadow);
         }
 
         .card-title {
-            font-size: 1.5em;
-            font-weight: 700;
+            font-size: 1.3em;
+            font-weight: 600;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
             color: var(--text-primary);
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
         }
 
         /* Todo List Styles */
@@ -274,10 +234,10 @@
             display: grid;
             gap: 12px;
             margin-bottom: 20px;
-            padding: 20px;
+            padding: 16px;
             background: var(--item-bg);
-            border-radius: 12px;
-            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
         }
 
         .input-row {
@@ -294,20 +254,24 @@
 
         .input-field {
             width: 100%;
-            padding: 12px 16px;
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
             font-size: 14px;
             background: var(--input-bg);
             color: var(--text-primary);
-            transition: all 0.3s;
+            transition: all 0.2s;
+            outline: none;
             font-family: inherit;
         }
 
         .input-field:focus {
-            outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
+        }
+
+        [data-theme="dark"] .input-field:focus {
+            box-shadow: 0 0 0 3px rgba(91, 155, 213, 0.2);
         }
 
         select.input-field {
@@ -315,14 +279,14 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
             font-size: 14px;
             display: flex;
             align-items: center;
@@ -331,52 +295,53 @@
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            background: var(--primary-light);
+            box-shadow: 0 2px 8px var(--shadow);
         }
 
         .btn-secondary {
             background: var(--item-bg);
-            color: var(--text-secondary);
-            border: 2px solid var(--border-color);
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-weight: 600;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
             font-size: 14px;
         }
 
         .btn-secondary:hover {
-            background: var(--border-color);
+            background: var(--item-hover);
+            border-color: var(--primary);
         }
 
         .btn-danger {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-weight: 600;
+            background: transparent;
+            color: var(--danger);
+            border: 1px solid var(--danger);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
             font-size: 12px;
         }
 
         .btn-danger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            background: var(--danger);
+            color: white;
         }
 
         .btn-success {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            background: var(--success);
             color: white;
             border: none;
             padding: 10px 20px;
-            border-radius: 10px;
-            font-weight: 600;
+            border-radius: 6px;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
             font-size: 14px;
             display: flex;
             align-items: center;
@@ -385,26 +350,26 @@
         }
 
         .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            opacity: 0.9;
+            box-shadow: 0 2px 8px var(--shadow);
         }
 
         .todo-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             max-height: 500px;
             overflow-y: auto;
-            padding-right: 8px;
+            padding-right: 4px;
         }
 
         .todo-item {
             background: var(--item-bg);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 14px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
             position: relative;
             display: flex;
             flex-direction: column;
@@ -412,26 +377,23 @@
         }
 
         .todo-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-color: var(--primary);
+            border-color: var(--primary-light);
+            box-shadow: 0 2px 8px var(--shadow);
         }
 
         .todo-item.selected {
             border-color: var(--primary);
             background: var(--confirmed-bg);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
         }
 
         .todo-item.completed {
             opacity: 0.6;
-            background: #e8f5e9;
-            border-color: #81c784;
+            background: var(--bg);
         }
 
         .todo-item.completed .todo-name {
             text-decoration: line-through;
-            color: #666;
+            color: var(--text-secondary);
         }
 
         .todo-header {
@@ -450,14 +412,14 @@
 
         .checkbox-wrapper {
             position: relative;
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             flex-shrink: 0;
         }
 
         .task-checkbox {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             cursor: pointer;
             opacity: 0;
             z-index: 2;
@@ -468,21 +430,21 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             border: 2px solid var(--border-color);
-            border-radius: 6px;
-            background: white;
-            transition: all 0.3s;
+            border-radius: 4px;
+            background: var(--card-bg);
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .task-checkbox:checked + .checkbox-custom {
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
-            border-color: var(--secondary);
+            background: var(--success);
+            border-color: var(--success);
             color: white;
         }
 
@@ -492,60 +454,63 @@
 
         .todo-name {
             font-weight: 600;
-            font-size: 1.1em;
+            font-size: 1em;
             color: var(--text-primary);
             word-break: break-word;
         }
 
         .todo-priority {
             display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
+            padding: 3px 8px;
+            border-radius: 4px;
             font-size: 0.75em;
             font-weight: 600;
             flex-shrink: 0;
         }
 
         .priority-high {
-            background: #ff6b6b;
+            background: var(--danger);
             color: white;
         }
 
         .priority-medium {
-            background: #feca57;
-            color: #333;
+            background: var(--warning);
+            color: #000;
         }
 
         .priority-low {
-            background: #48dbfb;
+            background: var(--primary-light);
             color: white;
         }
 
         .todo-meta {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             font-size: 0.85em;
             color: var(--text-secondary);
-            margin-left: 34px;
+            margin-left: 30px;
         }
 
         .todo-meta-item {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
         }
 
         .todo-actions {
             display: flex;
             gap: 8px;
             margin-top: 8px;
-            margin-left: 34px;
+            margin-left: 30px;
         }
 
         .empty-state {
             text-align: center;
             padding: 40px;
             color: var(--text-secondary);
+            background: var(--item-bg);
+            border-radius: 8px;
+            border: 1px dashed var(--border-color);
             font-size: 0.95em;
         }
 
@@ -562,29 +527,25 @@
         }
 
         .timer-display {
-            font-size: 5em;
+            font-size: 4em;
             font-weight: 700;
             font-family: 'Courier New', monospace;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--primary);
             margin: 20px 0;
             line-height: 1;
-            text-shadow: none;
         }
 
         @media (max-width: 768px) {
             .timer-display {
-                font-size: 3.5em;
+                font-size: 3em;
             }
         }
 
         .timer-status {
-            font-size: 1.2em;
+            font-size: 1.1em;
             color: var(--text-secondary);
             margin-bottom: 20px;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .timer-controls {
@@ -596,12 +557,12 @@
         }
 
         .control-btn-large {
-            padding: 14px 28px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 16px;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 15px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
             border: none;
             display: flex;
             align-items: center;
@@ -609,33 +570,34 @@
         }
 
         .btn-start {
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+            background: var(--success);
             color: white;
         }
 
         .btn-start:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            opacity: 0.9;
+            box-shadow: 0 2px 8px var(--shadow);
         }
 
         .btn-pause {
-            background: linear-gradient(135deg, #feca57 0%, #ff9f43 100%);
-            color: white;
+            background: var(--warning);
+            color: #000;
         }
 
         .btn-stop {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            background: var(--danger);
             color: white;
         }
 
         .settings-group {
             background: var(--item-bg);
-            padding: 20px;
-            border-radius: 12px;
+            padding: 16px;
+            border-radius: 8px;
             margin-top: 20px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
+            border: 1px solid var(--border-color);
         }
 
         @media (max-width: 768px) {
@@ -647,49 +609,50 @@
         .setting-item {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         .setting-label {
-            font-size: 0.9em;
+            font-size: 0.85em;
             color: var(--text-secondary);
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .current-task {
             background: var(--confirmed-bg);
-            border: 2px solid var(--primary);
-            border-radius: 12px;
-            padding: 20px;
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            padding: 16px;
             margin-bottom: 20px;
             text-align: left;
         }
 
         .current-task-label {
-            font-size: 0.85em;
+            font-size: 0.8em;
             color: var(--text-secondary);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-weight: 600;
         }
 
         .current-task-name {
-            font-size: 1.3em;
-            font-weight: 700;
+            font-size: 1.2em;
+            font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .current-task-meta {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             font-size: 0.9em;
             color: var(--text-secondary);
         }
 
         .progress-ring {
-            width: 200px;
-            height: 200px;
+            width: 180px;
+            height: 180px;
             margin: 0 auto 20px;
             position: relative;
         }
@@ -706,7 +669,7 @@
 
         .progress-ring-fill {
             fill: none;
-            stroke: url(#gradient);
+            stroke: var(--primary);
             stroke-width: 8;
             stroke-linecap: round;
             transition: stroke-dashoffset 1s linear;
@@ -714,30 +677,30 @@
 
         .footer {
             text-align: center;
-            padding: 30px;
-            color: white;
-            opacity: 0.9;
-            font-size: 0.9em;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            padding: 20px;
+            color: var(--text-secondary);
+            font-size: 0.85em;
+            border-top: 1px solid var(--border-color);
+            margin-top: 20px;
         }
 
         /* Scrollbar Styles */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
 
         ::-webkit-scrollbar-track {
             background: var(--item-bg);
-            border-radius: 4px;
+            border-radius: 3px;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 4px;
+            background: var(--border-color);
+            border-radius: 3px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-dark);
+            background: var(--primary);
         }
 
         /* Modal Styles */
@@ -748,13 +711,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
-            z-index: 2000;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
             justify-content: center;
             align-items: center;
-            animation: fadeIn 0.3s ease;
-            padding: 20px;
+            backdrop-filter: blur(4px);
         }
 
         .modal-overlay.show {
@@ -763,66 +724,58 @@
 
         .modal-content {
             background: var(--card-bg);
-            border-radius: 24px;
-            padding: 35px;
+            border-radius: 12px;
+            padding: 24px;
             max-width: 400px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: scaleIn 0.3s ease;
-            border: 2px solid var(--border-color);
+            width: 90%;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px var(--shadow);
             text-align: center;
-        }
-
-        @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
         }
 
         .modal-title {
             font-size: 1.3em;
-            font-weight: 700;
-            margin-bottom: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
             color: var(--text-primary);
         }
 
         .modal-text {
             color: var(--text-secondary);
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             line-height: 1.5;
         }
 
         .modal-actions {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             justify-content: center;
         }
 
         /* Back to top */
         .back-to-top {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+            bottom: 24px;
+            right: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
             background: var(--card-bg);
-            border: 2px solid var(--border-color);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px var(--shadow);
             cursor: pointer;
-            font-size: 20px;
+            font-size: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
             z-index: 99;
-            color: var(--text-primary);
+            color: var(--text-secondary);
         }
 
         .back-to-top:hover {
-            transform: translateY(-5px) scale(1.1);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
             background: var(--primary);
             color: white;
             border-color: var(--primary);
@@ -838,29 +791,19 @@
                 padding: 10px;
             }
             
-            .header {
-                padding: 70px 20px 25px 20px;
-                margin-bottom: 20px;
-            }
-            
             h1 {
                 font-size: 1.5em;
             }
             
             .card {
-                padding: 20px;
+                padding: 16px;
             }
             
             .back-to-top {
                 bottom: 20px;
                 right: 20px;
-                width: 45px;
-                height: 45px;
-                font-size: 18px;
-            }
-
-            .todo-actions {
-                flex-wrap: wrap;
+                width: 36px;
+                height: 36px;
             }
         }
     </style>
@@ -870,10 +813,10 @@
         <!-- Header -->
         <div class="header">
             <div class="control-panel">
-                <a href="/JLU-Toolkit/index.html" class="control-btn" title="返回首页">🏠</a>
-                <button class="control-btn" onclick="toggleDropdown('themeDropdown')" title="主题">🎨</button>
+                <button class="control-btn" onclick="window.location.href='/JLU-Toolkit/index.html'" title="返回首页">←</button>
+                <button class="control-btn" id="themeBtn" onclick="toggleDropdown('themeDropdown')" title="切换主题">☀</button>
                 <div class="dropdown-menu" id="themeDropdown"></div>
-                <button class="control-btn" onclick="toggleDropdown('langDropdown')" title="语言">🌐</button>
+                <button class="control-btn" id="langBtn" onclick="toggleDropdown('langDropdown')" title="切换语言">简</button>
                 <div class="dropdown-menu" id="langDropdown"></div>
             </div>
             <h1 id="pageTitle">🍅 番茄钟与待办事项</h1>
@@ -893,14 +836,17 @@
                     <input type="text" class="input-field" id="taskName" placeholder="任务名称...">
                     <div class="input-row">
                         <div style="position: relative;">
-                            <label id="ddlLabel" style="position: absolute; top: -10px; left: 10px; background: var(--card-bg); padding: 0 5px; font-size: 12px; color: var(--text-secondary); font-weight: 600;">截止日期 (DDL)</label>
-                            <input type="date" class="input-field" id="taskDDL" style="padding-top: 16px;">
+                            <label id="ddlLabel" style="display: block; margin-bottom: 4px; font-size: 0.8em; color: var(--text-secondary); font-weight: 500;">截止日期 (DDL)</label>
+                            <input type="date" class="input-field" id="taskDDL">
                         </div>
-                        <select class="input-field" id="taskPriority">
-                            <option value="high">高优先级</option>
-                            <option value="medium" selected>中优先级</option>
-                            <option value="low">低优先级</option>
-                        </select>
+                        <div>
+                            <label style="display: block; margin-bottom: 4px; font-size: 0.8em; color: var(--text-secondary); font-weight: 500;">优先级</label>
+                            <select class="input-field" id="taskPriority">
+                                <option value="high">高优先级</option>
+                                <option value="medium" selected>中优先级</option>
+                                <option value="low">低优先级</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="input-row">
                         <input type="number" class="input-field" id="taskDuration" placeholder="预计时间（分钟）" min="1">
@@ -946,16 +892,10 @@
                     </div>
 
                     <div class="progress-ring">
-                        <svg width="200" height="200">
-                            <defs>
-                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:var(--primary)"/>
-                                    <stop offset="100%" style="stop-color:var(--primary-dark)"/>
-                                </linearGradient>
-                            </defs>
-                            <circle class="progress-ring-bg" cx="100" cy="100" r="90"></circle>
-                            <circle class="progress-ring-fill" cx="100" cy="100" r="90" 
-                                    stroke-dasharray="565.48" 
+                        <svg width="180" height="180">
+                            <circle class="progress-ring-bg" cx="90" cy="90" r="80"></circle>
+                            <circle class="progress-ring-fill" cx="90" cy="90" r="80" 
+                                    stroke-dasharray="502.65" 
                                     stroke-dashoffset="0"></circle>
                         </svg>
                     </div>
@@ -996,7 +936,7 @@
             <div>JLU Pomodoro & Todo</div>
         </div>
 
-        <button class="back-to-top" id="backToTop" onclick="scrollToTop()" title="回到顶部">⬆️</button>
+        <button class="back-to-top" id="backToTop" onclick="scrollToTop()" title="回到顶部">↑</button>
     </div>
 
     <!-- Complete Task Modal -->
@@ -1020,7 +960,20 @@
         let isRunning = false;
         let isBreak = false;
         let totalTime = 25 * 60;
-        let currentTasks = []; // 内存中的任务列表
+        let currentTasks = [];
+
+        // 参考GPA计算器的配置
+        const themes = [
+            { id: 'default', name: '极光白', icon: '☀' },
+            { id: 'dark', name: '暗夜黑', icon: '☾' },
+            { id: 'jlu', name: '吉大蓝', icon: '◆' }
+        ];
+
+        const languages = [
+            { code: 'zh-CN', name: '简体中文', icon: '简' },
+            { code: 'zh-TW', name: '繁體中文', icon: '繁' },
+            { code: 'en', name: 'English', icon: 'EN' }
+        ];
 
         // Translations
         const translations = {
@@ -1049,7 +1002,7 @@
                 breakMessage: '恭喜完成一个番茄钟！休息一下吧。',
                 pomodoros: '个番茄',
                 ddl: '截止日期',
-                themes: ['紫色', '红色', '蓝色', '绿色', '黄色', '黑白', '科幻'],
+                themes: ['极光白', '暗夜黑', '吉大蓝'],
                 priority: {
                     high: '高优先级',
                     medium: '中优先级',
@@ -1086,7 +1039,7 @@
                 breakMessage: '恭喜完成一個番茄鐘！休息一下吧。',
                 pomodoros: '個番茄',
                 ddl: '截止日期',
-                themes: ['紫色', '紅色', '藍色', '綠色', '黃色', '黑白', '科幻'],
+                themes: ['極光白', '暗夜黑', '吉大藍'],
                 priority: {
                     high: '高優先級',
                     medium: '中優先級',
@@ -1123,7 +1076,7 @@
                 breakMessage: 'Congratulations! Take a break.',
                 pomodoros: 'pomodoros',
                 ddl: 'Due Date',
-                themes: ['Purple', 'Red', 'Blue', 'Green', 'Yellow', 'B&W', 'Sci-Fi'],
+                themes: ['Aurora White', 'Dark Night', 'JLU Blue'],
                 priority: {
                     high: 'High Priority',
                     medium: 'Medium Priority',
@@ -1137,76 +1090,26 @@
             }
         };
 
-        const themes = [
-            { id: 'default', emoji: '🟣' },
-            { id: 'red', emoji: '🔴' },
-            { id: 'blue', emoji: '🔵' },
-            { id: 'green', emoji: '🟢' },
-            { id: 'yellow', emoji: '🟡' },
-            { id: 'bw', emoji: '⚫' },
-            { id: 'scifi', emoji: '🚀' }
-        ];
-
-        const languages = [
-            { code: 'zh-CN', emoji: '🇨🇳' },
-            { code: 'zh-TW', emoji: '🇭🇰' },
-            { code: 'en', emoji: '🇺🇸' }
-        ];
-
         // Initialize
         function init() {
+            // 设置初始按钮状态
+            const initialTheme = themes.find(t => t.id === currentTheme);
+            if (initialTheme) {
+                document.getElementById('themeBtn').textContent = initialTheme.icon;
+            }
+            
+            const initialLang = languages.find(l => l.code === currentLang);
+            if (initialLang) {
+                document.getElementById('langBtn').textContent = initialLang.icon;
+            }
+            
             renderDropdowns();
             updateLanguage();
             updateTimerDisplay();
             initBackToTop();
             setupWorkDurationListener();
             
-            // Set today's date as default for DDL
             document.getElementById('taskDDL').valueAsDate = new Date();
-        }
-
-        function setupWorkDurationListener() {
-            const workInput = document.getElementById('workDuration');
-            workInput.addEventListener('input', function() {
-                // 实时更新所有任务的番茄钟显示
-                if (currentTasks.length > 0) {
-                    const workDuration = parseInt(this.value) || 25;
-                    currentTasks.forEach(task => {
-                        if (task.duration) {
-                            task.pomodoros = Math.ceil(task.duration / workDuration);
-                        }
-                    });
-                    renderTasksList(currentTasks);
-                }
-                // 同时更新计时器显示
-                if (!isRunning && !isBreak) {
-                    timeLeft = parseInt(this.value) || 25;
-                    timeLeft *= 60;
-                    totalTime = timeLeft;
-                    updateTimerDisplay();
-                }
-            });
-        }
-
-        function loadLocalTasks() {
-            const stored = localStorage.getItem('jlu_pomodoro_tasks');
-            if (stored) {
-                currentTasks = JSON.parse(stored);
-                // 根据当前设置的番茄钟时长重新计算番茄钟数量
-                const workDuration = parseInt(document.getElementById('workDuration').value) || 25;
-                currentTasks.forEach(task => {
-                    if (task.duration) {
-                        task.pomodoros = Math.ceil(task.duration / workDuration);
-                    }
-                });
-                renderTasksList(currentTasks);
-            } else {
-                alert(currentLang === 'en' ? 'No local tasks found' : '未找到本地任务');
-            }
-        }
-
-        function saveTasksToLocal() {
-            localStorage.setItem('jlu_pomodoro_tasks', JSON.stringify(currentTasks));
         }
 
         function renderDropdowns() {
@@ -1217,7 +1120,7 @@
             themeDropdown.innerHTML = themes.map((theme, index) => `
                 <div class="dropdown-item ${currentTheme === theme.id ? 'active' : ''}"
                      onclick="setTheme('${theme.id}')">
-                    ${theme.emoji} ${t.themes[index]}
+                    ${theme.icon} ${t.themes[index]}
                 </div>
             `).join('');
 
@@ -1226,7 +1129,7 @@
             langDropdown.innerHTML = languages.map((lang) => `
                 <div class="dropdown-item ${currentLang === lang.code ? 'active' : ''}"
                      onclick="setLanguage('${lang.code}')">
-                    ${lang.emoji} ${lang.code === 'zh-CN' ? '简体中文' : lang.code === 'zh-TW' ? '繁體中文' : 'English'}
+                    ${lang.icon} ${lang.name}
                 </div>
             `).join('');
         }
@@ -1240,18 +1143,35 @@
             dropdown.classList.toggle('show');
         }
 
-        function setTheme(theme) {
-            document.body.setAttribute('data-theme', theme);
-            currentTheme = theme;
+        function setTheme(themeId) {
+            currentTheme = themeId;
+            
+            if (themeId === 'default') {
+                document.body.removeAttribute('data-theme');
+            } else {
+                document.body.setAttribute('data-theme', themeId);
+            }
+            
+            const themeObj = themes.find(t => t.id === themeId);
+            if (themeObj) {
+                document.getElementById('themeBtn').textContent = themeObj.icon;
+            }
+            
             renderDropdowns();
-            document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+            document.getElementById('themeDropdown').classList.remove('show');
         }
 
-        function setLanguage(lang) {
-            currentLang = lang;
-            document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
-            updateLanguage();
+        function setLanguage(langCode) {
+            currentLang = langCode;
+            
+            const langObj = languages.find(l => l.code === langCode);
+            if (langObj) {
+                document.getElementById('langBtn').textContent = langObj.icon;
+            }
+            
             renderDropdowns();
+            document.getElementById('langDropdown').classList.remove('show');
+            updateLanguage();
             renderTasksList(currentTasks);
         }
 
@@ -1278,30 +1198,68 @@
             document.getElementById('modalText').textContent = t.breakMessage;
             document.getElementById('modalConfirm').textContent = t.confirm;
             
-            // Update priority options
             const prioritySelect = document.getElementById('taskPriority');
             prioritySelect.options[0].text = t.priority.high;
             prioritySelect.options[1].text = t.priority.medium;
             prioritySelect.options[2].text = t.priority.low;
             
-            // Update status display
             updateStatusDisplay();
         }
 
+        // 其他功能函数保持不变（由于长度限制，此处省略，与之前版本相同）
         function getPriorityValue(priority) {
             const values = { high: 3, medium: 2, low: 1 };
             return values[priority] || 0;
         }
 
         function compareDate(a, b) {
-            // 如果其中一个没有日期，有日期的排在前面
             if (!a && !b) return 0;
             if (!a) return 1;
             if (!b) return -1;
             return new Date(a) - new Date(b);
         }
 
-        // Todo Functions
+        function setupWorkDurationListener() {
+            const workInput = document.getElementById('workDuration');
+            workInput.addEventListener('input', function() {
+                if (currentTasks.length > 0) {
+                    const workDuration = parseInt(this.value) || 25;
+                    currentTasks.forEach(task => {
+                        if (task.duration) {
+                            task.pomodoros = Math.ceil(task.duration / workDuration);
+                        }
+                    });
+                    renderTasksList(currentTasks);
+                }
+                if (!isRunning && !isBreak) {
+                    timeLeft = parseInt(this.value) || 25;
+                    timeLeft *= 60;
+                    totalTime = timeLeft;
+                    updateTimerDisplay();
+                }
+            });
+        }
+
+        function loadLocalTasks() {
+            const stored = localStorage.getItem('jlu_pomodoro_tasks');
+            if (stored) {
+                currentTasks = JSON.parse(stored);
+                const workDuration = parseInt(document.getElementById('workDuration').value) || 25;
+                currentTasks.forEach(task => {
+                    if (task.duration) {
+                        task.pomodoros = Math.ceil(task.duration / workDuration);
+                    }
+                });
+                renderTasksList(currentTasks);
+            } else {
+                alert(currentLang === 'en' ? 'No local tasks found' : '未找到本地任务');
+            }
+        }
+
+        function saveTasksToLocal() {
+            localStorage.setItem('jlu_pomodoro_tasks', JSON.stringify(currentTasks));
+        }
+
         function addTask() {
             const name = document.getElementById('taskName').value.trim();
             const ddl = document.getElementById('taskDDL').value;
@@ -1329,7 +1287,6 @@
             currentTasks.push(newTask);
             saveTasksToLocal();
             
-            // Clear inputs
             document.getElementById('taskName').value = '';
             document.getElementById('taskDuration').value = '';
             
@@ -1341,14 +1298,14 @@
             currentTasks = currentTasks.filter(t => t.id !== id);
             saveTasksToLocal();
             
-            // 检查是否删除了当前选中的任务
-            const selectedTask = currentTasks.find((t, idx) => idx === currentTaskIndex);
-            if (!selectedTask) {
-                currentTaskIndex = -1;
-                updateCurrentTaskDisplay();
-            } else {
-                // 重新计算currentTaskIndex
-                currentTaskIndex = currentTasks.findIndex(t => t.id === selectedTask.id);
+            if (currentTaskIndex !== -1) {
+                const selectedTask = currentTasks.find((t, idx) => idx === currentTaskIndex);
+                if (!selectedTask) {
+                    currentTaskIndex = -1;
+                    updateCurrentTaskDisplay();
+                } else {
+                    currentTaskIndex = currentTasks.findIndex(t => t.id === selectedTask.id);
+                }
             }
             
             renderTasksList(currentTasks);
@@ -1403,7 +1360,6 @@
                 return;
             }
 
-            // 排序：先按优先级（高->低），相同优先级按DDL（近->远）
             const sortedTasks = [...tasks].sort((a, b) => {
                 const priorityDiff = getPriorityValue(b.priority) - getPriorityValue(a.priority);
                 if (priorityDiff !== 0) return priorityDiff;
@@ -1446,7 +1402,6 @@
             }).join('');
         }
 
-        // Pomodoro Functions
         function updateStatusDisplay() {
             const t = translations[currentLang];
             const statusEl = document.getElementById('timerStatus');
@@ -1464,8 +1419,7 @@
             document.getElementById('timerDisplay').textContent = 
                 `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             
-            // Update progress ring
-            const circumference = 2 * Math.PI * 90;
+            const circumference = 2 * Math.PI * 80;
             const progress = isBreak ? 
                 (1 - timeLeft / (parseInt(document.getElementById('breakDuration').value || 5) * 60)) :
                 (1 - timeLeft / totalTime);
@@ -1477,11 +1431,8 @@
             if (isRunning) return;
             
             if (!isBreak && timeLeft === totalTime) {
-                // Starting new work session
                 totalTime = parseInt(document.getElementById('workDuration').value || 25) * 60;
                 timeLeft = totalTime;
-            } else if (isBreak && timeLeft === parseInt(document.getElementById('breakDuration').value || 5) * 60) {
-                // Starting new break
             }
             
             isRunning = true;
@@ -1524,13 +1475,10 @@
             pauseTimer();
             
             if (!isBreak) {
-                // Work session completed
                 document.getElementById('completeModal').classList.add('show');
-                // Switch to break
                 isBreak = true;
                 timeLeft = parseInt(document.getElementById('breakDuration').value || 5) * 60;
             } else {
-                // Break completed
                 isBreak = false;
                 timeLeft = parseInt(document.getElementById('workDuration').value || 25) * 60;
                 totalTime = timeLeft;
@@ -1545,7 +1493,6 @@
             }
         }
 
-        // Back to top
         function initBackToTop() {
             const backToTopBtn = document.getElementById('backToTop');
             window.addEventListener('scroll', function() {
@@ -1564,14 +1511,12 @@
             });
         }
 
-        // Close dropdown when clicking outside
         document.addEventListener('click', function(e) {
             if (!e.target.matches('.control-btn')) {
                 document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
             }
         });
 
-        // Initialize on load
         window.onload = init;
     </script>
 </body>
