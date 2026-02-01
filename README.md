@@ -53,7 +53,8 @@
 ---
 
 ### 4. 🏆 竞赛信息查询 | Competition Info
-<img width="2442" height="1574" alt="competition" src="https://github.com/user-attachments/assets/b691ff3b-3cc7-4c3f-8ce3-2d9d757336bf" />
+<img width="2465" height="1446" alt="image" src="https://github.com/user-attachments/assets/55ab36f6-d36a-45d3-a114-368b19112903" />
+
 
 
 - 收录吉林大学官方认定的 A/B/C 类学科竞赛列表（共207项）
